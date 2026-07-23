@@ -1,4 +1,5 @@
 import { Scene, GameObjects } from 'phaser';
+import { SCENE_LEVEL_ONE } from '../constants/sceneKeys';
 
 export class MainMenu extends Scene
 {
@@ -17,16 +18,15 @@ export class MainMenu extends Scene
 
         this.logo = this.add.image(512, 300, 'logo');
 
-        this.title = this.add.text(512, 460, 'Main Menu', {
+        this.title = this.add.text(512, 460, 'Tap or click to play', {
             fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
             align: 'center'
         }).setOrigin(0.5);
 
         this.input.once('pointerdown', () => {
-
-            this.scene.start('Game');
-
+            this.scene.start(SCENE_LEVEL_ONE);
         });
     }
 }
+
