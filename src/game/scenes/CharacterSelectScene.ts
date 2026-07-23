@@ -63,7 +63,7 @@ export class CharacterSelect extends Scene {
 
         // Keyboard navigation
         window.addEventListener('keydown', this._onKeyDown);
-        this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+        this.events.once('shutdown', () => {
             window.removeEventListener('keydown', this._onKeyDown);
         });
     }
