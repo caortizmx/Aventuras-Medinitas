@@ -48,4 +48,6 @@ export const REQUIRED_OBJECT_COUNTS: Readonly<Record<string, number>> = {
     [LEVEL_ONE_LAYER_NAMES.killZones]: 1,
 };
 
+export const LEVEL_ONE_COLLECTIBLE_TARGET_COUNT = REQUIRED_OBJECT_COUNTS[LEVEL_ONE_LAYER_NAMES.collectibleSpawns] ?? 3;
+
 export const LEVEL_MAP_ERROR_PREFIX = '[LevelOne:TiledMapInvalid]';

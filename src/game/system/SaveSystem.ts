@@ -1,36 +1,206 @@
 import { findCharacterById, getDefaultCharacter } from '../data/characters';
 
-const CHARACTER_KEY = 'aventuras_selected_character';
+export interface SaveSettings {
+    soundEnabled: boolean;
+}
 
-/**
- * Persist the selected character id to localStorage.
- * Errors (private-browsing, quota exceeded, etc.) are silently ignored.
- */
-export function saveSelectedCharacter(id: string): void {
+export interface SaveData {
+    schemaVersion: number;
+    selectedCharacterId: string;
+    unlockedLevel: number;
+    bestScores: Record<string, number>;
+    bestCollectibleCounts: Record<string, number>;
+    settings: SaveSettings;
+}
+
+export const SAVE_DATA_SCHEMA_VERSION = 1;
+export const SAVE_DATA_STORAGE_KEY = 'aventuras_save_data_v1';
+const LEGACY_CHARACTER_KEY = 'aventuras_selected_character';
+
+const DEFAULT_SAVE_DATA: SaveData = {
+    schemaVersion: SAVE_DATA_SCHEMA_VERSION,
+    selectedCharacterId: getDefaultCharacter().id,
+    unlockedLevel: 1,
+    bestScores: {},
+    bestCollectibleCounts: {},
+    settings: {
+        soundEnabled: true,
+    },
+};
+
+function createDefaultSaveData(): SaveData {
+    return {
+        schemaVersion: SAVE_DATA_SCHEMA_VERSION,
+        selectedCharacterId: DEFAULT_SAVE_DATA.selectedCharacterId,
+        unlockedLevel: DEFAULT_SAVE_DATA.unlockedLevel,
+        bestScores: {},
+        bestCollectibleCounts: {},
+        settings: {
+            soundEnabled: DEFAULT_SAVE_DATA.settings.soundEnabled,
+        },
+    };
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function toNonNegativeInteger(value: unknown, fallback: number): number {
+    if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) {
+        return fallback;
+    }
+
+    return Math.floor(value);
+}
+
+function sanitizeBestMap(value: unknown): Record<string, number> {
+    if (!isRecord(value)) {
+        return {};
+    }
+
+    const sanitized: Record<string, number> = {};
+    for (const [key, raw] of Object.entries(value)) {
+        const safeValue = toNonNegativeInteger(raw, -1);
+        if (safeValue >= 0) {
+            sanitized[key] = safeValue;
+        }
+    }
+
+    return sanitized;
+}
+
+function sanitizeSelectedCharacterId(value: unknown): string {
+    if (typeof value === 'string' && findCharacterById(value)) {
+        return value;
+    }
+
+    return DEFAULT_SAVE_DATA.selectedCharacterId;
+}
+
+function sanitizeSettings(value: unknown): SaveSettings {
+    if (!isRecord(value)) {
+        return { ...DEFAULT_SAVE_DATA.settings };
+    }
+
+    return {
+        soundEnabled: typeof value.soundEnabled === 'boolean'
+            ? value.soundEnabled
+            : DEFAULT_SAVE_DATA.settings.soundEnabled,
+    };
+}
+
+function sanitizeSaveData(raw: unknown): SaveData {
+    if (!isRecord(raw)) {
+        return createDefaultSaveData();
+    }
+
+    if (raw.schemaVersion !== SAVE_DATA_SCHEMA_VERSION) {
+        return createDefaultSaveData();
+    }
+
+    return {
+        schemaVersion: SAVE_DATA_SCHEMA_VERSION,
+        selectedCharacterId: sanitizeSelectedCharacterId(raw.selectedCharacterId),
+        unlockedLevel: toNonNegativeInteger(raw.unlockedLevel, DEFAULT_SAVE_DATA.unlockedLevel),
+        bestScores: sanitizeBestMap(raw.bestScores),
+        bestCollectibleCounts: sanitizeBestMap(raw.bestCollectibleCounts),
+        settings: sanitizeSettings(raw.settings),
+    };
+}
+
+function loadLegacyCharacterSelection(): string | undefined {
     try {
-        localStorage.setItem(CHARACTER_KEY, id);
+        const saved = localStorage.getItem(LEGACY_CHARACTER_KEY);
+        if (saved && findCharacterById(saved)) {
+            return saved;
+        }
     } catch {
-        // Silently ignore storage errors
+        // Ignore storage errors
+    }
+
+    return undefined;
+}
+
+export function loadGameSaveData(): SaveData {
+    try {
+        const raw = localStorage.getItem(SAVE_DATA_STORAGE_KEY);
+        if (!raw) {
+            const legacyCharacterId = loadLegacyCharacterSelection();
+            if (!legacyCharacterId) {
+                return createDefaultSaveData();
+            }
+
+            const migrated: SaveData = {
+                ...createDefaultSaveData(),
+                selectedCharacterId: legacyCharacterId,
+            };
+            saveGameSaveData(migrated);
+            try {
+                localStorage.removeItem(LEGACY_CHARACTER_KEY);
+            } catch {
+                // Ignore storage errors
+            }
+            return migrated;
+        }
+
+        const parsed = JSON.parse(raw);
+        const safeData = sanitizeSaveData(parsed);
+        return safeData;
+    } catch {
+        return createDefaultSaveData();
     }
 }
 
-/**
- * Load the previously saved character id from localStorage.
- *
- * Returns the stored id only if it matches a known character.
- * Falls back to the default character id for any of these cases:
- *  - Nothing saved yet
- *  - Stored value does not match any character id (corrupted / outdated)
- *  - localStorage is unavailable (e.g. private browsing restrictions)
- */
-export function loadSelectedCharacterId(): string {
+export function saveGameSaveData(data: SaveData): SaveData {
+    const safeData = sanitizeSaveData(data);
     try {
-        const raw = localStorage.getItem(CHARACTER_KEY);
-        if (raw !== null && findCharacterById(raw) !== undefined) {
-            return raw;
-        }
+        localStorage.setItem(SAVE_DATA_STORAGE_KEY, JSON.stringify(safeData));
     } catch {
-        // Silently ignore storage errors
+        // Ignore storage errors
     }
-    return getDefaultCharacter().id;
+    return safeData;
+}
+
+export function saveSelectedCharacter(id: string): void {
+    const current = loadGameSaveData();
+    current.selectedCharacterId = sanitizeSelectedCharacterId(id);
+    saveGameSaveData(current);
+}
+
+export function loadSelectedCharacterId(): string {
+    return loadGameSaveData().selectedCharacterId;
+}
+
+export interface LevelResultPayload {
+    levelId: string;
+    score: number;
+    collectibleCount: number;
+    unlockedLevel: number;
+}
+
+export function recordLevelResult(payload: LevelResultPayload): SaveData {
+    const current = loadGameSaveData();
+    const score = toNonNegativeInteger(payload.score, 0);
+    const collectibleCount = toNonNegativeInteger(payload.collectibleCount, 0);
+    const unlockedLevel = Math.max(1, toNonNegativeInteger(payload.unlockedLevel, current.unlockedLevel));
+
+    const previousBestScore = current.bestScores[payload.levelId] ?? 0;
+    const previousBestCollectibleCount = current.bestCollectibleCounts[payload.levelId] ?? 0;
+
+    current.bestScores[payload.levelId] = Math.max(previousBestScore, score);
+    current.bestCollectibleCounts[payload.levelId] = Math.max(previousBestCollectibleCount, collectibleCount);
+    current.unlockedLevel = Math.max(current.unlockedLevel, unlockedLevel);
+
+    return saveGameSaveData(current);
+}
+
+export function resetProgress(): SaveData {
+    const current = loadGameSaveData();
+    const resetData: SaveData = {
+        ...createDefaultSaveData(),
+        selectedCharacterId: current.selectedCharacterId,
+        settings: current.settings,
+    };
+
+    return saveGameSaveData(resetData);
 }

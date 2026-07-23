@@ -25,10 +25,11 @@ import {
     PLAYER_KNOCKBACK_X,
     PLAYER_KNOCKBACK_Y,
 } from '../constants/gameValues';
-import { SCENE_GAME_OVER, SCENE_MAIN_MENU } from '../constants/sceneKeys';
+import { SCENE_GAME_OVER, SCENE_LEVEL_COMPLETE } from '../constants/sceneKeys';
 import { CharacterConfig, findCharacterById, getDefaultCharacter } from '../data/characters';
 import { ASSET_KEYS } from '../constants/assetKeys';
 import {
+    LEVEL_ONE_COLLECTIBLE_TARGET_COUNT,
     LEVEL_ONE_LAYER_NAMES,
     LEVEL_ONE_TILESET_NAME,
 } from '../constants/tiledLevel';
@@ -50,6 +51,8 @@ import {
     startInvulnerability,
     RespawnCandidate,
 } from '../system/stage7Gameplay';
+import { applyCollectiblePickup } from '../system/stage8Gameplay';
+import { recordLevelResult } from '../system/SaveSystem';
 
 type SpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 type DynamicBody = Phaser.Physics.Arcade.Body;
@@ -70,10 +73,20 @@ interface CheckpointMarker {
     activated: boolean;
 }
 
+interface CollectibleSpawnPoint {
+    id: string;
+    x: number;
+    y: number;
+}
+
 const TILED_WORLD_BOTTOM_PADDING = 1200;
 const FALLBACK_WORLD_BOUNDS_Y = -200;
 const FALLBACK_WORLD_BOUNDS_EXTRA_HEIGHT = 2200;
 const PLAYER_RESPAWN_CLEARANCE_Y = 8;
+const LEVEL_ONE_ID = 'level-1';
+const COLLECTIBLE_POINTS = 100;
+const ENEMY_STOMP_POINTS = 50;
+const LEVEL_CLEAR_LIFE_BONUS = 25;
 
 function isCollidableTilemapLayer(
     layer: Phaser.Tilemaps.TilemapLayer | Phaser.Tilemaps.TilemapGPULayer,
@@ -105,6 +118,8 @@ export class LevelOne extends Scene {
     private _pauseHint!:  Phaser.GameObjects.Text;
     private _goalBanner!: Phaser.GameObjects.Text;
     private _livesLabel!: Phaser.GameObjects.Text;
+    private _scoreLabel!: Phaser.GameObjects.Text;
+    private _collectiblesLabel!: Phaser.GameObjects.Text;
 
     private _collisionLayer?: Phaser.Tilemaps.TilemapLayer;
     private _killZones: LevelRect[] = [];
@@ -121,6 +136,10 @@ export class LevelOne extends Scene {
     private _playerState: PlayerGameplayState = 'normal';
     private _lives = PLAYER_INITIAL_LIVES;
     private _invulnerableUntilMs = 0;
+    private _score = 0;
+    private _collectiblesCollected = 0;
+    private _collectiblesTotal = 0;
+    private _collectedCollectibleIds = new Set<string>();
 
     constructor() { super('LevelOne'); }
 
@@ -139,6 +158,10 @@ export class LevelOne extends Scene {
         this._playerState = 'normal';
         this._lives = PLAYER_INITIAL_LIVES;
         this._invulnerableUntilMs = 0;
+        this._score = 0;
+        this._collectiblesCollected = 0;
+        this._collectiblesTotal = 0;
+        this._collectedCollectibleIds = new Set<string>();
         this._collisionLayer = undefined;
         this._killZones = [];
         this._enemies = [];
@@ -178,6 +201,8 @@ export class LevelOne extends Scene {
 
         this._buildUI();
         this._refreshLivesUI();
+        this._refreshScoreUI();
+        this._refreshCollectiblesUI();
     }
 
     update(_time: number, _delta: number): void {
@@ -299,6 +324,7 @@ export class LevelOne extends Scene {
 
             this._spawnEnemies(mapData.enemySpawns);
             this._spawnCheckpoints(mapData.checkpoints);
+            this._spawnCollectibles(this._toCollectibleSpawns(mapData.collectibleSpawns));
 
             const killZoneGroup = this.physics.add.staticGroup();
             for (const zone of mapData.killZones) {
@@ -392,6 +418,8 @@ export class LevelOne extends Scene {
         if (outcome === 'stomp') {
             enemy.defeat();
             this._player.setVelocityY(this._character.jumpVelocity * 0.7);
+            this._score += ENEMY_STOMP_POINTS;
+            this._refreshScoreUI();
             return;
         }
 
@@ -574,6 +602,14 @@ export class LevelOne extends Scene {
         this._livesLabel?.setText(`Lives: ${this._lives}`);
     }
 
+    private _refreshScoreUI(): void {
+        this._scoreLabel?.setText(`Score: ${this._score}`);
+    }
+
+    private _refreshCollectiblesUI(): void {
+        this._collectiblesLabel?.setText(`Collectibles: ${this._collectiblesCollected}/${this._collectiblesTotal}`);
+    }
+
     private _getValidatedTiledMapData(): ValidatedLevelMapData {
         const cacheEntry = this.cache.tilemap.get(ASSET_KEYS.levelOneMap) as { data?: TiledMapLike } | undefined;
         if (!cacheEntry?.data) {
@@ -609,10 +645,6 @@ export class LevelOne extends Scene {
     }
 
     private _drawDevMarkers(mapData: ValidatedLevelMapData): void {
-        for (const point of mapData.collectibleSpawns) {
-            this.add.circle(point.x, point.y, 8, 0xf1c40f, 0.5).setDepth(20);
-        }
-
         for (const point of mapData.enemySpawns) {
             this.add.circle(point.x, point.y, 10, 0xe74c3c, 0.5).setDepth(20);
             this.add.line(
@@ -630,6 +662,58 @@ export class LevelOne extends Scene {
         for (const point of mapData.checkpoints) {
             this.add.rectangle(point.x, point.y - 24, 16, 32, 0x3498db, 0.5).setDepth(20);
         }
+    }
+
+    private _spawnCollectibles(spawns: CollectibleSpawnPoint[]): void {
+        this._collectiblesTotal = spawns.length;
+        this._refreshCollectiblesUI();
+
+        const collectibles = this.physics.add.staticGroup();
+
+        for (const spawn of spawns) {
+            const collectible = this.physics.add.staticImage(spawn.x, spawn.y, ASSET_KEYS.pixel);
+            collectible
+                .setDisplaySize(20, 20)
+                .setTint(0xf1c40f)
+                .setData('collectibleId', spawn.id)
+                .refreshBody();
+            collectibles.add(collectible, true);
+        }
+
+        this.physics.add.overlap(this._player, collectibles, (_playerSprite, collectibleBody) => {
+            const collectible = collectibleBody as Phaser.Physics.Arcade.Image;
+            const collectibleId = collectible.getData('collectibleId');
+            if (typeof collectibleId !== 'string') {
+                return;
+            }
+
+            const pickupResult = applyCollectiblePickup(
+                this._collectedCollectibleIds,
+                collectibleId,
+                this._collectiblesCollected,
+                this._score,
+                COLLECTIBLE_POINTS,
+            );
+
+            if (!pickupResult.collected) {
+                return;
+            }
+
+            this._collectedCollectibleIds = pickupResult.collectedIds;
+            this._collectiblesCollected = pickupResult.collectedCount;
+            this._score = pickupResult.score;
+            collectible.disableBody(true, true);
+            this._refreshCollectiblesUI();
+            this._refreshScoreUI();
+        });
+    }
+
+    private _toCollectibleSpawns(points: Array<{ x: number; y: number }>): CollectibleSpawnPoint[] {
+        return points.slice(0, LEVEL_ONE_COLLECTIBLE_TARGET_COUNT).map((point, index) => ({
+            id: `map-collectible-${index}`,
+            x: point.x,
+            y: point.y,
+        }));
     }
 
     private _buildPrototypeFallbackLevel(): void {
@@ -692,6 +776,12 @@ export class LevelOne extends Scene {
         this._spawnCheckpoints([
             { id: 'fallback-checkpoint-1', x: 1180, y: this._spawnY },
         ]);
+
+        this._spawnCollectibles([
+            { id: 'fallback-collectible-1', x: 760, y: 320 },
+            { id: 'fallback-collectible-2', x: 1460, y: 260 },
+            { id: 'fallback-collectible-3', x: 2440, y: 220 },
+        ]);
     }
 
     private _togglePause(): void {
@@ -718,9 +808,26 @@ export class LevelOne extends Scene {
         this._player.body.moves = false;
         this._playCharacterAnimation('celebrate');
         this._goalBanner.setVisible(true);
+        this._score += this._lives * LEVEL_CLEAR_LIFE_BONUS;
+        this._refreshScoreUI();
+
+        const saved = recordLevelResult({
+            levelId: LEVEL_ONE_ID,
+            score: this._score,
+            collectibleCount: this._collectiblesCollected,
+            unlockedLevel: 2,
+        });
 
         this.time.delayedCall(CELEBRATION_EXIT_DELAY_MS, () => {
-            this.scene.start(SCENE_MAIN_MENU);
+            this.scene.start(SCENE_LEVEL_COMPLETE, {
+                characterId: this._character.id,
+                levelId: LEVEL_ONE_ID,
+                score: this._score,
+                collectibleCount: this._collectiblesCollected,
+                totalCollectibles: this._collectiblesTotal,
+                bestScore: saved.bestScores[LEVEL_ONE_ID] ?? 0,
+                bestCollectibleCount: saved.bestCollectibleCounts[LEVEL_ONE_ID] ?? 0,
+            });
         });
     }
 
@@ -780,6 +887,22 @@ export class LevelOne extends Scene {
                 fontFamily: 'monospace',
                 fontSize: '12px',
                 color: '#ffdf8a',
+            })
+            .setScrollFactor(0).setDepth(depth);
+
+        this._scoreLabel = this.add
+            .text(12, 58, `Score: ${this._score}`, {
+                fontFamily: 'monospace',
+                fontSize: '12px',
+                color: '#9ee6ff',
+            })
+            .setScrollFactor(0).setDepth(depth);
+
+        this._collectiblesLabel = this.add
+            .text(12, 74, `Collectibles: ${this._collectiblesCollected}/${this._collectiblesTotal}`, {
+                fontFamily: 'monospace',
+                fontSize: '12px',
+                color: '#f6de8f',
             })
             .setScrollFactor(0).setDepth(depth);
 
