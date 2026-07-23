@@ -53,7 +53,7 @@ import {
 import { applyCollectiblePickup } from '../system/stage8Gameplay';
 import { recordLevelResult } from '../system/SaveSystem';
 import { PRESENTATION_ANIMATION_KEYS } from '../constants/presentationAnimationKeys';
-import { CHARACTER_VISUALS } from '../assets/characterVisualConfig';
+import { CHARACTER_SOURCE_SIZE, CHARACTER_VISUALS } from '../assets/characterVisualConfig';
 import { ENVIRONMENT_VISUALS } from '../assets/environmentVisualConfig';
 import { GAMEPLAY_VISUALS, PROP_VISUALS } from '../assets/gameplayVisualConfig';
 
@@ -908,7 +908,8 @@ export class LevelOne extends Scene {
 
     private _configurePlayerVisual(): void {
         const visual = CHARACTER_VISUALS[this._character.id];
-        const displayWidth = visual.displayHeight * (242 / 181);
+        const displayWidth = visual.displayHeight
+            * (CHARACTER_SOURCE_SIZE.width / CHARACTER_SOURCE_SIZE.height);
         this._player
             .setOrigin(visual.originX, visual.originY)
             .setDisplaySize(displayWidth, visual.displayHeight)

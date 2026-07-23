@@ -9,6 +9,7 @@ import { ATLAS_PATHS } from '../assets/assetPaths';
 import { REQUIRED_ATLAS_KEYS } from '../assets/assetKeys';
 import { registerAtlasAnimations } from '../assets/registerAnimations';
 import { getDevelopmentAssetScene } from './devAssetRoute';
+import { ATLAS_ANIMATION_DEFINITIONS } from '../assets/animationDefinitions';
 
 export class Preloader extends Scene
 {
@@ -46,6 +47,7 @@ export class Preloader extends Scene
             }
         });
 
+        this.load.setPath('');
         for (const atlasKey of REQUIRED_ATLAS_KEYS) {
             const paths = ATLAS_PATHS[atlasKey];
             this.load.atlas(atlasKey, paths.textureURL, paths.atlasURL);
@@ -56,7 +58,7 @@ export class Preloader extends Scene
     {
         registerAtlasAnimations(
             this.anims,
-            undefined,
+            ATLAS_ANIMATION_DEFINITIONS.filter(({ textureKey }) => this.textures.exists(textureKey)),
         );
         this.registry.set('failedAtlasKeys', [...this._failedAtlasKeys]);
         this.scene.start(getDevelopmentAssetScene(window.location.pathname) ?? SCENE_MAIN_MENU);
