@@ -54,8 +54,10 @@ export class LevelOne extends Scene {
     init(data: { characterId?: string }): void {
         this._character = (data?.characterId ? findCharacterById(data.characterId) : undefined)
             ?? getDefaultCharacter();
-        // Compute spawn Y so every character lands flush on the ground
-        this._spawnY = WORLD_HEIGHT - GROUND_HEIGHT - this._character.collisionHeight / 2;
+        // Compute spawn Y so every character lands flush on the ground.
+        // Use half the scaled display height (not the collision body) because
+        // Phaser positions the sprite by its visual centre.
+        this._spawnY = WORLD_HEIGHT - GROUND_HEIGHT - (PLAYER_HEIGHT * PLAYER_SPRITE_SCALE) / 2;
     }
 
     create(): void {
