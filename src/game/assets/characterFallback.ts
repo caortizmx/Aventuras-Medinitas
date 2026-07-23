@@ -94,7 +94,7 @@ function ensureFallbackTexture(
     }
 
     const sheetTexture = createFallbackSheet(scene, key, characterId);
-    scene.textures.addSpriteSheet(key, sheetTexture, {
+    scene.textures.addSpriteSheet(key, sheetTexture.canvas as any, {
         frameWidth:  CHARACTER_SPRITESHEET_SPEC.frameWidth,
         frameHeight: CHARACTER_SPRITESHEET_SPEC.frameHeight,
     });
