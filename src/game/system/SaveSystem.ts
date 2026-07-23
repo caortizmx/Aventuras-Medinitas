@@ -28,6 +28,19 @@ const DEFAULT_SAVE_DATA: SaveData = {
     },
 };
 
+function createDefaultSaveData(): SaveData {
+    return {
+        schemaVersion: SAVE_DATA_SCHEMA_VERSION,
+        selectedCharacterId: DEFAULT_SAVE_DATA.selectedCharacterId,
+        unlockedLevel: DEFAULT_SAVE_DATA.unlockedLevel,
+        bestScores: {},
+        bestCollectibleCounts: {},
+        settings: {
+            soundEnabled: DEFAULT_SAVE_DATA.settings.soundEnabled,
+        },
+    };
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
     return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
@@ -78,17 +91,17 @@ function sanitizeSettings(value: unknown): SaveSettings {
 
 function sanitizeSaveData(raw: unknown): SaveData {
     if (!isRecord(raw)) {
-        return { ...DEFAULT_SAVE_DATA };
+        return createDefaultSaveData();
     }
 
     if (raw.schemaVersion !== SAVE_DATA_SCHEMA_VERSION) {
-        return { ...DEFAULT_SAVE_DATA };
+        return createDefaultSaveData();
     }
 
     return {
         schemaVersion: SAVE_DATA_SCHEMA_VERSION,
         selectedCharacterId: sanitizeSelectedCharacterId(raw.selectedCharacterId),
-        unlockedLevel: Math.max(1, toNonNegativeInteger(raw.unlockedLevel, DEFAULT_SAVE_DATA.unlockedLevel)),
+        unlockedLevel: toNonNegativeInteger(raw.unlockedLevel, DEFAULT_SAVE_DATA.unlockedLevel),
         bestScores: sanitizeBestMap(raw.bestScores),
         bestCollectibleCounts: sanitizeBestMap(raw.bestCollectibleCounts),
         settings: sanitizeSettings(raw.settings),
@@ -114,22 +127,27 @@ export function loadGameSaveData(): SaveData {
         if (!raw) {
             const legacyCharacterId = loadLegacyCharacterSelection();
             if (!legacyCharacterId) {
-                return { ...DEFAULT_SAVE_DATA };
+                return createDefaultSaveData();
             }
 
             const migrated: SaveData = {
-                ...DEFAULT_SAVE_DATA,
+                ...createDefaultSaveData(),
                 selectedCharacterId: legacyCharacterId,
             };
             saveGameSaveData(migrated);
+            try {
+                localStorage.removeItem(LEGACY_CHARACTER_KEY);
+            } catch {
+                // Ignore storage errors
+            }
             return migrated;
         }
 
-        const parsed = JSON.parse(raw) as unknown;
+        const parsed = JSON.parse(raw);
         const safeData = sanitizeSaveData(parsed);
         return safeData;
     } catch {
-        return { ...DEFAULT_SAVE_DATA };
+        return createDefaultSaveData();
     }
 }
 
@@ -179,7 +197,7 @@ export function recordLevelResult(payload: LevelResultPayload): SaveData {
 export function resetProgress(): SaveData {
     const current = loadGameSaveData();
     const resetData: SaveData = {
-        ...DEFAULT_SAVE_DATA,
+        ...createDefaultSaveData(),
         selectedCharacterId: current.selectedCharacterId,
         settings: current.settings,
     };

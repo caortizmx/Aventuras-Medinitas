@@ -134,13 +134,13 @@ describe('stage 8 save system', () => {
 
     it('prevents collectible duplication in one level attempt', () => {
         const firstPickup = applyCollectiblePickup(new Set<string>(), 'c-1', 0, 0, 100);
-        const duplicatedPickup = applyCollectiblePickup(firstPickup.collectedIds, 'c-1', firstPickup.collectedCount, firstPickup.score, 100);
+        const duplicateAttempt = applyCollectiblePickup(firstPickup.collectedIds, 'c-1', firstPickup.collectedCount, firstPickup.score, 100);
 
         expect(firstPickup.collected).toBe(true);
         expect(firstPickup.collectedCount).toBe(1);
         expect(firstPickup.score).toBe(100);
-        expect(duplicatedPickup.collected).toBe(false);
-        expect(duplicatedPickup.collectedCount).toBe(1);
-        expect(duplicatedPickup.score).toBe(100);
+        expect(duplicateAttempt.collected).toBe(false);
+        expect(duplicateAttempt.collectedCount).toBe(1);
+        expect(duplicateAttempt.score).toBe(100);
     });
 });

@@ -4,6 +4,7 @@ import { saveSelectedCharacter, loadSelectedCharacterId, loadGameSaveData } from
 import { SCENE_LEVEL_ONE } from '../constants/sceneKeys';
 import { GAME_WIDTH, GAME_HEIGHT } from '../constants/gameValues';
 import { getCharacterAnimationKey } from '../constants/animationKeys';
+import { LEVEL_ONE_COLLECTIBLE_TARGET_COUNT } from '../constants/tiledLevel';
 
 // ── Layout constants ──────────────────────────────────────────────────────────
 const CARD_W      = 160;
@@ -157,6 +158,7 @@ export class CharacterSelect extends Scene {
         const progress = loadGameSaveData();
         const bestScore = progress.bestScores['level-1'] ?? 0;
         const bestCollectibles = progress.bestCollectibleCounts['level-1'] ?? 0;
+        const totalCollectibles = LEVEL_ONE_COLLECTIBLE_TARGET_COUNT;
 
         this.add.text(GAME_WIDTH / 2, GAME_HEIGHT - 14,
             '← / → or A / D to navigate   •   Enter or Space to start', {
@@ -166,7 +168,7 @@ export class CharacterSelect extends Scene {
         }).setOrigin(0.5);
 
         this.add.text(GAME_WIDTH / 2, GAME_HEIGHT - 32,
-            `Unlocked level: ${progress.unlockedLevel}   •   Best score: ${bestScore}   •   Best collectibles: ${bestCollectibles}/3`, {
+            `Unlocked level: ${progress.unlockedLevel}   •   Best score: ${bestScore}   •   Best collectibles: ${bestCollectibles}/${totalCollectibles}`, {
             fontFamily: 'monospace',
             fontSize: '11px',
             color: '#8ec5ff',

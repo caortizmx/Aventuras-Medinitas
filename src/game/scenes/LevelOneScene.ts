@@ -29,6 +29,7 @@ import { SCENE_GAME_OVER, SCENE_LEVEL_COMPLETE } from '../constants/sceneKeys';
 import { CharacterConfig, findCharacterById, getDefaultCharacter } from '../data/characters';
 import { ASSET_KEYS } from '../constants/assetKeys';
 import {
+    LEVEL_ONE_COLLECTIBLE_TARGET_COUNT,
     LEVEL_ONE_LAYER_NAMES,
     LEVEL_ONE_TILESET_NAME,
 } from '../constants/tiledLevel';
@@ -323,13 +324,7 @@ export class LevelOne extends Scene {
 
             this._spawnEnemies(mapData.enemySpawns);
             this._spawnCheckpoints(mapData.checkpoints);
-            this._spawnCollectibles(
-                mapData.collectibleSpawns.map((point, index) => ({
-                    id: `map-collectible-${index + 1}`,
-                    x: point.x,
-                    y: point.y,
-                })),
-            );
+            this._spawnCollectibles(this._toCollectibleSpawns(mapData.collectibleSpawns));
 
             const killZoneGroup = this.physics.add.staticGroup();
             for (const zone of mapData.killZones) {
@@ -685,7 +680,7 @@ export class LevelOne extends Scene {
             collectibles.add(collectible, true);
         }
 
-        this.physics.add.overlap(this._player, collectibles, (_player, collectibleBody) => {
+        this.physics.add.overlap(this._player, collectibles, (_playerSprite, collectibleBody) => {
             const collectible = collectibleBody as Phaser.Physics.Arcade.Image;
             const collectibleId = collectible.getData('collectibleId');
             if (typeof collectibleId !== 'string') {
@@ -711,6 +706,14 @@ export class LevelOne extends Scene {
             this._refreshCollectiblesUI();
             this._refreshScoreUI();
         });
+    }
+
+    private _toCollectibleSpawns(points: Array<{ x: number; y: number }>): CollectibleSpawnPoint[] {
+        return points.slice(0, LEVEL_ONE_COLLECTIBLE_TARGET_COUNT).map((point, index) => ({
+            id: `map-collectible-${index}`,
+            x: point.x,
+            y: point.y,
+        }));
     }
 
     private _buildPrototypeFallbackLevel(): void {
@@ -820,7 +823,7 @@ export class LevelOne extends Scene {
                 characterId: this._character.id,
                 levelId: LEVEL_ONE_ID,
                 score: this._score,
-                collectedCount: this._collectiblesCollected,
+                collectibleCount: this._collectiblesCollected,
                 totalCollectibles: this._collectiblesTotal,
                 bestScore: saved.bestScores[LEVEL_ONE_ID] ?? 0,
                 bestCollectibleCount: saved.bestCollectibleCounts[LEVEL_ONE_ID] ?? 0,

@@ -7,7 +7,7 @@ interface LevelCompleteData {
     characterId: string;
     levelId: string;
     score: number;
-    collectedCount: number;
+    collectibleCount: number;
     totalCollectibles: number;
     bestScore: number;
     bestCollectibleCount: number;
@@ -23,7 +23,7 @@ export class LevelComplete extends Scene {
             characterId: data?.characterId ?? loadGameSaveData().selectedCharacterId,
             levelId: data?.levelId ?? 'level-1',
             score: typeof data?.score === 'number' ? data.score : 0,
-            collectedCount: typeof data?.collectedCount === 'number' ? data.collectedCount : 0,
+            collectibleCount: typeof data?.collectibleCount === 'number' ? data.collectibleCount : 0,
             totalCollectibles: typeof data?.totalCollectibles === 'number' ? data.totalCollectibles : 0,
             bestScore: typeof data?.bestScore === 'number' ? data.bestScore : 0,
             bestCollectibleCount: typeof data?.bestCollectibleCount === 'number' ? data.bestCollectibleCount : 0,
@@ -45,7 +45,7 @@ export class LevelComplete extends Scene {
             color: '#ffffff',
         }).setOrigin(0.5);
 
-        this.add.text(GAME_WIDTH / 2, 158, `Collectibles: ${safeData.collectedCount}/${safeData.totalCollectibles}`, {
+        this.add.text(GAME_WIDTH / 2, 158, `Collectibles: ${safeData.collectibleCount}/${safeData.totalCollectibles}`, {
             fontFamily: 'monospace',
             fontSize: '20px',
             color: '#ffffff',
