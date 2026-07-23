@@ -22,6 +22,8 @@ import { getCharacterAssetKey } from '../constants/characterSpriteConfig';
 import { ASSET_KEYS } from '../constants/assetKeys';
 
 type SpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+const HURT_RECOVERY_DELAY_MS = 350;
+const CELEBRATION_EXIT_DELAY_MS = 2500;
 
 export class LevelOne extends Scene {
     private _input!:     InputController;
@@ -197,7 +199,7 @@ export class LevelOne extends Scene {
         this._player.body.moves = false;
         this._playCharacterAnimation('hurt');
 
-        this.time.delayedCall(350, () => {
+        this.time.delayedCall(HURT_RECOVERY_DELAY_MS, () => {
             this._respawn();
         });
     }
@@ -226,7 +228,7 @@ export class LevelOne extends Scene {
         this._playCharacterAnimation('celebrate');
         this._goalBanner.setVisible(true);
 
-        this.time.delayedCall(2500, () => {
+        this.time.delayedCall(CELEBRATION_EXIT_DELAY_MS, () => {
             this.scene.start(SCENE_MAIN_MENU);
         });
     }
