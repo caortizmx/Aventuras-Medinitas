@@ -7,6 +7,8 @@ export default defineConfig({
         baseURL: 'http://127.0.0.1:8080',
         browserName: 'chromium',
         headless: true,
+        screenshot: 'only-on-failure',
+        trace: 'retain-on-failure',
     },
     webServer: {
         command: 'npm run dev-nolog -- --host 127.0.0.1',
