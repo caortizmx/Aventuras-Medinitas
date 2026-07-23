@@ -7,34 +7,109 @@ import {
     getCharacterAssetKey,
 } from '../constants/characterSpriteConfig';
 import { findCharacterById } from '../data/characters';
+import { shadeColor } from './colorShading';
 
 function findCharacterIdByAssetKey(assetKey: string): CharacterId | undefined {
     return CHARACTER_IDS.find((characterId) => CHARACTER_ASSET_KEYS[characterId] === assetKey);
 }
 
+/** Draw a filled + stroked rounded rectangle path used for the chunky-cute silhouette. */
+function roundedRectPath(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    radius: number,
+): void {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.arcTo(x + width, y, x + width, y + height, radius);
+    ctx.arcTo(x + width, y + height, x, y + height, radius);
+    ctx.arcTo(x, y + height, x, y, radius);
+    ctx.arcTo(x, y, x + width, y, radius);
+    ctx.closePath();
+}
+
+/**
+ * Draws a single fallback placeholder frame.
+ *
+ * This is a stopgap for missing real art, not the final art bible. It still
+ * follows the storybook-pixel art direction as closely as a procedurally
+ * drawn placeholder can: a rounded chunky-cute silhouette, simple two-tone
+ * top/bottom shading (soft top-left light), a dark-tinted (not pure black)
+ * outline derived from the character's own color, and a subtle idle bob so
+ * the placeholder doesn't look static/dead before real art lands.
+ */
 function drawFallbackFrame(
     ctx: CanvasRenderingContext2D,
     frameX: number,
     characterColorHex: string,
+    frameIndex: number,
 ): void {
     const { frameWidth, frameHeight } = CHARACTER_SPRITESHEET_SPEC;
 
+    ctx.clearRect(frameX, 0, frameWidth, frameHeight);
     ctx.fillStyle = CHARACTER_FALLBACK_CONFIG.backgroundColor;
     ctx.fillRect(frameX, 0, frameWidth, frameHeight);
 
+    // Gentle per-frame bob so idle/run/celebrate placeholders read as "alive":
+    // treat every 6 frames as one full sine bob cycle (2*pi / (pi/3) = 6
+    // steps per cycle) with a small +/-2px vertical amplitude.
+    const bob = Math.sin((frameIndex % 6) * (Math.PI / 3)) * 2;
+
+    const bodyX = frameX + 8;
+    const bodyY = 6 + bob;
+    const bodyWidth = frameWidth - 16;
+    const bodyHeight = frameHeight - 12;
+    const radius = 10;
+
+    const lightColor = shadeColor(characterColorHex, 35);
+    const darkColor = shadeColor(characterColorHex, -30);
+    const outlineColor = shadeColor(characterColorHex, -60);
+
+    // Two-tone top/bottom shading approximates a single soft top-left light
+    // source without requiring a real gradient asset.
+    roundedRectPath(ctx, bodyX, bodyY, bodyWidth, bodyHeight, radius);
+    ctx.save();
+    ctx.clip();
+    ctx.fillStyle = lightColor;
+    ctx.fillRect(bodyX, bodyY, bodyWidth, bodyHeight / 2);
     ctx.fillStyle = characterColorHex;
-    ctx.fillRect(frameX + 8, 6, frameWidth - 16, frameHeight - 12);
+    ctx.fillRect(bodyX, bodyY + bodyHeight / 2, bodyWidth, bodyHeight / 2);
+    ctx.restore();
 
+    // Soft cast shadow under the character to avoid a "floating square" look.
     ctx.fillStyle = CHARACTER_FALLBACK_CONFIG.shadowColor;
-    ctx.fillRect(frameX + 7, frameHeight - 10, frameWidth - 14, 4);
+    ctx.beginPath();
+    ctx.ellipse(
+        frameX + frameWidth / 2,
+        frameHeight - 5,
+        bodyWidth / 2.4,
+        3,
+        0,
+        0,
+        Math.PI * 2,
+    );
+    ctx.fill();
 
+    // Simple rounded eyes for a friendly, family-facing read.
     ctx.fillStyle = CHARACTER_FALLBACK_CONFIG.eyeColor;
-    ctx.fillRect(frameX + 15, 17, 6, 4);
-    ctx.fillRect(frameX + 27, 17, 6, 4);
+    ctx.beginPath();
+    ctx.ellipse(frameX + 18, 17 + bob, 3.5, 4.5, 0, 0, Math.PI * 2);
+    ctx.ellipse(frameX + 30, 17 + bob, 3.5, 4.5, 0, 0, Math.PI * 2);
+    ctx.fill();
 
-    ctx.strokeStyle = CHARACTER_FALLBACK_CONFIG.outlineColor;
+    ctx.fillStyle = darkColor;
+    ctx.beginPath();
+    ctx.ellipse(frameX + 18, 18 + bob, 1.5, 2, 0, 0, Math.PI * 2);
+    ctx.ellipse(frameX + 30, 18 + bob, 1.5, 2, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    roundedRectPath(ctx, bodyX, bodyY, bodyWidth, bodyHeight, radius);
+    ctx.strokeStyle = outlineColor;
     ctx.lineWidth = 2;
-    ctx.strokeRect(frameX + 8, 6, frameWidth - 16, frameHeight - 12);
+    ctx.stroke();
 }
 
 function createFallbackSheet(scene: Phaser.Scene, textureKey: string, characterId: CharacterId): Phaser.Textures.CanvasTexture {
@@ -60,7 +135,7 @@ function createFallbackSheet(scene: Phaser.Scene, textureKey: string, characterI
         : CHARACTER_FALLBACK_CONFIG.defaultBodyColor;
 
     for (let frame = 0; frame < totalFrames; frame += 1) {
-        drawFallbackFrame(ctx, frame * frameWidth, fallbackColor);
+        drawFallbackFrame(ctx, frame * frameWidth, fallbackColor, frame);
     }
 
     canvasTexture.refresh();

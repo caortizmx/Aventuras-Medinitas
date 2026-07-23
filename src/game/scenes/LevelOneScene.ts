@@ -16,6 +16,8 @@ import {
     GOAL_COLOR, GOAL_HEIGHT, GOAL_WIDTH, GOAL_X, GOAL_Y,
     GRAVITY,
     GROUND_COLOR, GROUND_HEIGHT, GROUND_WIDTH, GROUND_Y,
+    JUMP_BUFFER_MS,
+    JUMP_COYOTE_TIME_MS,
     KILL_ZONE_Y,
     PLATFORM_COLOR, PLATFORM_HEIGHT, PLATFORMS,
     SPAWN_X,
@@ -88,6 +90,25 @@ const COLLECTIBLE_POINTS = 100;
 const ENEMY_STOMP_POINTS = 50;
 const LEVEL_CLEAR_LIFE_BONUS = 25;
 
+// ─── Parallax backdrop (art-free depth cue, see art bible §7 first-pass polish) ──
+const SKY_TOP_COLOR = 0xbfe3f7;
+const SKY_HORIZON_COLOR = 0xeaf6ff;
+const HORIZON_Y_RATIO = 0.62;
+interface HillRowConfig {
+    yOffset: number;
+    bumpWidth: number;
+    bumpHeight: number;
+    color: number;
+    alpha: number;
+    depth: number;
+    scrollFactor: number;
+}
+
+const HILL_FAR_CONFIG: HillRowConfig = { yOffset: 10, bumpWidth: 220, bumpHeight: 60, color: 0x9fd6c6, alpha: 0.45, depth: -60, scrollFactor: 0.25 };
+const HILL_NEAR_CONFIG: HillRowConfig = { yOffset: 30, bumpWidth: 260, bumpHeight: 80, color: 0x7dc9a0, alpha: 0.65, depth: -40, scrollFactor: 0.5 };
+const SKY_DEPTH = -90;
+const SKY_SCROLL_FACTOR = 0.02;
+
 function isCollidableTilemapLayer(
     layer: Phaser.Tilemaps.TilemapLayer | Phaser.Tilemaps.TilemapGPULayer,
 ): layer is Phaser.Tilemaps.TilemapLayer {
@@ -114,6 +135,7 @@ export class LevelOne extends Scene {
     private _usingPrototypeFallback = false;
 
     private _pauseBg!:    Phaser.GameObjects.Rectangle;
+    private _pausePanel!: Phaser.GameObjects.Rectangle;
     private _pauseTitle!: Phaser.GameObjects.Text;
     private _pauseHint!:  Phaser.GameObjects.Text;
     private _goalBanner!: Phaser.GameObjects.Text;
@@ -131,7 +153,15 @@ export class LevelOne extends Scene {
     private _levelDone = false;
     private _prevJump  = false;
     private _prevPause = false;
+    private _lastGroundedTimeMs = -Infinity;
+    private _jumpBufferExpiresAtMs = -Infinity;
     private _activeAnimState?: CharacterAnimationState;
+
+    private _playerShadow!: Phaser.GameObjects.Ellipse;
+    private _playerBaseScaleX = 1;
+    private _playerBaseScaleY = 1;
+    private _wasGrounded = true;
+    private _squashTween?: Phaser.Tweens.Tween;
 
     private _playerState: PlayerGameplayState = 'normal';
     private _lives = PLAYER_INITIAL_LIVES;
@@ -153,6 +183,8 @@ export class LevelOne extends Scene {
         this._levelDone = false;
         this._prevJump  = false;
         this._prevPause = false;
+        this._lastGroundedTimeMs = -Infinity;
+        this._jumpBufferExpiresAtMs = -Infinity;
         this._activeAnimState = undefined;
         this._usingPrototypeFallback = false;
         this._playerState = 'normal';
@@ -167,6 +199,8 @@ export class LevelOne extends Scene {
         this._enemies = [];
         this._checkpoints = [];
         this._activeCheckpoint = undefined;
+        this._wasGrounded = true;
+        this._squashTween = undefined;
 
         this._input  = new InputController();
         this._mobile = new MobileControls(
@@ -193,11 +227,14 @@ export class LevelOne extends Scene {
             this._buildPrototypeFallbackLevel();
         }
 
+        this._buildParallaxBackdrop();
+
         this.cameras.main.setBounds(0, 0, this._worldWidth, this._worldHeight);
         this.cameras.main.startFollow(
             this._player, false, CAMERA_LERP_X, CAMERA_LERP_Y,
         );
         this._playCharacterAnimation('idle');
+        this._createPlayerShadow();
 
         this._buildUI();
         this._refreshLivesUI();
@@ -224,6 +261,9 @@ export class LevelOne extends Scene {
             this._player.setAlpha(Math.floor(this.time.now / 80) % 2 === 0 ? 0.45 : 1);
         }
 
+        this._updatePlayerShadow();
+        this._updateLandingFeedback();
+
         const state = this._input.getState();
         if (state.pause && !this._prevPause) this._togglePause();
         this._prevPause = state.pause;
@@ -243,8 +283,29 @@ export class LevelOne extends Scene {
         }
 
         const grounded = this._player.body.blocked.down;
-        if (state.jump && !this._prevJump && grounded) {
+        const now = this.time.now;
+
+        if (grounded) {
+            this._lastGroundedTimeMs = now;
+        }
+
+        // Jump buffering: a press just before landing is remembered for a
+        // short window instead of being dropped. Coyote time: a press just
+        // after walking off a ledge still counts as grounded. Together these
+        // prevent the strict single-frame "grounded" check from swallowing
+        // jump presses, which is what made jumping feel unresponsive/stuck.
+        if (state.jump && !this._prevJump) {
+            this._jumpBufferExpiresAtMs = now + JUMP_BUFFER_MS;
+        }
+
+        const jumpBuffered = now <= this._jumpBufferExpiresAtMs;
+        const coyoteTimeActive = now - this._lastGroundedTimeMs <= JUMP_COYOTE_TIME_MS;
+
+        if (jumpBuffered && coyoteTimeActive) {
             this._player.setVelocityY(this._character.jumpVelocity);
+            this._playSquashStretch(1.25, 0.78, 90);
+            this._jumpBufferExpiresAtMs = -Infinity;
+            this._lastGroundedTimeMs = -Infinity;
         }
         this._prevJump = state.jump;
         this._updateMovementAnimation();
@@ -454,6 +515,7 @@ export class LevelOne extends Scene {
 
         this._input.resetAll();
         this._prevJump = false;
+        this._jumpBufferExpiresAtMs = -Infinity;
         this._playerState = 'hurt';
         this._playCharacterAnimation('hurt');
 
@@ -508,6 +570,7 @@ export class LevelOne extends Scene {
         this._player.setAlpha(1);
         this._input.resetAll();
         this._prevJump = false;
+        this._jumpBufferExpiresAtMs = -Infinity;
         this._player.body.moves = true;
         this._playCharacterAnimation('idle');
     }
@@ -595,7 +658,7 @@ export class LevelOne extends Scene {
         }
 
         const tile = this._collisionLayer.getTileAtWorldXY(x, y, true);
-        return tile.index !== -1;
+        return tile !== null && tile.index !== -1;
     }
 
     private _refreshLivesUI(): void {
@@ -788,6 +851,7 @@ export class LevelOne extends Scene {
         this._isPaused = !this._isPaused;
         this._input.resetAll();
         this._prevJump = false;
+        this._jumpBufferExpiresAtMs = -Infinity;
 
         if (this._isPaused) {
             this.physics.pause();
@@ -796,6 +860,7 @@ export class LevelOne extends Scene {
         }
 
         this._pauseBg.setVisible(this._isPaused);
+        this._pausePanel.setVisible(this._isPaused);
         this._pauseTitle.setVisible(this._isPaused);
         this._pauseHint.setVisible(this._isPaused);
     }
@@ -831,6 +896,42 @@ export class LevelOne extends Scene {
         });
     }
 
+    /**
+     * Draws a cheap, art-free parallax backdrop: a soft sky gradient plus two
+     * rows of desaturated, low-contrast hill silhouettes scrolling slower
+     * than the foreground. This gives the level a sense of depth without
+     * requiring any new art assets, per the first-pass polish plan.
+     */
+    private _buildParallaxBackdrop(): void {
+        const width = this._worldWidth;
+        const horizonY = this._worldHeight * HORIZON_Y_RATIO;
+
+        const sky = this.add.graphics().setDepth(SKY_DEPTH).setScrollFactor(SKY_SCROLL_FACTOR, 0);
+        sky.fillGradientStyle(SKY_TOP_COLOR, SKY_TOP_COLOR, SKY_HORIZON_COLOR, SKY_HORIZON_COLOR, 1);
+        sky.fillRect(0, 0, width, this._worldHeight);
+
+        this._drawHillRow(width, horizonY, HILL_FAR_CONFIG);
+        this._drawHillRow(width, horizonY, HILL_NEAR_CONFIG);
+    }
+
+    /** Draws a single repeating row of soft rounded hill bumps used for parallax depth. */
+    private _drawHillRow(worldWidth: number, horizonY: number, config: HillRowConfig): void {
+        const baseY = horizonY + config.yOffset;
+        const graphics = this.add.graphics().setDepth(config.depth).setScrollFactor(config.scrollFactor, 0);
+        graphics.fillStyle(config.color, config.alpha);
+
+        // Solid base fills the area below the hill crests down to the world
+        // bottom, then overlapping circles bulge upward to form a simple,
+        // unambiguous rounded hill skyline (avoids arc-direction guesswork).
+        graphics.fillRect(0, baseY, worldWidth, this._worldHeight - baseY);
+
+        const bumpCount = Math.ceil(worldWidth / config.bumpWidth) + 2;
+        for (let i = 0; i < bumpCount; i += 1) {
+            const cx = -config.bumpWidth / 2 + i * config.bumpWidth;
+            graphics.fillEllipse(cx, baseY, config.bumpWidth, config.bumpHeight * 2);
+        }
+    }
+
     private _buildUI(): void {
         const depth = 100;
         const cx    = GAME_WIDTH / 2;
@@ -838,6 +939,11 @@ export class LevelOne extends Scene {
 
         this._pauseBg = this.add
             .rectangle(cx, cy, GAME_WIDTH, GAME_HEIGHT, 0x000000, 0.65)
+            .setScrollFactor(0).setDepth(depth).setVisible(false);
+
+        this._pausePanel = this.add
+            .rectangle(cx, cy, 360, 160, 0x1c2333, 0.92)
+            .setStrokeStyle(3, 0xffffff, 0.35)
             .setScrollFactor(0).setDepth(depth).setVisible(false);
 
         this._pauseTitle = this.add
@@ -865,6 +971,12 @@ export class LevelOne extends Scene {
                 strokeThickness: 6,
             })
             .setOrigin(0.5).setScrollFactor(0).setDepth(depth + 1).setVisible(false);
+
+        this.add
+            .rectangle(96, 46, 176, 76, 0x14182a, 0.55)
+            .setStrokeStyle(1, 0xffffff, 0.18)
+            .setOrigin(0.5)
+            .setScrollFactor(0).setDepth(depth - 1);
 
         this.add
             .text(12, 10, `gravity ${GRAVITY} px/s²`, {
@@ -914,6 +1026,119 @@ export class LevelOne extends Scene {
                 align:      'right',
             })
             .setOrigin(1, 0).setScrollFactor(0).setDepth(depth);
+    }
+
+    /** Creates the soft ground-contact shadow used to ground the player visually. */
+    private _createPlayerShadow(): void {
+        this._playerBaseScaleX = this._player.scaleX;
+        this._playerBaseScaleY = this._player.scaleY;
+        this._playerShadow = this.add
+            .ellipse(this._player.x, this._player.y, this._player.displayWidth * 0.55, 10, 0x000000, 0.28)
+            .setDepth((this._player.depth ?? 0) - 1);
+    }
+
+    /**
+     * Projects a soft shadow ellipse from the player down onto the nearest
+     * ground/platform surface, shrinking and fading it the higher the
+     * player is above that surface. This is the cheapest available fix for
+     * placeholder characters looking like "floating squares".
+     */
+    private _updatePlayerShadow(): void {
+        if (!this._playerShadow) {
+            return;
+        }
+
+        const body = this._player.body as DynamicBody;
+        const feetY = body.bottom;
+        const grounded = body.blocked.down || body.touching.down;
+        // Fast path: while grounded the shadow sits directly under the feet,
+        // so there is no need to scan for the nearest surface below. The
+        // (bounded) downward scan only runs while the player is airborne,
+        // which is a small fraction of total frames.
+        const groundY = grounded ? feetY : this._findGroundYBelow(this._player.x, feetY);
+        const clearance = Math.max(0, groundY - feetY);
+        const maxClearance = 220;
+        const proximity = 1 - Math.min(clearance, maxClearance) / maxClearance;
+
+        this._playerShadow.setPosition(this._player.x, groundY);
+        this._playerShadow.setScale(0.6 + proximity * 0.4);
+        this._playerShadow.setAlpha(0.12 + proximity * 0.2);
+    }
+
+    /** Scans downward in fixed steps to find the nearest ground/platform surface below (x, startY). */
+    private _findGroundYBelow(x: number, startY: number): number {
+        const step = 8;
+        const maxDistance = 240;
+
+        for (let distance = 0; distance <= maxDistance; distance += step) {
+            const probeY = startY + distance;
+            if (this._hasGroundTileAt(x, probeY)) {
+                return probeY;
+            }
+        }
+
+        return startY + maxDistance;
+    }
+
+    /**
+     * Detects grounded/airborne transitions to trigger a landing squash and
+     * a small dust puff — cheap "juice" that reads as polish independent of
+     * final art. Guarded by the `!this._wasGrounded` edge check so it only
+     * fires once per landing rather than every frame the player stays
+     * grounded, even if `blocked.down`/`touching.down` flicker briefly on
+     * uneven terrain.
+     */
+    private _updateLandingFeedback(): void {
+        const body = this._player.body as DynamicBody;
+        const grounded = body.blocked.down || body.touching.down;
+
+        if (grounded && !this._wasGrounded) {
+            this._playSquashStretch(0.8, 1.2, 110);
+            this._spawnDustPuff(this._player.x, body.bottom);
+        }
+
+        this._wasGrounded = grounded;
+    }
+
+    /** Briefly scales the player away from its base scale, then eases back — classic squash & stretch. */
+    private _playSquashStretch(scaleXFactor: number, scaleYFactor: number, durationMs: number): void {
+        this._squashTween?.stop();
+        this._player.setScale(
+            this._playerBaseScaleX * scaleXFactor,
+            this._playerBaseScaleY * scaleYFactor,
+        );
+        this._squashTween = this.tweens.add({
+            targets: this._player,
+            scaleX: this._playerBaseScaleX,
+            scaleY: this._playerBaseScaleY,
+            duration: durationMs,
+            ease: 'Sine.easeOut',
+        });
+    }
+
+    /** Spawns a handful of small fading/expanding circles at the player's feet on landing. */
+    private _spawnDustPuff(x: number, y: number): void {
+        const puffCount = 4;
+        for (let i = 0; i < puffCount; i += 1) {
+            // Spread the puffs across a 144° arc (0.8 * pi) centered on
+            // straight-down (pi radians), so they fan out low and to the
+            // sides of the player's feet rather than in a single column.
+            const angle = Math.PI + (i / Math.max(1, puffCount - 1) - 0.5) * Math.PI * 0.8;
+            const puff = this.add
+                .circle(x, y, 4, 0xf3ead2, 0.55)
+                .setDepth((this._player.depth ?? 0) - 1);
+
+            this.tweens.add({
+                targets: puff,
+                x: x + Math.cos(angle) * 18,
+                y: y + Math.sin(angle) * 8,
+                scale: 2.2,
+                alpha: 0,
+                duration: 280,
+                ease: 'Sine.easeOut',
+                onComplete: () => puff.destroy(),
+            });
+        }
     }
 
     private _updateMovementAnimation(): void {

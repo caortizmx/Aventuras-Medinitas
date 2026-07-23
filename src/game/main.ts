@@ -12,6 +12,11 @@ const config: Phaser.Types.Core.GameConfig = {
     type: AUTO,
     parent: 'game-container',
     backgroundColor: '#1a1a2e',
+    // Crisp, non-blurry pixel-art scaling: nearest-neighbor filtering and
+    // whole-pixel positioning are the cheapest, highest-impact visual polish
+    // wins available before any new art assets are produced.
+    pixelArt: true,
+    roundPixels: true,
     scale: {
         mode:       Scale.FIT,
         autoCenter: Scale.CENTER_BOTH,
