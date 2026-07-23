@@ -105,7 +105,10 @@ export class CharacterSelect extends Scene {
 
             const preview = this.add.sprite(cx, cy - 20, char.assetKey, 0)
                 .setDisplaySize(84, 84);
-            preview.play(getCharacterAnimationKey(char.id, 'idle'));
+            const idleAnimationKey = getCharacterAnimationKey(char.id, 'idle');
+            if (this.anims.exists(idleAnimationKey)) {
+                preview.play(idleAnimationKey);
+            }
 
             // Character name below swatch
             const name = this.add.text(cx, cy + 66, char.displayName, {
