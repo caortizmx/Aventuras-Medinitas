@@ -67,17 +67,30 @@ function createFallbackSheet(scene: Phaser.Scene, textureKey: string, characterI
     return canvasTexture;
 }
 
+const REQUIRED_CHARACTER_FRAME_INDEX = Math.max(
+    ...Object.values(CHARACTER_SPRITESHEET_SPEC.animations).map(({ end }) => end),
+);
+
+function hasExpectedCharacterFrames(scene: Phaser.Scene, textureKey: string): boolean {
+    if (!scene.textures.exists(textureKey)) {
+        return false;
+    }
+
+    const texture = scene.textures.get(textureKey);
+    return texture.has(String(REQUIRED_CHARACTER_FRAME_INDEX));
+}
+
 function ensureFallbackTexture(
     scene: Phaser.Scene,
     characterId: CharacterId,
     forceReplaceExisting = false,
 ): void {
     const key = getCharacterAssetKey(characterId);
-    if (scene.textures.exists(key) && !forceReplaceExisting) {
-        return;
-    }
-    if (forceReplaceExisting && scene.textures.exists(key)) {
+    if (scene.textures.exists(key) && (forceReplaceExisting || !hasExpectedCharacterFrames(scene, key))) {
         scene.textures.remove(key);
+    }
+    if (scene.textures.exists(key)) {
+        return;
     }
 
     const sheetTexture = createFallbackSheet(scene, key, characterId);
