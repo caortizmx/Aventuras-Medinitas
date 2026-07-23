@@ -37,7 +37,7 @@ export const CHARACTER_SPRITESHEET_SPEC = {
         fall:      { start: 12, end: 13, frames: 2, frameRate: 10, repeat: -1 },
         hurt:      { start: 14, end: 15, frames: 2, frameRate: 12, repeat: 0 },
         celebrate: { start: 16, end: 21, frames: 6, frameRate: 10, repeat: -1 },
-    } as const satisfies Record<string, AnimationSliceSpec>,
+    } as const,
 } as const;
 
 export const CHARACTER_FALLBACK_CONFIG = {

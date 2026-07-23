@@ -76,8 +76,10 @@ describe('duplicate animation prevention', () => {
                 createCalls += 1;
                 existing.add(key);
             },
-            generateFrameNumbers: (_key: string, cfg: { start: number; end: number }) =>
-                Array.from({ length: cfg.end - cfg.start + 1 }, (_, i) => cfg.start + i),
+            generateFrameNumbers: (textureKey: string, cfg: { start: number; end: number }) => {
+                void textureKey;
+                return Array.from({ length: cfg.end - cfg.start + 1 }, (_, i) => cfg.start + i);
+            },
         };
 
         const firstPass = registerCharacterAnimations(registrar as any);

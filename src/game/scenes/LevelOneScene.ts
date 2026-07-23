@@ -301,11 +301,11 @@ export class LevelOne extends Scene {
     private _updateMovementAnimation(): void {
         const body = this._player.body;
         const grounded = body.blocked.down || body.touching.down;
-        const vx = this._player.body.velocity.x;
-        const vy = this._player.body.velocity.y;
+        const velocityX = this._player.body.velocity.x;
+        const velocityY = this._player.body.velocity.y;
 
         if (!grounded) {
-            if (vy < 0) {
+            if (velocityY < 0) {
                 this._playCharacterAnimation('jump');
             } else {
                 this._playCharacterAnimation('fall');
@@ -313,7 +313,7 @@ export class LevelOne extends Scene {
             return;
         }
 
-        if (Math.abs(vx) > PLAYER_RUN_ANIMATION_THRESHOLD) {
+        if (Math.abs(velocityX) > PLAYER_RUN_ANIMATION_THRESHOLD) {
             this._playCharacterAnimation('run');
             return;
         }
