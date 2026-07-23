@@ -67,10 +67,17 @@ function createFallbackSheet(scene: Phaser.Scene, textureKey: string, characterI
     return canvasTexture;
 }
 
-function ensureFallbackTexture(scene: Phaser.Scene, characterId: CharacterId): void {
+function ensureFallbackTexture(
+    scene: Phaser.Scene,
+    characterId: CharacterId,
+    forceReplaceExisting = false,
+): void {
     const key = getCharacterAssetKey(characterId);
-    if (scene.textures.exists(key)) {
+    if (scene.textures.exists(key) && !forceReplaceExisting) {
         return;
+    }
+    if (forceReplaceExisting && scene.textures.exists(key)) {
+        scene.textures.remove(key);
     }
 
     const sheetTexture = createFallbackSheet(scene, key, characterId);
@@ -88,7 +95,7 @@ export function ensureCharacterFallbackTextures(
     for (const key of failedAssetKeys) {
         const characterId = findCharacterIdByAssetKey(key);
         if (characterId) {
-            ensureFallbackTexture(scene, characterId);
+            ensureFallbackTexture(scene, characterId, true);
         }
     }
 
