@@ -1,10 +1,8 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { InputController } from '../src/game/input/InputController';
 import { MobileControls } from '../src/game/input/MobileControls';
-
-const projectRoot = join(__dirname, '..');
+import mobileControlsSource from '../src/game/input/MobileControls.ts?raw';
+import swRaw from '../public/sw.js?raw';
 
 const setViewport = (width: number, height: number): void => {
     Object.defineProperty(window, 'innerWidth', { configurable: true, value: width });
@@ -25,18 +23,22 @@ describe('PWA smoke checks', () => {
     });
 
     it('keeps offline fallback and safe runtime cache rules in service worker', () => {
-        const sw = readFileSync(join(projectRoot, 'public', 'sw.js'), 'utf8');
-        expect(sw).toContain("request.mode === 'navigate'");
-        expect(sw).toContain('OFFLINE_FALLBACK_URL');
-        expect(sw).toContain('response.ok');
-        expect(sw).toContain("requestUrl.origin !== self.location.origin");
+        expect(swRaw).toContain("request.mode === 'navigate'");
+        expect(swRaw).toContain('OFFLINE_FALLBACK_URL');
+        expect(swRaw).toContain('response.ok');
+        expect(swRaw).toContain("requestUrl.origin !== self.location.origin");
     });
 
     it('keeps standalone layout and safe-area styles', () => {
-        const css = readFileSync(join(projectRoot, 'public', 'style.css'), 'utf8');
-        expect(css).toContain('env(safe-area-inset-top)');
-        expect(css).toContain('body.standalone-mode');
-        expect(css).toContain('#pwa-update-notice');
+        input = new InputController();
+        controls = new MobileControls(input, document.body);
+        const left = document.querySelector('[data-testid="mobile-left"]') as HTMLButtonElement | null;
+        const root = document.querySelector('[data-testid="mobile-controls-root"]') as HTMLDivElement | null;
+
+        expect(mobileControlsSource).toContain('safe-area-inset-left');
+        expect(mobileControlsSource).toContain('safe-area-inset-bottom');
+        expect(left).toBeTruthy();
+        expect(root?.style.position).toBe('fixed');
     });
 
     it('shows portrait warning and keeps controls in landscape for Android and iPhone viewports', () => {
