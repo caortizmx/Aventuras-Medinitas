@@ -92,10 +92,18 @@ const LEVEL_CLEAR_LIFE_BONUS = 25;
 const SKY_TOP_COLOR = 0xbfe3f7;
 const SKY_HORIZON_COLOR = 0xeaf6ff;
 const HORIZON_Y_RATIO = 0.62;
-const HILL_FAR_COLOR = 0x9fd6c6;
-const HILL_NEAR_COLOR = 0x7dc9a0;
-const HILL_FAR_CONFIG = { yOffset: 10, bumpWidth: 220, bumpHeight: 60, alpha: 0.45, depth: -60, scrollFactor: 0.25 };
-const HILL_NEAR_CONFIG = { yOffset: 30, bumpWidth: 260, bumpHeight: 80, alpha: 0.65, depth: -40, scrollFactor: 0.5 };
+interface HillRowConfig {
+    yOffset: number;
+    bumpWidth: number;
+    bumpHeight: number;
+    color: number;
+    alpha: number;
+    depth: number;
+    scrollFactor: number;
+}
+
+const HILL_FAR_CONFIG: HillRowConfig = { yOffset: 10, bumpWidth: 220, bumpHeight: 60, color: 0x9fd6c6, alpha: 0.45, depth: -60, scrollFactor: 0.25 };
+const HILL_NEAR_CONFIG: HillRowConfig = { yOffset: 30, bumpWidth: 260, bumpHeight: 80, color: 0x7dc9a0, alpha: 0.65, depth: -40, scrollFactor: 0.5 };
 const SKY_DEPTH = -90;
 const SKY_SCROLL_FACTOR = 0.02;
 
@@ -873,33 +881,25 @@ export class LevelOne extends Scene {
         sky.fillGradientStyle(SKY_TOP_COLOR, SKY_TOP_COLOR, SKY_HORIZON_COLOR, SKY_HORIZON_COLOR, 1);
         sky.fillRect(0, 0, width, this._worldHeight);
 
-        this._drawHillRow(width, horizonY + HILL_FAR_CONFIG.yOffset, HILL_FAR_CONFIG.bumpWidth, HILL_FAR_CONFIG.bumpHeight, HILL_FAR_COLOR, HILL_FAR_CONFIG.alpha, HILL_FAR_CONFIG.depth, HILL_FAR_CONFIG.scrollFactor);
-        this._drawHillRow(width, horizonY + HILL_NEAR_CONFIG.yOffset, HILL_NEAR_CONFIG.bumpWidth, HILL_NEAR_CONFIG.bumpHeight, HILL_NEAR_COLOR, HILL_NEAR_CONFIG.alpha, HILL_NEAR_CONFIG.depth, HILL_NEAR_CONFIG.scrollFactor);
+        this._drawHillRow(width, horizonY, HILL_FAR_CONFIG);
+        this._drawHillRow(width, horizonY, HILL_NEAR_CONFIG);
     }
 
     /** Draws a single repeating row of soft rounded hill bumps used for parallax depth. */
-    private _drawHillRow(
-        worldWidth: number,
-        baseY: number,
-        bumpWidth: number,
-        bumpHeight: number,
-        color: number,
-        alpha: number,
-        depth: number,
-        scrollFactor: number,
-    ): void {
-        const graphics = this.add.graphics().setDepth(depth).setScrollFactor(scrollFactor, 0);
-        graphics.fillStyle(color, alpha);
+    private _drawHillRow(worldWidth: number, horizonY: number, config: HillRowConfig): void {
+        const baseY = horizonY + config.yOffset;
+        const graphics = this.add.graphics().setDepth(config.depth).setScrollFactor(config.scrollFactor, 0);
+        graphics.fillStyle(config.color, config.alpha);
 
         // Solid base fills the area below the hill crests down to the world
         // bottom, then overlapping circles bulge upward to form a simple,
         // unambiguous rounded hill skyline (avoids arc-direction guesswork).
         graphics.fillRect(0, baseY, worldWidth, this._worldHeight - baseY);
 
-        const bumpCount = Math.ceil(worldWidth / bumpWidth) + 2;
+        const bumpCount = Math.ceil(worldWidth / config.bumpWidth) + 2;
         for (let i = 0; i < bumpCount; i += 1) {
-            const cx = -bumpWidth / 2 + i * bumpWidth;
-            graphics.fillEllipse(cx, baseY, bumpWidth, bumpHeight * 2);
+            const cx = -config.bumpWidth / 2 + i * config.bumpWidth;
+            graphics.fillEllipse(cx, baseY, config.bumpWidth, config.bumpHeight * 2);
         }
     }
 
@@ -1094,7 +1094,7 @@ export class LevelOne extends Scene {
             // Spread the puffs across a 144° arc (0.8 * pi) centered on
             // straight-down (pi radians), so they fan out low and to the
             // sides of the player's feet rather than in a single column.
-            const angle = Math.PI + (i / (puffCount - 1) - 0.5) * Math.PI * 0.8;
+            const angle = Math.PI + (i / Math.max(1, puffCount - 1) - 0.5) * Math.PI * 0.8;
             const puff = this.add
                 .circle(x, y, 4, 0xf3ead2, 0.55)
                 .setDepth((this._player.depth ?? 0) - 1);

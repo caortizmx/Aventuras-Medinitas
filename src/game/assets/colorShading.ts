@@ -21,8 +21,8 @@ export function shadeColor(color: number | string, amount: number): string {
     const r = parseInt(hex.substring(0, 2), 16);
     const g = parseInt(hex.substring(2, 4), 16);
     const b = parseInt(hex.substring(4, 6), 16);
-    const shaded = [r, g, b].map((channel) => clampByte(channel + amount));
-    return `#${shaded.map((channel) => channel.toString(16).padStart(2, '0')).join('')}`;
+    const shadedChannels = [r, g, b].map((channel) => clampByte(channel + amount));
+    return `#${shadedChannels.map((channel) => channel.toString(16).padStart(2, '0')).join('')}`;
 }
 
 /** Converts a numeric hex color (e.g. `0xd6663f`) to a `#rrggbb` string. */
