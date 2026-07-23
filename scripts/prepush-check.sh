@@ -13,21 +13,21 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --target)
-      if [[ $# -lt 2 || "$2" == --* ]]; then
+      if [[ -z "${2:-}" || "${2:-}" == --* ]]; then
         echo "Missing value for --target"
         echo "Usage: npm run prepush:check -- [--build] [--target <branch>] [--remote <remote>]"
         exit 1
       fi
-      TARGET_BRANCH="${2:-}"
+      TARGET_BRANCH="$2"
       shift 2
       ;;
     --remote)
-      if [[ $# -lt 2 || "$2" == --* ]]; then
+      if [[ -z "${2:-}" || "${2:-}" == --* ]]; then
         echo "Missing value for --remote"
         echo "Usage: npm run prepush:check -- [--build] [--target <branch>] [--remote <remote>]"
         exit 1
       fi
-      REMOTE="${2:-}"
+      REMOTE="$2"
       shift 2
       ;;
     *)
@@ -37,11 +37,6 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
-
-if [[ -z "$TARGET_BRANCH" || -z "$REMOTE" ]]; then
-  echo "Remote and target branch are required."
-  exit 1
-fi
 
 echo "Syncing refs from '$REMOTE'..."
 git fetch --prune "$REMOTE"
