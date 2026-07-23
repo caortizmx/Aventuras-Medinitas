@@ -5,12 +5,17 @@ set -euo pipefail
 REMOTE="origin"
 TARGET_BRANCH="main"
 RUN_BUILD=false
-USAGE="Usage: npm run prepush:check -- [--build] [--target <branch>] [--remote <remote>]"
+SKIP_UNSHALLOW=false
+USAGE="Usage: npm run prepush:check -- [--build] [--skip-unshallow] [--target <branch>] [--remote <remote>]"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --build)
       RUN_BUILD=true
+      shift
+      ;;
+    --skip-unshallow)
+      SKIP_UNSHALLOW=true
       shift
       ;;
     --target)
@@ -43,8 +48,12 @@ echo "Syncing refs from '$REMOTE'..."
 git fetch --prune "$REMOTE"
 
 if [[ "$(git rev-parse --is-shallow-repository)" == "true" ]]; then
-  echo "Repository is shallow. Unshallowing may take time on large repositories..."
-  git fetch --unshallow "$REMOTE"
+  if [[ "$SKIP_UNSHALLOW" == "true" ]]; then
+    echo "Repository is shallow and --skip-unshallow was set. Continuing without unshallowing."
+  else
+    echo "Repository is shallow. Unshallowing may take time on large repositories..."
+    git fetch --unshallow "$REMOTE"
+  fi
 fi
 
 echo "Fetching explicit target ref '$TARGET_BRANCH'..."
@@ -57,7 +66,7 @@ if [[ -z "$CURRENT_BRANCH" ]]; then
 fi
 
 echo "Current branch: $CURRENT_BRANCH"
-if [[ "$CURRENT_BRANCH" == "main" || "$CURRENT_BRANCH" == "master" ]]; then
+if [[ "$CURRENT_BRANCH" == "$TARGET_BRANCH" || "$CURRENT_BRANCH" == "main" || "$CURRENT_BRANCH" == "master" ]]; then
   echo "Do not push directly to protected branch '$CURRENT_BRANCH'. Use a feature branch and PR."
   exit 1
 fi

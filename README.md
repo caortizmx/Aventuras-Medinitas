@@ -49,9 +49,15 @@ Optional remote override (default is `origin`):
 npm run prepush:check -- --remote upstream
 ```
 
+Optional skip for unshallow step:
+
+```bash
+npm run prepush:check -- --skip-unshallow
+```
+
 This helper enforces the workflow to reduce GH013 branch protection/ruleset failures:
 
-- Sync refs with `git fetch --prune origin`
+- Sync refs with `git fetch --prune <remote>` (default: `origin`)
 - Unshallow when needed with `git fetch --unshallow <remote>`
 - Fetch explicit target branch ref (`<remote>/<target-branch>`)
 - Block direct pushes from protected branches (`main` / `master`)
