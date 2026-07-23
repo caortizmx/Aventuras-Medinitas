@@ -7,34 +7,44 @@ import {
     GOAL_COLOR, GOAL_HEIGHT, GOAL_WIDTH, GOAL_X, GOAL_Y,
     GRAVITY,
     GROUND_COLOR, GROUND_HEIGHT, GROUND_WIDTH, GROUND_Y,
-    JUMP_FORCE,
     KILL_ZONE_Y,
     PLATFORM_COLOR, PLATFORM_HEIGHT, PLATFORMS,
-    PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_WIDTH,
-    SPAWN_X, SPAWN_Y,
+    SPAWN_X,
     WORLD_HEIGHT, WORLD_WIDTH,
 } from '../constants/gameValues';
 import { SCENE_MAIN_MENU } from '../constants/sceneKeys';
+import { CharacterConfig, findCharacterById, getDefaultCharacter } from '../data/characters';
 
 type SpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
 export class LevelOne extends Scene {
-    private _input!: InputController;
-    private _mobile!: MobileControls;
-    private _player!: SpriteWithBody;
+    private _input!:     InputController;
+    private _mobile!:    MobileControls;
+    private _player!:    SpriteWithBody;
+    private _character!: CharacterConfig;
+    private _spawnY!:    number;
 
-    private _pauseBg!:   Phaser.GameObjects.Rectangle;
+    private _pauseBg!:    Phaser.GameObjects.Rectangle;
     private _pauseTitle!: Phaser.GameObjects.Text;
-    private _pauseHint!: Phaser.GameObjects.Text;
+    private _pauseHint!:  Phaser.GameObjects.Text;
 
     private _goalBanner!: Phaser.GameObjects.Text;
 
-    private _isPaused     = false;
-    private _levelDone    = false;
-    private _prevJump     = false;
-    private _prevPause    = false;
+    private _isPaused  = false;
+    private _levelDone = false;
+    private _prevJump  = false;
+    private _prevPause = false;
 
     constructor() { super('LevelOne'); }
+
+    // ── Receive scene data ────────────────────────────────────────────────────
+
+    init(data: { characterId?: string }): void {
+        const id = typeof data?.characterId === 'string' ? data.characterId : '';
+        this._character = findCharacterById(id) ?? getDefaultCharacter();
+        // Compute spawn Y so every character lands flush on the ground
+        this._spawnY = WORLD_HEIGHT - GROUND_HEIGHT - this._character.collisionHeight / 2;
+    }
 
     create(): void {
         this._isPaused  = false;
@@ -88,11 +98,11 @@ export class LevelOne extends Scene {
         const goal = this.physics.add.staticImage(GOAL_X, GOAL_Y, 'px');
         goal.setDisplaySize(GOAL_WIDTH, GOAL_HEIGHT).setTint(GOAL_COLOR).refreshBody();
 
-        // ── Player ───────────────────────────────────────────────────────────
-        this._player = this.physics.add.sprite(SPAWN_X, SPAWN_Y, 'px');
+        // ── Player (appearance driven by character config) ────────────────────
+        this._player = this.physics.add.sprite(SPAWN_X, this._spawnY, 'px');
         this._player
-            .setDisplaySize(PLAYER_WIDTH, PLAYER_HEIGHT)
-            .setTint(PLAYER_COLOR)
+            .setDisplaySize(this._character.collisionWidth, this._character.collisionHeight)
+            .setTint(this._character.temporaryColor)
             .setCollideWorldBounds(true);
 
         // ── Physics / Collisions ──────────────────────────────────────────────
@@ -124,9 +134,9 @@ export class LevelOne extends Scene {
 
         // ── Horizontal movement ───────────────────────────────────────────────
         if (state.left && !state.right) {
-            this._player.setVelocityX(-PLAYER_SPEED);
+            this._player.setVelocityX(-this._character.movementSpeed);
         } else if (state.right && !state.left) {
-            this._player.setVelocityX(PLAYER_SPEED);
+            this._player.setVelocityX(this._character.movementSpeed);
         } else {
             this._player.setVelocityX(0);
         }
@@ -134,7 +144,7 @@ export class LevelOne extends Scene {
         // ── Jump (rising-edge + grounded = no double-jump) ────────────────────
         const grounded = this._player.body.blocked.down;
         if (state.jump && !this._prevJump && grounded) {
-            this._player.setVelocityY(JUMP_FORCE);
+            this._player.setVelocityY(this._character.jumpVelocity);
         }
         this._prevJump = state.jump;
 
@@ -145,7 +155,7 @@ export class LevelOne extends Scene {
     // ── Private helpers ───────────────────────────────────────────────────────
 
     private _respawn(): void {
-        this._player.setPosition(SPAWN_X, SPAWN_Y);
+        this._player.setPosition(SPAWN_X, this._spawnY);
         this._player.setVelocity(0, 0);
         this._input.resetAll();
         this._prevJump = false;
@@ -217,9 +227,17 @@ export class LevelOne extends Scene {
             .setOrigin(0.5).setScrollFactor(0).setDepth(depth + 1).setVisible(false);
 
         // Gravity indicator at top-left
-        const gravity = GRAVITY;
         this.add
-            .text(12, 10, `gravity ${gravity} px/s²`, {
+            .text(12, 10, `gravity ${GRAVITY} px/s²`, {
+                fontFamily: 'monospace',
+                fontSize:   '12px',
+                color:      '#ffffff88',
+            })
+            .setScrollFactor(0).setDepth(depth);
+
+        // Playing-as indicator
+        this.add
+            .text(12, 26, `Playing as: ${this._character.displayName}`, {
                 fontFamily: 'monospace',
                 fontSize:   '12px',
                 color:      '#ffffff88',

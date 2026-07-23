@@ -1,5 +1,5 @@
 import { Scene, GameObjects } from 'phaser';
-import { SCENE_LEVEL_ONE } from '../constants/sceneKeys';
+import { SCENE_CHARACTER_SELECT } from '../constants/sceneKeys';
 
 export class MainMenu extends Scene
 {
@@ -25,7 +25,7 @@ export class MainMenu extends Scene
         }).setOrigin(0.5);
 
         this.input.once('pointerdown', () => {
-            this.scene.start(SCENE_LEVEL_ONE);
+            this.scene.start(SCENE_CHARACTER_SELECT);
         });
     }
 }
