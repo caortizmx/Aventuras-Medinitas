@@ -27,6 +27,32 @@ This template has been updated for:
 | `npm run build` | Create a production build in the `dist` folder |
 | `npm run dev-nolog` | Launch a development web server without sending anonymous data (see "About log.js" below) |
 | `npm run build-nolog` | Create a production build in the `dist` folder without sending anonymous data (see "About log.js" below) |
+| `npm run prepush:check` | Sync refs, verify branch/remote state, and run local checks before pushing |
+
+## GH013-safe Workflow (Future Work)
+
+Before any rebase, merge, or push, run:
+
+```bash
+npm run prepush:check
+```
+
+Optional build preflight:
+
+```bash
+npm run prepush:check -- --build
+```
+
+This helper enforces the workflow to reduce GH013 branch protection/ruleset failures:
+
+- Sync refs with `git fetch --prune origin`
+- Unshallow when needed with `git fetch --unshallow origin`
+- Fetch explicit target branch ref (`origin/main`)
+- Block direct pushes from protected branches (`main` / `master`)
+- Verify branch and remote heads
+- Run required local checks (`npm run typecheck` and `npm run test`)
+
+If GH013 still appears, treat it as a policy rejection and fix the exact violated rule from the error output (required checks, branch target, signed commits/signoff, or PR requirement).
 
 ## Writing Code
 
