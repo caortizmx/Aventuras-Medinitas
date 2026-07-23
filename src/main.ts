@@ -39,8 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
             }
         },
-    }).catch(() => {
+    }).catch((error) => {
         // Prevent registration errors from interrupting game boot.
+        if (import.meta.env.DEV) {
+            console.warn('[PWA] service worker registration failed', error);
+        }
     });
 
 });
