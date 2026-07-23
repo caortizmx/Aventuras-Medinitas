@@ -51,7 +51,7 @@ if [[ "$(git rev-parse --is-shallow-repository)" == "true" ]]; then
   if [[ "$SKIP_UNSHALLOW" == "true" ]]; then
     echo "Repository is shallow and --skip-unshallow was set. Continuing without unshallowing."
   else
-    echo "Repository is shallow. Unshallowing may take time on large repositories..."
+    echo "Repository is shallow. Converting to a full repository may take time on large repositories..."
     git fetch --unshallow "$REMOTE"
   fi
 fi
@@ -92,5 +92,5 @@ fi
 
 echo
 echo "Pre-push checks completed."
-echo "If you still get GH013, treat it as branch policy rejection and fix the exact rule from the error message."
-echo "Common fixes: required status checks, correct target branch, signed commits/signoff, and PR-only workflow."
+echo "If you still get GH013 (GitHub branch/ruleset policy rejection), fix the exact rule from the error message."
+echo "Common fixes: required status checks, correct target branch, missing commit signatures/sign-offs, and PR-only workflow requirements."
