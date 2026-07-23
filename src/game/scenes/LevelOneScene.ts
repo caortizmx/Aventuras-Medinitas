@@ -1,0 +1,239 @@
+import { Scene } from 'phaser';
+import { InputController } from '../input/InputController';
+import { MobileControls } from '../input/MobileControls';
+import {
+    CAMERA_LERP_X, CAMERA_LERP_Y,
+    GAME_HEIGHT, GAME_WIDTH,
+    GOAL_COLOR, GOAL_HEIGHT, GOAL_WIDTH, GOAL_X, GOAL_Y,
+    GRAVITY,
+    GROUND_COLOR, GROUND_HEIGHT, GROUND_WIDTH, GROUND_Y,
+    JUMP_FORCE,
+    KILL_ZONE_Y,
+    PLATFORM_COLOR, PLATFORM_HEIGHT, PLATFORMS,
+    PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_WIDTH,
+    SPAWN_X, SPAWN_Y,
+    WORLD_HEIGHT, WORLD_WIDTH,
+} from '../constants/gameValues';
+import { SCENE_MAIN_MENU } from '../constants/sceneKeys';
+
+type SpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+
+export class LevelOne extends Scene {
+    private _input!: InputController;
+    private _mobile!: MobileControls;
+    private _player!: SpriteWithBody;
+
+    private _pauseBg!:   Phaser.GameObjects.Rectangle;
+    private _pauseTitle!: Phaser.GameObjects.Text;
+    private _pauseHint!: Phaser.GameObjects.Text;
+
+    private _goalBanner!: Phaser.GameObjects.Text;
+
+    private _isPaused     = false;
+    private _levelDone    = false;
+    private _prevJump     = false;
+    private _prevPause    = false;
+
+    constructor() { super('LevelOne'); }
+
+    create(): void {
+        this._isPaused  = false;
+        this._levelDone = false;
+        this._prevJump  = false;
+        this._prevPause = false;
+
+        // ── Input ────────────────────────────────────────────────────────────
+        this._input  = new InputController();
+        this._mobile = new MobileControls(
+            this._input,
+            this.game.canvas.parentElement ?? document.body,
+        );
+
+        // Cleanup on scene stop so listeners aren't duplicated on restart
+        this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+            this._input.destroy();
+            this._mobile.destroy();
+        });
+
+        // ── Textures (1-px white; resize per object) ──────────────────────────
+        if (!this.textures.exists('px')) {
+            const g = this.add.graphics();
+            g.fillStyle(0xffffff).fillRect(0, 0, 1, 1);
+            g.generateTexture('px', 1, 1);
+            g.destroy();
+        }
+
+        // ── World bounds (tall enough that kill-zone fires before bottom) ─────
+        this.physics.world.setBounds(0, -200, WORLD_WIDTH, WORLD_HEIGHT + 2200);
+
+        // ── Ground ───────────────────────────────────────────────────────────
+        const ground = this.physics.add.staticImage(
+            GROUND_WIDTH / 2, GROUND_Y, 'px',
+        );
+        ground.setDisplaySize(GROUND_WIDTH, GROUND_HEIGHT)
+              .setTint(GROUND_COLOR)
+              .refreshBody();
+
+        // ── Platforms ────────────────────────────────────────────────────────
+        const platforms = this.physics.add.staticGroup();
+        platforms.add(ground, true);
+
+        for (const [cx, cy, w] of PLATFORMS) {
+            const p = this.physics.add.staticImage(cx, cy, 'px');
+            p.setDisplaySize(w, PLATFORM_HEIGHT).setTint(PLATFORM_COLOR).refreshBody();
+            platforms.add(p, true);
+        }
+
+        // ── Goal zone ────────────────────────────────────────────────────────
+        const goal = this.physics.add.staticImage(GOAL_X, GOAL_Y, 'px');
+        goal.setDisplaySize(GOAL_WIDTH, GOAL_HEIGHT).setTint(GOAL_COLOR).refreshBody();
+
+        // ── Player ───────────────────────────────────────────────────────────
+        this._player = this.physics.add.sprite(SPAWN_X, SPAWN_Y, 'px');
+        this._player
+            .setDisplaySize(PLAYER_WIDTH, PLAYER_HEIGHT)
+            .setTint(PLAYER_COLOR)
+            .setCollideWorldBounds(true);
+
+        // ── Physics / Collisions ──────────────────────────────────────────────
+        this.physics.add.collider(this._player, platforms);
+        this.physics.add.overlap(this._player, goal, () => {
+            if (!this._levelDone) this._completeLevel();
+        });
+
+        // ── Camera ───────────────────────────────────────────────────────────
+        this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+        this.cameras.main.startFollow(
+            this._player, false, CAMERA_LERP_X, CAMERA_LERP_Y,
+        );
+
+        // ── UI decorations ────────────────────────────────────────────────────
+        this._buildUI();
+    }
+
+    // ── per-frame update ─────────────────────────────────────────────────────
+
+    update(_time: number, _delta: number): void {
+        const state = this._input.getState();
+
+        // Pause toggle (rising-edge; checked even while paused so you can unpause)
+        if (state.pause && !this._prevPause) this._togglePause();
+        this._prevPause = state.pause;
+
+        if (this._isPaused || this._levelDone) return;
+
+        // ── Horizontal movement ───────────────────────────────────────────────
+        if (state.left && !state.right) {
+            this._player.setVelocityX(-PLAYER_SPEED);
+        } else if (state.right && !state.left) {
+            this._player.setVelocityX(PLAYER_SPEED);
+        } else {
+            this._player.setVelocityX(0);
+        }
+
+        // ── Jump (rising-edge + grounded = no double-jump) ────────────────────
+        const grounded = this._player.body.blocked.down;
+        if (state.jump && !this._prevJump && grounded) {
+            this._player.setVelocityY(JUMP_FORCE);
+        }
+        this._prevJump = state.jump;
+
+        // ── Kill zone ─────────────────────────────────────────────────────────
+        if (this._player.y > KILL_ZONE_Y) this._respawn();
+    }
+
+    // ── Private helpers ───────────────────────────────────────────────────────
+
+    private _respawn(): void {
+        this._player.setPosition(SPAWN_X, SPAWN_Y);
+        this._player.setVelocity(0, 0);
+        this._input.resetAll();
+        this._prevJump = false;
+    }
+
+    private _togglePause(): void {
+        this._isPaused = !this._isPaused;
+        this._input.resetAll();
+        this._prevJump = false;
+
+        if (this._isPaused) {
+            this.physics.pause();
+        } else {
+            this.physics.resume();
+        }
+
+        this._pauseBg.setVisible(this._isPaused);
+        this._pauseTitle.setVisible(this._isPaused);
+        this._pauseHint.setVisible(this._isPaused);
+    }
+
+    private _completeLevel(): void {
+        this._levelDone = true;
+        this._input.resetAll();
+        this._player.setVelocity(0, 0);
+        this.physics.pause();
+        this._goalBanner.setVisible(true);
+
+        this.time.delayedCall(2500, () => {
+            this.scene.start(SCENE_MAIN_MENU);
+        });
+    }
+
+    private _buildUI(): void {
+        const depth = 100;
+        const cx    = GAME_WIDTH / 2;
+        const cy    = GAME_HEIGHT / 2;
+
+        // Pause overlay
+        this._pauseBg = this.add
+            .rectangle(cx, cy, GAME_WIDTH, GAME_HEIGHT, 0x000000, 0.65)
+            .setScrollFactor(0).setDepth(depth).setVisible(false);
+
+        this._pauseTitle = this.add
+            .text(cx, cy - 30, 'PAUSED', {
+                fontFamily: 'Arial Black',
+                fontSize:   '48px',
+                color:      '#ffffff',
+            })
+            .setOrigin(0.5).setScrollFactor(0).setDepth(depth + 1).setVisible(false);
+
+        this._pauseHint = this.add
+            .text(cx, cy + 36, 'Press Esc / P  or  ⏸  to resume', {
+                fontFamily: 'Arial',
+                fontSize:   '22px',
+                color:      '#cccccc',
+            })
+            .setOrigin(0.5).setScrollFactor(0).setDepth(depth + 1).setVisible(false);
+
+        // Goal reached banner
+        this._goalBanner = this.add
+            .text(cx, cy, '🎉  Level Complete!', {
+                fontFamily: 'Arial Black',
+                fontSize:   '42px',
+                color:      '#f1c40f',
+                stroke:     '#000000',
+                strokeThickness: 6,
+            })
+            .setOrigin(0.5).setScrollFactor(0).setDepth(depth + 1).setVisible(false);
+
+        // Gravity indicator at top-left
+        const gravity = GRAVITY;
+        this.add
+            .text(12, 10, `gravity ${gravity} px/s²`, {
+                fontFamily: 'monospace',
+                fontSize:   '12px',
+                color:      '#ffffff88',
+            })
+            .setScrollFactor(0).setDepth(depth);
+
+        // Back to menu hint
+        this.add
+            .text(GAME_WIDTH - 12, 10, 'Esc / P = pause', {
+                fontFamily: 'monospace',
+                fontSize:   '12px',
+                color:      '#ffffff88',
+                align:      'right',
+            })
+            .setOrigin(1, 0).setScrollFactor(0).setDepth(depth);
+    }
+}
