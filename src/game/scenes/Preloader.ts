@@ -18,6 +18,8 @@ import {
 } from '../layout/responsiveLayout';
 import { RENDER_DEPTHS } from '../constants/renderDepths';
 
+const MAX_ASSET_KEY_DISPLAY_LENGTH = 32;
+
 export class Preloader extends Scene
 {
     private readonly _failedAtlasKeys = new Set<string>();
@@ -152,6 +154,6 @@ export class Preloader extends Scene
     private _formatAssetKeyForDisplay (key: string | number): string
     {
         const value = String(key).replace(/[-_]+/g, ' ').trim();
-        return value.length > 32 ? 'game artwork' : value;
+        return value.length > MAX_ASSET_KEY_DISPLAY_LENGTH ? 'game artwork' : value;
     }
 }

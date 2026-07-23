@@ -147,7 +147,7 @@ test('gameplay uses atlas terrain and coherent backgrounds without default debug
     });
     await waitForScene(page, 'LevelOne');
 
-    const backgroundFrames = BACKGROUND_LAYERS.map(({ frame }) => frame);
+    const expectedBackgroundFrames = BACKGROUND_LAYERS.map(({ frame }) => frame);
     const state = await page.evaluate((expectedBackgroundFrames) => {
         const scene = window.__PHASER_GAME__!.scene.getScene('LevelOne');
         const children = scene.children.list;
@@ -174,7 +174,7 @@ test('gameplay uses atlas terrain and coherent backgrounds without default debug
             terrainCount: terrain.length,
             tileLayers,
         };
-    }, backgroundFrames);
+    }, expectedBackgroundFrames);
 
     expect(state.text.some((value) => value.includes('gravity'))).toBe(false);
     expect(state.backgroundCount).toBe(3);

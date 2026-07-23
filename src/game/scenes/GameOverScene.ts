@@ -148,15 +148,20 @@ export class GameOver extends Scene {
     }
 
     private _handleKey (event: KeyboardEvent): void {
+        let selectionChanged = false;
         if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
             this._selectedAction = RETRY_ACTION;
-            this._refreshSelection();
+            selectionChanged = true;
         } else if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
             this._selectedAction = MENU_ACTION;
-            this._refreshSelection();
+            selectionChanged = true;
         } else if (event.key === 'Enter' || event.key === ' ') {
             (this._selectedAction === RETRY_ACTION ? this._retryButton : this._menuButton)
                 .background.emit('pointerdown');
+        }
+
+        if (selectionChanged) {
+            this._refreshSelection();
         }
     }
 

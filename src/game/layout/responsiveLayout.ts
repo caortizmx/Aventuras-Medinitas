@@ -10,6 +10,9 @@ export const UI_LAYOUT = {
     buttonGap: 10,
 } as const;
 
+const MIN_ACCESSIBLE_BUTTON_HEIGHT = 44;
+const MAX_BUTTON_HEIGHT = 48;
+
 export interface SafeArea {
     left: number;
     top: number;
@@ -153,7 +156,10 @@ export function calculateGameOverLayout(width: number, height: number): GameOver
     const panelBottom = panelTop + panelHeight;
     // The configured 450px camera is above this threshold; Math.max also preserves
     // the 44px accessible touch target if an alternate shorter camera is supplied.
-    const buttonHeight = Math.max(44, Math.min(height * 0.105, 48));
+    const buttonHeight = Math.max(
+        MIN_ACCESSIBLE_BUTTON_HEIGHT,
+        Math.min(height * 0.105, MAX_BUTTON_HEIGHT),
+    );
 
     return {
         safeArea,
