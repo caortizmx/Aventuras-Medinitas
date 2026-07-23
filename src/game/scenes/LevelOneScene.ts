@@ -20,8 +20,12 @@ import {
     PLATFORM_COLOR, PLATFORM_HEIGHT, PLATFORMS,
     SPAWN_X,
     WORLD_HEIGHT, WORLD_WIDTH,
+    PLAYER_INITIAL_LIVES,
+    PLAYER_INVULNERABILITY_MS,
+    PLAYER_KNOCKBACK_X,
+    PLAYER_KNOCKBACK_Y,
 } from '../constants/gameValues';
-import { SCENE_MAIN_MENU } from '../constants/sceneKeys';
+import { SCENE_GAME_OVER, SCENE_MAIN_MENU } from '../constants/sceneKeys';
 import { CharacterConfig, findCharacterById, getDefaultCharacter } from '../data/characters';
 import { ASSET_KEYS } from '../constants/assetKeys';
 import {
@@ -32,10 +36,23 @@ import {
     LevelMapValidationError,
     TiledMapLike,
     ValidatedLevelMapData,
+    LevelRect,
     validateAndExtractLevelMapData,
 } from '../level/tiledLevelValidation';
+import { Enemy, EnemySpawnConfig } from '../entities/Enemy';
+import {
+    PlayerGameplayState,
+    applyLifeLoss,
+    buildRespawnResetState,
+    chooseSafeRespawn,
+    classifyEnemyCollision,
+    resolveInvulnerabilityState,
+    startInvulnerability,
+    RespawnCandidate,
+} from '../system/stage7Gameplay';
 
 type SpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+type DynamicBody = Phaser.Physics.Arcade.Body;
 
 type TileLayerName =
     | (typeof LEVEL_ONE_LAYER_NAMES)['background']
@@ -45,16 +62,31 @@ type TileLayerName =
     | (typeof LEVEL_ONE_LAYER_NAMES)['decorationFront']
     | (typeof LEVEL_ONE_LAYER_NAMES)['collision'];
 
-// Allow falling through Tiled gap kill-zones that extend below the map canvas.
+interface CheckpointMarker {
+    id: string;
+    x: number;
+    y: number;
+    sprite: Phaser.GameObjects.Rectangle;
+    activated: boolean;
+}
+
 const TILED_WORLD_BOTTOM_PADDING = 1200;
-// Legacy prototype bounds preserved while fallback mode remains available.
 const FALLBACK_WORLD_BOUNDS_Y = -200;
 const FALLBACK_WORLD_BOUNDS_EXTRA_HEIGHT = 2200;
+const PLAYER_RESPAWN_CLEARANCE_Y = 8;
 
 function isCollidableTilemapLayer(
     layer: Phaser.Tilemaps.TilemapLayer | Phaser.Tilemaps.TilemapGPULayer,
 ): layer is Phaser.Tilemaps.TilemapLayer {
     return 'setCollisionByExclusion' in layer;
+}
+
+function normalizeCheckpoint(point: { id: string; x: number; y: number }): RespawnCandidate {
+    return {
+        id: point.id,
+        x: point.x,
+        y: point.y - PLAYER_RESPAWN_CLEARANCE_Y,
+    };
 }
 
 export class LevelOne extends Scene {
@@ -71,19 +103,26 @@ export class LevelOne extends Scene {
     private _pauseBg!:    Phaser.GameObjects.Rectangle;
     private _pauseTitle!: Phaser.GameObjects.Text;
     private _pauseHint!:  Phaser.GameObjects.Text;
-
     private _goalBanner!: Phaser.GameObjects.Text;
+    private _livesLabel!: Phaser.GameObjects.Text;
+
+    private _collisionLayer?: Phaser.Tilemaps.TilemapLayer;
+    private _killZones: LevelRect[] = [];
+    private _enemies: Enemy[] = [];
+    private _checkpoints: CheckpointMarker[] = [];
+    private _activeCheckpoint?: RespawnCandidate;
 
     private _isPaused  = false;
     private _levelDone = false;
-    private _isHurt    = false;
     private _prevJump  = false;
     private _prevPause = false;
     private _activeAnimState?: CharacterAnimationState;
 
-    constructor() { super('LevelOne'); }
+    private _playerState: PlayerGameplayState = 'normal';
+    private _lives = PLAYER_INITIAL_LIVES;
+    private _invulnerableUntilMs = 0;
 
-    // ── Receive scene data ────────────────────────────────────────────────────
+    constructor() { super('LevelOne'); }
 
     init(data: { characterId?: string }): void {
         this._character = (data?.characterId ? findCharacterById(data.characterId) : undefined)
@@ -93,26 +132,30 @@ export class LevelOne extends Scene {
     create(): void {
         this._isPaused  = false;
         this._levelDone = false;
-        this._isHurt    = false;
         this._prevJump  = false;
         this._prevPause = false;
         this._activeAnimState = undefined;
         this._usingPrototypeFallback = false;
+        this._playerState = 'normal';
+        this._lives = PLAYER_INITIAL_LIVES;
+        this._invulnerableUntilMs = 0;
+        this._collisionLayer = undefined;
+        this._killZones = [];
+        this._enemies = [];
+        this._checkpoints = [];
+        this._activeCheckpoint = undefined;
 
-        // ── Input ────────────────────────────────────────────────────────────
         this._input  = new InputController();
         this._mobile = new MobileControls(
             this._input,
             this.game.canvas.parentElement ?? document.body,
         );
 
-        // Cleanup on scene stop so listeners aren't duplicated on restart
         this.events.once('shutdown', () => {
             this._input.destroy();
             this._mobile.destroy();
         });
 
-        // ── Textures (1-px white; resize per object) ──────────────────────────
         if (!this.textures.exists(ASSET_KEYS.pixel)) {
             const g = this.add.graphics();
             g.fillStyle(0xffffff).fillRect(0, 0, 1, 1);
@@ -127,29 +170,43 @@ export class LevelOne extends Scene {
             this._buildPrototypeFallbackLevel();
         }
 
-        // ── Camera ───────────────────────────────────────────────────────────
         this.cameras.main.setBounds(0, 0, this._worldWidth, this._worldHeight);
         this.cameras.main.startFollow(
             this._player, false, CAMERA_LERP_X, CAMERA_LERP_Y,
         );
         this._playCharacterAnimation('idle');
 
-        // ── UI decorations ────────────────────────────────────────────────────
         this._buildUI();
+        this._refreshLivesUI();
     }
 
-    // ── per-frame update ─────────────────────────────────────────────────────
-
     update(_time: number, _delta: number): void {
-        const state = this._input.getState();
+        this._enemies.forEach((enemy) => enemy.updatePatrol());
 
-        // Pause toggle (rising-edge; checked even while paused so you can unpause)
+        const resolved = resolveInvulnerabilityState({
+            lives: this._lives,
+            state: this._playerState,
+            invulnerableUntilMs: this._invulnerableUntilMs,
+        }, this.time.now);
+
+        if (resolved.state !== this._playerState) {
+            this._playerState = resolved.state;
+            this._invulnerableUntilMs = resolved.invulnerableUntilMs;
+            this._player.setAlpha(1);
+        }
+
+        if (this._playerState === 'invulnerable') {
+            this._player.setAlpha(Math.floor(this.time.now / 80) % 2 === 0 ? 0.45 : 1);
+        }
+
+        const state = this._input.getState();
         if (state.pause && !this._prevPause) this._togglePause();
         this._prevPause = state.pause;
 
-        if (this._isPaused || this._levelDone || this._isHurt) return;
+        if (this._isPaused || this._levelDone || this._playerState === 'hurt' || this._playerState === 'dead') {
+            return;
+        }
 
-        // ── Horizontal movement ───────────────────────────────────────────────
         if (state.left && !state.right) {
             this._player.setVelocityX(-this._character.movementSpeed);
             this._player.setFlipX(true);
@@ -160,7 +217,6 @@ export class LevelOne extends Scene {
             this._player.setVelocityX(0);
         }
 
-        // ── Jump (rising-edge + grounded = no double-jump) ────────────────────
         const grounded = this._player.body.blocked.down;
         if (state.jump && !this._prevJump && grounded) {
             this._player.setVelocityY(this._character.jumpVelocity);
@@ -168,13 +224,10 @@ export class LevelOne extends Scene {
         this._prevJump = state.jump;
         this._updateMovementAnimation();
 
-        // ── Kill zone (prototype fallback only) ───────────────────────────────
-        if (this._usingPrototypeFallback && this._player.y > KILL_ZONE_Y && !this._isHurt) {
-            this._enterHurtState();
+        if (this._usingPrototypeFallback && this._player.y > KILL_ZONE_Y) {
+            this._applyPlayerDamage(this._player.x);
         }
     }
-
-    // ── Private helpers ───────────────────────────────────────────────────────
 
     private _buildLevelFromTiledMap(): boolean {
         try {
@@ -206,13 +259,14 @@ export class LevelOne extends Scene {
                 throw new LevelMapValidationError('collision layer does not support arcade collision setup');
             }
             collision.setCollisionByExclusion([-1]);
+            this._collisionLayer = collision;
 
             this._worldWidth = mapData.dimensions.widthPixels;
             this._worldHeight = mapData.dimensions.heightPixels;
             this._spawnX = mapData.playerSpawn.x;
             this._spawnY = mapData.playerSpawn.y;
+            this._killZones = mapData.killZones;
 
-            // Keep extra vertical space so Tiled kill-zones can extend below map height.
             this.physics.world.setBounds(0, 0, this._worldWidth, this._worldHeight + TILED_WORLD_BOTTOM_PADDING);
 
             const goal = this.physics.add.staticImage(
@@ -243,6 +297,9 @@ export class LevelOne extends Scene {
                 if (!this._levelDone) this._completeLevel();
             });
 
+            this._spawnEnemies(mapData.enemySpawns);
+            this._spawnCheckpoints(mapData.checkpoints);
+
             const killZoneGroup = this.physics.add.staticGroup();
             for (const zone of mapData.killZones) {
                 const killZoneSprite = this.physics.add.staticImage(
@@ -257,7 +314,7 @@ export class LevelOne extends Scene {
                 killZoneGroup.add(killZoneSprite);
             }
             this.physics.add.overlap(this._player, killZoneGroup, () => {
-                if (!this._isHurt && !this._levelDone) this._enterHurtState();
+                if (!this._levelDone) this._applyPlayerDamage(this._player.x);
             });
 
             this._drawDevMarkers(mapData);
@@ -267,6 +324,254 @@ export class LevelOne extends Scene {
             this._showDevelopmentMapError(error);
             return false;
         }
+    }
+
+    private _spawnEnemies(enemySpawns: EnemySpawnConfig[]): void {
+        for (const enemySpawn of enemySpawns) {
+            const enemy = new Enemy(this, enemySpawn, {
+                hasGroundAhead: (x, y) => this._hasGroundTileAt(x, y),
+            }).spawn();
+
+            this._enemies.push(enemy);
+            if (this._collisionLayer) {
+                this.physics.add.collider(enemy, this._collisionLayer);
+            }
+            this.physics.add.collider(this._player, enemy, () => {
+                this._onPlayerEnemyCollision(enemy);
+            });
+        }
+    }
+
+    private _spawnCheckpoints(checkpoints: Array<{ id: string; x: number; y: number }>): void {
+        for (const checkpointData of checkpoints) {
+            const marker = this.add.rectangle(checkpointData.x, checkpointData.y - 30, 18, 40, 0x3498db, 0.45).setDepth(20);
+            const checkpoint: CheckpointMarker = {
+                id: checkpointData.id,
+                x: checkpointData.x,
+                y: checkpointData.y,
+                sprite: marker,
+                activated: false,
+            };
+            this._checkpoints.push(checkpoint);
+            this.physics.add.existing(marker, true);
+            this.physics.add.overlap(this._player, marker, () => {
+                this._activateCheckpoint(checkpoint);
+            });
+        }
+    }
+
+    private _activateCheckpoint(checkpoint: CheckpointMarker): void {
+        if (checkpoint.activated && this._activeCheckpoint?.id === checkpoint.id) {
+            return;
+        }
+
+        for (const cp of this._checkpoints) {
+            cp.activated = cp.id === checkpoint.id;
+            cp.sprite.setFillStyle(cp.activated ? 0x2ecc71 : 0x3498db, cp.activated ? 0.75 : 0.45);
+        }
+
+        this._activeCheckpoint = normalizeCheckpoint(checkpoint);
+    }
+
+    private _onPlayerEnemyCollision(enemy: Enemy): void {
+        if (!enemy.isAlive() || this._playerState === 'dead' || this._playerState === 'celebrating') {
+            return;
+        }
+
+        const playerBody = this._player.body as DynamicBody;
+        const enemyBody = enemy.body as DynamicBody;
+
+        const outcome = classifyEnemyCollision({
+            playerBottom: playerBody.bottom,
+            playerVelocityY: playerBody.velocity.y,
+            playerWasAboveEnemy: playerBody.bottom <= enemyBody.top + 4,
+            enemyTop: enemyBody.top,
+            playerTouchingDown: playerBody.touching.down,
+        });
+
+        if (outcome === 'stomp') {
+            enemy.defeat();
+            this._player.setVelocityY(this._character.jumpVelocity * 0.7);
+            return;
+        }
+
+        this._applyPlayerDamage(enemy.x);
+    }
+
+    private _applyPlayerDamage(enemyX: number): void {
+        const result = applyLifeLoss({
+            lives: this._lives,
+            state: this._playerState,
+            invulnerableUntilMs: this._invulnerableUntilMs,
+        });
+
+        if (!result.applied) {
+            return;
+        }
+
+        this._lives = result.lives;
+        this._playerState = result.nextState;
+        this._refreshLivesUI();
+
+        if (this._playerState === 'dead') {
+            this._input.resetAll();
+            this._player.setVelocity(0, 0);
+            this._player.body.moves = false;
+            this._playCharacterAnimation('hurt');
+            this.time.delayedCall(300, () => {
+                this.scene.start(SCENE_GAME_OVER, { reason: 'All lives lost', lives: this._lives });
+            });
+            return;
+        }
+
+        this._input.resetAll();
+        this._prevJump = false;
+        this._playerState = 'hurt';
+        this._playCharacterAnimation('hurt');
+
+        const direction = this._player.x < enemyX ? -1 : 1;
+        this._applySafeKnockback(direction);
+
+        this.time.delayedCall(HURT_RECOVERY_DELAY_MS, () => {
+            this._respawn();
+        });
+    }
+
+    private _applySafeKnockback(direction: 1 | -1): void {
+        const targetX = this._player.x + direction * 20;
+        const safeX = this._findNearestSafeHorizontalPosition(targetX, direction);
+        this._player.setPosition(safeX, this._player.y - 2);
+        this._player.setVelocity(direction * PLAYER_KNOCKBACK_X, PLAYER_KNOCKBACK_Y);
+    }
+
+    private _findNearestSafeHorizontalPosition(targetX: number, direction: 1 | -1): number {
+        let safeX = this._player.x;
+        const end = targetX;
+        const step = direction * 4;
+
+        for (let probe = this._player.x; direction > 0 ? probe <= end : probe >= end; probe += step) {
+            if (this._wouldSpawnInsideWall(probe, this._player.y)) {
+                break;
+            }
+            safeX = probe;
+        }
+
+        return safeX;
+    }
+
+    private _respawn(): void {
+        const spawnCandidates = this._buildRespawnCandidates();
+        const safeRespawn = chooseSafeRespawn(spawnCandidates, (candidate) => this._isRespawnCandidateSafe(candidate));
+        const fallbackRespawn = spawnCandidates[spawnCandidates.length - 1];
+        const selected = safeRespawn ?? fallbackRespawn;
+
+        const nextInvulnerableUntil = startInvulnerability(this.time.now, PLAYER_INVULNERABILITY_MS);
+        const nextRuntime = buildRespawnResetState({
+            lives: this._lives,
+            state: this._playerState,
+            invulnerableUntilMs: this._invulnerableUntilMs,
+        }, nextInvulnerableUntil);
+
+        this._playerState = nextRuntime.state;
+        this._invulnerableUntilMs = nextRuntime.invulnerableUntilMs;
+
+        this._player.setPosition(selected.x, selected.y);
+        this._player.setVelocity(0, 0);
+        this._player.setAlpha(1);
+        this._input.resetAll();
+        this._prevJump = false;
+        this._player.body.moves = true;
+        this._playCharacterAnimation('idle');
+    }
+
+    private _buildRespawnCandidates(): RespawnCandidate[] {
+        const candidates: RespawnCandidate[] = [];
+
+        if (this._activeCheckpoint) {
+            candidates.push(this._activeCheckpoint);
+        }
+
+        candidates.push({ id: 'initial-spawn', x: this._spawnX, y: this._spawnY });
+
+        if (!this._activeCheckpoint) {
+            return candidates;
+        }
+
+        for (const offsetX of [-64, -32, 32, 64, -96, 96]) {
+            candidates.push({
+                id: `checkpoint-offset-${offsetX}`,
+                x: this._activeCheckpoint.x + offsetX,
+                y: this._activeCheckpoint.y,
+            });
+        }
+
+        return candidates;
+    }
+
+    private _isRespawnCandidateSafe(candidate: RespawnCandidate): boolean {
+        if (this._isInsideKillZone(candidate.x, candidate.y)) {
+            return false;
+        }
+
+        if (this._wouldSpawnInsideWall(candidate.x, candidate.y)) {
+            return false;
+        }
+
+        if (this._isInsideEnemy(candidate.x, candidate.y)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private _isInsideKillZone(x: number, y: number): boolean {
+        return this._killZones.some((zone) => {
+            const withinX = x >= zone.x && x <= zone.x + zone.width;
+            const withinY = y >= zone.y && y <= zone.y + zone.height;
+            return withinX && withinY;
+        });
+    }
+
+    private _isInsideEnemy(x: number, y: number): boolean {
+        return this._enemies.some((enemy) => {
+            if (!enemy.isAlive()) {
+                return false;
+            }
+            const body = enemy.body as DynamicBody;
+            return x >= body.left && x <= body.right && y >= body.top && y <= body.bottom;
+        });
+    }
+
+    private _wouldSpawnInsideWall(x: number, y: number): boolean {
+        if (!this._collisionLayer) {
+            return false;
+        }
+
+        const halfW = this._character.collisionWidth / 2;
+        const height = this._character.collisionHeight;
+
+        const probes: Array<[number, number]> = [
+            [x - halfW + 2, y - height + 2],
+            [x + halfW - 2, y - height + 2],
+            [x - halfW + 2, y - 2],
+            [x + halfW - 2, y - 2],
+            [x, y - height / 2],
+        ];
+
+        return probes.some(([px, py]) => this._hasGroundTileAt(px, py));
+    }
+
+    private _hasGroundTileAt(x: number, y: number): boolean {
+        if (!this._collisionLayer) {
+            return y >= this._worldHeight - GROUND_HEIGHT;
+        }
+
+        const tile = this._collisionLayer.getTileAtWorldXY(x, y, true);
+        return tile.index !== -1;
+    }
+
+    private _refreshLivesUI(): void {
+        this._livesLabel?.setText(`Lives: ${this._lives}`);
     }
 
     private _getValidatedTiledMapData(): ValidatedLevelMapData {
@@ -310,6 +615,16 @@ export class LevelOne extends Scene {
 
         for (const point of mapData.enemySpawns) {
             this.add.circle(point.x, point.y, 10, 0xe74c3c, 0.5).setDepth(20);
+            this.add.line(
+                point.x,
+                point.y - 28,
+                point.patrolLeft - point.x,
+                0,
+                point.patrolRight - point.x,
+                0,
+                0x8e44ad,
+                0.8,
+            ).setDepth(20);
         }
 
         for (const point of mapData.checkpoints) {
@@ -323,8 +638,8 @@ export class LevelOne extends Scene {
         this._worldWidth = WORLD_WIDTH;
         this._worldHeight = WORLD_HEIGHT;
         this._usingPrototypeFallback = true;
+        this._killZones = [{ x: 0, y: KILL_ZONE_Y, width: WORLD_WIDTH, height: WORLD_HEIGHT }];
 
-        // Keep large fallback bounds so legacy kill-zone behavior mirrors the prototype level.
         this.physics.world.setBounds(0, FALLBACK_WORLD_BOUNDS_Y, WORLD_WIDTH, WORLD_HEIGHT + FALLBACK_WORLD_BOUNDS_EXTRA_HEIGHT);
 
         const ground = this.physics.add.staticImage(
@@ -362,28 +677,21 @@ export class LevelOne extends Scene {
         this.physics.add.overlap(this._player, goal, () => {
             if (!this._levelDone) this._completeLevel();
         });
-    }
 
-    private _respawn(): void {
-        this._player.setPosition(this._spawnX, this._spawnY);
-        this._player.setVelocity(0, 0);
-        this._input.resetAll();
-        this._prevJump = false;
-        this._isHurt = false;
-        this._player.body.moves = true;
-        this._playCharacterAnimation('idle');
-    }
+        this._spawnEnemies([
+            {
+                x: 1180,
+                y: this._spawnY,
+                patrolLeft: 1080,
+                patrolRight: 1320,
+                patrolSpeed: 90,
+                avoidLedges: true,
+            },
+        ]);
 
-    private _enterHurtState(): void {
-        this._isHurt = true;
-        this._input.resetAll();
-        this._player.setVelocity(0, 0);
-        this._player.body.moves = false;
-        this._playCharacterAnimation('hurt');
-
-        this.time.delayedCall(HURT_RECOVERY_DELAY_MS, () => {
-            this._respawn();
-        });
+        this._spawnCheckpoints([
+            { id: 'fallback-checkpoint-1', x: 1180, y: this._spawnY },
+        ]);
     }
 
     private _togglePause(): void {
@@ -404,6 +712,7 @@ export class LevelOne extends Scene {
 
     private _completeLevel(): void {
         this._levelDone = true;
+        this._playerState = 'celebrating';
         this._input.resetAll();
         this._player.setVelocity(0, 0);
         this._player.body.moves = false;
@@ -420,7 +729,6 @@ export class LevelOne extends Scene {
         const cx    = GAME_WIDTH / 2;
         const cy    = GAME_HEIGHT / 2;
 
-        // Pause overlay
         this._pauseBg = this.add
             .rectangle(cx, cy, GAME_WIDTH, GAME_HEIGHT, 0x000000, 0.65)
             .setScrollFactor(0).setDepth(depth).setVisible(false);
@@ -441,7 +749,6 @@ export class LevelOne extends Scene {
             })
             .setOrigin(0.5).setScrollFactor(0).setDepth(depth + 1).setVisible(false);
 
-        // Goal reached banner
         this._goalBanner = this.add
             .text(cx, cy, '🎉  Level Complete!', {
                 fontFamily: 'Arial Black',
@@ -452,7 +759,6 @@ export class LevelOne extends Scene {
             })
             .setOrigin(0.5).setScrollFactor(0).setDepth(depth + 1).setVisible(false);
 
-        // Gravity indicator at top-left
         this.add
             .text(12, 10, `gravity ${GRAVITY} px/s²`, {
                 fontFamily: 'monospace',
@@ -461,7 +767,6 @@ export class LevelOne extends Scene {
             })
             .setScrollFactor(0).setDepth(depth);
 
-        // Playing-as indicator
         this.add
             .text(12, 26, `Playing as: ${this._character.displayName}`, {
                 fontFamily: 'monospace',
@@ -470,7 +775,14 @@ export class LevelOne extends Scene {
             })
             .setScrollFactor(0).setDepth(depth);
 
-        // Back to menu hint
+        this._livesLabel = this.add
+            .text(12, 42, `Lives: ${this._lives}`, {
+                fontFamily: 'monospace',
+                fontSize: '12px',
+                color: '#ffdf8a',
+            })
+            .setScrollFactor(0).setDepth(depth);
+
         this.add
             .text(GAME_WIDTH - 12, 10, 'Esc / P = pause', {
                 fontFamily: 'monospace',

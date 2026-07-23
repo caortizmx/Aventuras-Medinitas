@@ -149,4 +149,43 @@ describe('invalid map handling', () => {
             }),
         );
     });
+
+    it('extracts checkpoint ids and enemy patrol properties from Tiled objects', () => {
+        const map = buildValidMap();
+        const enemyLayer = map.layers?.find((layer) => layer.name === LEVEL_ONE_LAYER_NAMES.enemySpawns);
+        if (!enemyLayer || !enemyLayer.objects?.[0]) throw new Error('enemy layer fixture missing');
+        enemyLayer.objects[0].properties = [
+            { name: 'patrolLeft', value: 500 },
+            { name: 'patrolRight', value: 700 },
+            { name: 'patrolSpeed', value: 95 },
+            { name: 'avoidLedges', value: false },
+        ];
+
+        const checkpointLayer = map.layers?.find((layer) => layer.name === LEVEL_ONE_LAYER_NAMES.checkpoints);
+        if (!checkpointLayer || !checkpointLayer.objects?.[0]) throw new Error('checkpoint layer fixture missing');
+        checkpointLayer.objects[0].name = 'checkpoint-alpha';
+
+        const extracted = validateAndExtractLevelMapData(map);
+        expect(extracted.enemySpawns[0]).toMatchObject({
+            x: 560,
+            y: 300,
+            patrolLeft: 500,
+            patrolRight: 700,
+            patrolSpeed: 95,
+            avoidLedges: false,
+        });
+        expect(extracted.checkpoints[0].id).toBe('checkpoint-alpha');
+    });
+
+    it('throws when enemy patrol bounds are invalid', () => {
+        const map = buildValidMap();
+        const enemyLayer = map.layers?.find((layer) => layer.name === LEVEL_ONE_LAYER_NAMES.enemySpawns);
+        if (!enemyLayer || !enemyLayer.objects?.[0]) throw new Error('enemy layer fixture missing');
+        enemyLayer.objects[0].properties = [
+            { name: 'patrolLeft', value: 800 },
+            { name: 'patrolRight', value: 700 },
+        ];
+
+        expect(() => validateAndExtractLevelMapData(map)).toThrow(LevelMapValidationError);
+    });
 });

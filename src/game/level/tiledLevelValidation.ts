@@ -12,6 +12,10 @@ export interface TiledObjectLike {
     y?: number;
     width?: number;
     height?: number;
+    properties?: Array<{
+        name: string;
+        value: unknown;
+    }>;
 }
 
 export interface TiledLayerLike {
@@ -47,8 +51,13 @@ export interface ValidatedLevelMapData {
     };
     playerSpawn: LevelPoint;
     levelGoal: LevelRect;
-    checkpoints: LevelPoint[];
-    enemySpawns: LevelPoint[];
+    checkpoints: Array<LevelPoint & { id: string }>;
+    enemySpawns: Array<LevelPoint & {
+        patrolLeft: number;
+        patrolRight: number;
+        patrolSpeed: number;
+        avoidLedges: boolean;
+    }>;
     collectibleSpawns: LevelPoint[];
     killZones: LevelRect[];
 }
@@ -106,6 +115,46 @@ function toRect(object: TiledObjectLike, label: string): LevelRect {
     }
 
     return { x, y, width, height };
+}
+
+function getObjectProperty(object: TiledObjectLike, propertyName: string): unknown {
+    return object.properties?.find((property) => property.name === propertyName)?.value;
+}
+
+function getFiniteObjectProperty(
+    object: TiledObjectLike,
+    propertyName: string,
+    fallback: number,
+    label: string,
+): number {
+    const value = getObjectProperty(object, propertyName);
+    if (value === undefined) {
+        return fallback;
+    }
+
+    if (typeof value !== 'number' || !Number.isFinite(value)) {
+        throw new LevelMapValidationError(`${label} property "${propertyName}" must be a finite number`);
+    }
+
+    return value;
+}
+
+function getBooleanObjectProperty(
+    object: TiledObjectLike,
+    propertyName: string,
+    fallback: boolean,
+    label: string,
+): boolean {
+    const value = getObjectProperty(object, propertyName);
+    if (value === undefined) {
+        return fallback;
+    }
+
+    if (typeof value !== 'boolean') {
+        throw new LevelMapValidationError(`${label} property "${propertyName}" must be a boolean`);
+    }
+
+    return value;
 }
 
 export function validateRequiredLayers(map: TiledMapLike): void {
@@ -200,6 +249,57 @@ function getObjectPoints(map: TiledMapLike, layerName: string): LevelPoint[] {
     return layerObjects(layer).map((object, index) => toPoint(object, `${layerName} object ${index + 1}`));
 }
 
+function getCheckpoints(map: TiledMapLike): Array<LevelPoint & { id: string }> {
+    const layers = requireLayers(map);
+    const layer = findLayer(layers, LEVEL_ONE_LAYER_NAMES.checkpoints);
+    if (!layer) {
+        throw new LevelMapValidationError(`missing required object layer "${LEVEL_ONE_LAYER_NAMES.checkpoints}"`);
+    }
+
+    return layerObjects(layer).map((object, index) => ({
+        ...toPoint(object, `checkpoint ${index + 1}`),
+        id: object.name && object.name.trim().length > 0 ? object.name : `checkpoint-${index + 1}`,
+    }));
+}
+
+function getEnemySpawns(map: TiledMapLike): Array<LevelPoint & {
+    patrolLeft: number;
+    patrolRight: number;
+    patrolSpeed: number;
+    avoidLedges: boolean;
+}> {
+    const layers = requireLayers(map);
+    const layer = findLayer(layers, LEVEL_ONE_LAYER_NAMES.enemySpawns);
+    if (!layer) {
+        throw new LevelMapValidationError(`missing required object layer "${LEVEL_ONE_LAYER_NAMES.enemySpawns}"`);
+    }
+
+    return layerObjects(layer).map((object, index) => {
+        const spawn = toPoint(object, `enemy spawn ${index + 1}`);
+        const label = `enemy spawn ${index + 1}`;
+
+        const patrolLeft = getFiniteObjectProperty(object, 'patrolLeft', spawn.x - 160, label);
+        const patrolRight = getFiniteObjectProperty(object, 'patrolRight', spawn.x + 160, label);
+        const patrolSpeed = getFiniteObjectProperty(object, 'patrolSpeed', 90, label);
+        const avoidLedges = getBooleanObjectProperty(object, 'avoidLedges', true, label);
+
+        if (patrolLeft >= patrolRight) {
+            throw new LevelMapValidationError(`${label} patrolLeft must be less than patrolRight`);
+        }
+        if (patrolSpeed <= 0) {
+            throw new LevelMapValidationError(`${label} patrolSpeed must be greater than zero`);
+        }
+
+        return {
+            ...spawn,
+            patrolLeft,
+            patrolRight,
+            patrolSpeed,
+            avoidLedges,
+        };
+    });
+}
+
 export function validateAndExtractLevelMapData(map: TiledMapLike): ValidatedLevelMapData {
     validateRequiredLayers(map);
     validateRequiredObjects(map);
@@ -216,8 +316,8 @@ export function validateAndExtractLevelMapData(map: TiledMapLike): ValidatedLeve
         },
         playerSpawn: getPlayerSpawn(map),
         levelGoal: getLevelGoal(map),
-        checkpoints: getObjectPoints(map, LEVEL_ONE_LAYER_NAMES.checkpoints),
-        enemySpawns: getObjectPoints(map, LEVEL_ONE_LAYER_NAMES.enemySpawns),
+        checkpoints: getCheckpoints(map),
+        enemySpawns: getEnemySpawns(map),
         collectibleSpawns: getObjectPoints(map, LEVEL_ONE_LAYER_NAMES.collectibleSpawns),
         killZones: getKillZones(map),
     };
