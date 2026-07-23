@@ -23,6 +23,8 @@ interface ActionButton {
 
 const BUTTON_COLOR = 0x287a50;
 const BUTTON_SELECTED_COLOR = 0x35a36b;
+const RETRY_ACTION = 0;
+const MENU_ACTION = 1;
 
 export class GameOver extends Scene {
     private _data: GameOverData = {};
@@ -33,7 +35,7 @@ export class GameOver extends Scene {
     private _summary!: GameObjects.Text;
     private _retryButton!: ActionButton;
     private _menuButton!: ActionButton;
-    private _selectedAction = 0;
+    private _selectedAction = RETRY_ACTION;
 
     constructor () {
         super('GameOver');
@@ -103,7 +105,9 @@ export class GameOver extends Scene {
         }).setOrigin(0.5).setDepth(depth + 1);
 
         background.on('pointerover', () => {
-            this._selectedAction = background === this._retryButton?.background ? 0 : 1;
+            this._selectedAction = background === this._retryButton?.background
+                ? RETRY_ACTION
+                : MENU_ACTION;
             this._refreshSelection();
         });
         background.on('pointerdown', action);
@@ -147,13 +151,13 @@ export class GameOver extends Scene {
 
     private _handleKey (event: KeyboardEvent): void {
         if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-            this._selectedAction = 0;
+            this._selectedAction = RETRY_ACTION;
             this._refreshSelection();
         } else if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-            this._selectedAction = 1;
+            this._selectedAction = MENU_ACTION;
             this._refreshSelection();
         } else if (event.key === 'Enter' || event.key === ' ') {
-            (this._selectedAction === 0 ? this._retryButton : this._menuButton)
+            (this._selectedAction === RETRY_ACTION ? this._retryButton : this._menuButton)
                 .background.emit('pointerdown');
         }
     }

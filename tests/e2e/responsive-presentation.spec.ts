@@ -1,4 +1,5 @@
 import { expect, Page, test } from '@playwright/test';
+import { BACKGROUND_LAYERS } from '../../src/game/assets/environmentVisualConfig';
 
 const LANDSCAPE_VIEWPORTS = [
     { width: 1600, height: 900 },
@@ -100,7 +101,8 @@ test('gameplay uses atlas terrain and coherent backgrounds without default debug
     });
     await waitForScene(page, 'LevelOne');
 
-    const state = await page.evaluate(() => {
+    const backgroundFrames = BACKGROUND_LAYERS.map(({ frame }) => frame);
+    const state = await page.evaluate((expectedBackgroundFrames) => {
         const scene = window.__PHASER_GAME__!.scene.getScene('LevelOne');
         const children = scene.children.list;
         const text = children
@@ -108,8 +110,7 @@ test('gameplay uses atlas terrain and coherent backgrounds without default debug
             .map((child) => child.text);
         const backgrounds = children.filter((child) => (
             child.type === 'TileSprite'
-            && ['background_sky_clouds', 'background_mountains_far', 'background_hills_foliage_combined']
-                .includes((child as Phaser.GameObjects.TileSprite).frame.name)
+            && expectedBackgroundFrames.includes((child as Phaser.GameObjects.TileSprite).frame.name)
         )) as Phaser.GameObjects.TileSprite[];
         const terrain = children.filter((child) => (
             child.type === 'Image'
@@ -127,7 +128,7 @@ test('gameplay uses atlas terrain and coherent backgrounds without default debug
             terrainCount: terrain.length,
             tileLayers,
         };
-    });
+    }, backgroundFrames);
 
     expect(state.text.some((value) => value.includes('gravity'))).toBe(false);
     expect(state.backgroundCount).toBe(3);
