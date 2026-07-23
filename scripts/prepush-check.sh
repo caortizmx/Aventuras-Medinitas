@@ -14,7 +14,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     --target)
       if [[ -z "${2:-}" || "${2:-}" == --* ]]; then
-        echo "Missing value for --target"
+        echo "Error: --target requires a branch name"
         echo "Usage: npm run prepush:check -- [--build] [--target <branch>] [--remote <remote>]"
         exit 1
       fi
@@ -23,7 +23,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     --remote)
       if [[ -z "${2:-}" || "${2:-}" == --* ]]; then
-        echo "Missing value for --remote"
+        echo "Error: --remote requires a remote name"
         echo "Usage: npm run prepush:check -- [--build] [--target <branch>] [--remote <remote>]"
         exit 1
       fi
@@ -51,7 +51,7 @@ git fetch "$REMOTE" "${TARGET_BRANCH}:refs/remotes/${REMOTE}/${TARGET_BRANCH}"
 
 CURRENT_BRANCH="$(git branch --show-current)"
 if [[ -z "$CURRENT_BRANCH" ]]; then
-  echo "Detached HEAD detected. Checkout a feature branch before pushing."
+  echo "Detached HEAD detected. Check out a feature branch before pushing."
   exit 1
 fi
 

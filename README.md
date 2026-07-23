@@ -43,7 +43,7 @@ Optional build preflight:
 npm run prepush:check -- --build
 ```
 
-This helper enforces the workflow to reduce GH013 branch protection/ruleset failures:
+This helper enforces the workflow to reduce GH013 branch protection/ruleset failures (default remote is `origin`, override with `--remote <remote>`):
 
 - Sync refs with `git fetch --prune origin`
 - Unshallow when needed with `git fetch --unshallow origin`
