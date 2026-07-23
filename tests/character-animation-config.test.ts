@@ -80,8 +80,8 @@ describe('duplicate animation prevention', () => {
                 Array.from({ length: cfg.end - cfg.start + 1 }, (_, i) => cfg.start + i),
         };
 
-        const firstPass = registerCharacterAnimations(registrar);
-        const secondPass = registerCharacterAnimations(registrar);
+        const firstPass = registerCharacterAnimations(registrar as any);
+        const secondPass = registerCharacterAnimations(registrar as any);
 
         expect(firstPass.length).toBeGreaterThan(0);
         expect(secondPass).toHaveLength(0);

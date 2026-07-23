@@ -23,16 +23,11 @@ export interface CharacterAnimationDefinition {
 
 export interface AnimationRegistrar {
     exists: (key: string) => boolean;
-    create: (config: {
-        key: string;
-        frames: unknown;
-        frameRate: number;
-        repeat: number;
-    }) => unknown;
+    create: (config: Phaser.Types.Animations.Animation) => unknown;
     generateFrameNumbers: (
         key: string,
         config: { start: number; end: number },
-    ) => unknown;
+    ) => Phaser.Types.Animations.AnimationFrame[];
 }
 
 export function getRequiredCharacterAnimationDefinitions(): CharacterAnimationDefinition[] {

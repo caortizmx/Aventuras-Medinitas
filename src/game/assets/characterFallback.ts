@@ -37,17 +37,21 @@ function drawFallbackFrame(
     ctx.strokeRect(frameX + 8, 6, frameWidth - 16, frameHeight - 12);
 }
 
-function createFallbackSheet(characterId: CharacterId): HTMLCanvasElement {
-    const canvas = document.createElement('canvas');
+function createFallbackSheet(scene: Phaser.Scene, textureKey: string, characterId: CharacterId): Phaser.Textures.CanvasTexture {
     const { frameWidth, frameHeight, totalFrames } = CHARACTER_SPRITESHEET_SPEC;
-
-    canvas.width = frameWidth * totalFrames;
-    canvas.height = frameHeight;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) {
-        throw new Error('Cannot create fallback sprite sheet canvas context.');
+    const sourceTextureKey = `${textureKey}__fallback-source`;
+    if (scene.textures.exists(sourceTextureKey)) {
+        scene.textures.remove(sourceTextureKey);
     }
+    const canvasTexture = scene.textures.createCanvas(
+        sourceTextureKey,
+        frameWidth * totalFrames,
+        frameHeight,
+    );
+    if (!canvasTexture) {
+        throw new Error(`Cannot create fallback texture canvas for "${textureKey}".`);
+    }
+    const ctx = canvasTexture.getContext();
 
     const cfg = findCharacterById(characterId);
     const fallbackColor = cfg ? `#${cfg.temporaryColor.toString(16).padStart(6, '0')}` : '#888888';
@@ -56,7 +60,8 @@ function createFallbackSheet(characterId: CharacterId): HTMLCanvasElement {
         drawFallbackFrame(ctx, frame * frameWidth, fallbackColor);
     }
 
-    return canvas;
+    canvasTexture.refresh();
+    return canvasTexture;
 }
 
 function ensureFallbackTexture(scene: Phaser.Scene, characterId: CharacterId): void {
@@ -65,11 +70,12 @@ function ensureFallbackTexture(scene: Phaser.Scene, characterId: CharacterId): v
         return;
     }
 
-    const sheet = createFallbackSheet(characterId);
-    scene.textures.addSpriteSheet(key, sheet, {
+    const sheetTexture = createFallbackSheet(scene, key, characterId);
+    scene.textures.addSpriteSheet(key, sheetTexture, {
         frameWidth:  CHARACTER_SPRITESHEET_SPEC.frameWidth,
         frameHeight: CHARACTER_SPRITESHEET_SPEC.frameHeight,
     });
+    scene.textures.remove(sheetTexture.key);
 }
 
 export function ensureCharacterFallbackTextures(
