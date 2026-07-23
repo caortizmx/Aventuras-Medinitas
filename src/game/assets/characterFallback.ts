@@ -74,7 +74,7 @@ function ensureFallbackTexture(scene: Phaser.Scene, characterId: CharacterId): v
     }
 
     const sheetTexture = createFallbackSheet(scene, key, characterId);
-    scene.textures.addSpriteSheet(key, sheetTexture, {
+    scene.textures.addSpriteSheet(key, sheetTexture.canvas, {
         frameWidth:  CHARACTER_SPRITESHEET_SPEC.frameWidth,
         frameHeight: CHARACTER_SPRITESHEET_SPEC.frameHeight,
     });
