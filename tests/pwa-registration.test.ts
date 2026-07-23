@@ -46,7 +46,7 @@ describe('PWA registration', () => {
             value: { register, getRegistrations },
         });
 
-        await registerPwa({}, false);
+        await expect(registerPwa({}, false)).resolves.toBeUndefined();
 
         expect(getRegistrations).toHaveBeenCalledTimes(1);
         expect(unregister).toHaveBeenCalledTimes(1);

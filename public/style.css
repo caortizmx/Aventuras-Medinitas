@@ -59,7 +59,6 @@ body {
     cursor: pointer;
 }
 
-.standalone-mode body,
 body.standalone-mode {
     padding-top: env(safe-area-inset-top);
     padding-right: env(safe-area-inset-right);

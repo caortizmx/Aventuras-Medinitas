@@ -26,14 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const applyButton = document.getElementById('pwa-apply-update');
             const dismissButton = document.getElementById('pwa-dismiss-update');
 
-            applyButton?.addEventListener('click', () => {
-                updateNotice.hidden = true;
-                applyUpdate();
-            }, { once: true });
+            if (applyButton instanceof HTMLButtonElement) {
+                applyButton.onclick = () => {
+                    updateNotice.hidden = true;
+                    applyUpdate();
+                };
+            }
 
-            dismissButton?.addEventListener('click', () => {
-                updateNotice.hidden = true;
-            }, { once: true });
+            if (dismissButton instanceof HTMLButtonElement) {
+                dismissButton.onclick = () => {
+                    updateNotice.hidden = true;
+                };
+            }
         },
     }).catch(() => {
         // Prevent registration errors from interrupting game boot.
