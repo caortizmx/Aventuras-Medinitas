@@ -186,6 +186,9 @@ export class LevelOne extends Scene {
             collision.setVisible(false);
             decorationFront.setDepth(15);
 
+            if (!('setCollisionByExclusion' in collision)) {
+                throw new LevelMapValidationError('collision layer does not support arcade collision setup');
+            }
             collision.setCollisionByExclusion([-1]);
 
             this._worldWidth = mapData.dimensions.widthPixels;
@@ -218,7 +221,7 @@ export class LevelOne extends Scene {
                 this._player.height - this._character.collisionHeight,
             );
 
-            this.physics.add.collider(this._player, collision);
+            this.physics.add.collider(this._player, collision as Phaser.Tilemaps.TilemapLayer);
             this.physics.add.overlap(this._player, goal, () => {
                 if (!this._levelDone) this._completeLevel();
             });
@@ -262,7 +265,7 @@ export class LevelOne extends Scene {
         map: Phaser.Tilemaps.Tilemap,
         layerName: TileLayerName,
         tileset: Phaser.Tilemaps.Tileset,
-    ): Phaser.Tilemaps.TilemapLayer {
+    ): Phaser.Tilemaps.TilemapLayer | Phaser.Tilemaps.TilemapGPULayer {
         const layer = map.createLayer(layerName, tileset, 0, 0);
         if (!layer) {
             throw new LevelMapValidationError(`unable to create required layer "${layerName}"`);
