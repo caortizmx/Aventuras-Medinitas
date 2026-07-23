@@ -1,0 +1,52 @@
+[
+  {
+    "atlas": "emma_atlas",
+    "valid": true,
+    "frameCount": 36,
+    "imageSize": [
+      2012,
+      472
+    ],
+    "issues": []
+  },
+  {
+    "atlas": "orel_atlas",
+    "valid": true,
+    "frameCount": 36,
+    "imageSize": [
+      2040,
+      548
+    ],
+    "issues": []
+  },
+  {
+    "atlas": "israel_atlas",
+    "valid": true,
+    "frameCount": 36,
+    "imageSize": [
+      1944,
+      504
+    ],
+    "issues": []
+  },
+  {
+    "atlas": "gameplay_assets_atlas",
+    "valid": true,
+    "frameCount": 41,
+    "imageSize": [
+      2028,
+      380
+    ],
+    "issues": []
+  },
+  {
+    "atlas": "environment_atlas",
+    "valid": true,
+    "frameCount": 60,
+    "imageSize": [
+      2032,
+      696
+    ],
+    "issues": []
+  }
+]

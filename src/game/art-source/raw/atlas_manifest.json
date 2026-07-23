@@ -1,0 +1,47 @@
+{
+  "emma_atlas": {
+    "image": "emma_atlas.png",
+    "data": "emma_atlas.json",
+    "frameCount": 36,
+    "size": {
+      "w": 2012,
+      "h": 472
+    }
+  },
+  "orel_atlas": {
+    "image": "orel_atlas.png",
+    "data": "orel_atlas.json",
+    "frameCount": 36,
+    "size": {
+      "w": 2040,
+      "h": 548
+    }
+  },
+  "israel_atlas": {
+    "image": "israel_atlas.png",
+    "data": "israel_atlas.json",
+    "frameCount": 36,
+    "size": {
+      "w": 1944,
+      "h": 504
+    }
+  },
+  "gameplay_assets_atlas": {
+    "image": "gameplay_assets_atlas.png",
+    "data": "gameplay_assets_atlas.json",
+    "frameCount": 41,
+    "size": {
+      "w": 2028,
+      "h": 380
+    }
+  },
+  "environment_atlas": {
+    "image": "environment_atlas.png",
+    "data": "environment_atlas.json",
+    "frameCount": 60,
+    "size": {
+      "w": 2032,
+      "h": 696
+    }
+  }
+}
