@@ -15,7 +15,7 @@ describe('responsive layout helpers', () => {
     });
 
     it('calculates a safe area entirely inside each supported viewport', () => {
-        for (const [width, height] of [[1600, 900], [1280, 720], [844, 390], [932, 430], [390, 844]]) {
+        for (const [width, height] of [[1600, 900], [1280, 720], [844, 390], [932, 430], [390, 844], [320, 240]]) {
             const safe = calculateSafeArea(width, height);
             expect(safe.left).toBeGreaterThan(0);
             expect(safe.top).toBeGreaterThan(0);

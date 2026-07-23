@@ -109,6 +109,8 @@ const CAMERA_INTRO_ZOOM = 1.02;
 const GOAL_CELEBRATION_ZOOM = 1.05;
 const MIN_CAMERA_DEADZONE_SIZE = 1;
 const HURT_FLASH_DURATION_MS = 120;
+// Keeps composed platform pieces close to native width while avoiding tiny seam fragments.
+const MAX_PLATFORM_SEGMENT_SCALE = 1.15;
 
 // ─── Parallax backdrop (art-free depth cue, see art bible §7 first-pass polish) ──
 function isCollidableTilemapLayer(
@@ -820,7 +822,7 @@ export class LevelOne extends Scene {
         }
 
         const frame = this.textures.getFrame(ENVIRONMENT_VISUALS.atlasKey, mapping.frame);
-        const segmentCount = Math.max(1, Math.ceil(width / (frame.width * 1.15)));
+        const segmentCount = Math.max(1, Math.ceil(width / (frame.width * MAX_PLATFORM_SEGMENT_SCALE)));
         const segmentWidth = width / segmentCount;
 
         for (let segment = 0; segment < segmentCount; segment += 1) {

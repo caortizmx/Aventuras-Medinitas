@@ -21,6 +21,9 @@ interface ActionButton {
     label: GameObjects.Text;
 }
 
+const BUTTON_COLOR = 0x287a50;
+const BUTTON_SELECTED_COLOR = 0x35a36b;
+
 export class GameOver extends Scene {
     private _data: GameOverData = {};
     private _background!: GameObjects.Image;
@@ -89,7 +92,7 @@ export class GameOver extends Scene {
 
     private _createButton (label: string, action: () => void): ActionButton {
         const depth = RENDER_DEPTHS.modal + 3;
-        const background = this.add.rectangle(0, 0, 1, 1, 0x287a50)
+        const background = this.add.rectangle(0, 0, 1, 1, BUTTON_COLOR)
             .setStrokeStyle(2, 0xffffff, 0.75)
             .setInteractive({ useHandCursor: true })
             .setDepth(depth);
@@ -157,7 +160,7 @@ export class GameOver extends Scene {
 
     private _refreshSelection (): void {
         [this._retryButton, this._menuButton].forEach((button, index) => {
-            button.background.setFillStyle(index === this._selectedAction ? 0x35a36b : 0x287a50);
+            button.background.setFillStyle(index === this._selectedAction ? BUTTON_SELECTED_COLOR : BUTTON_COLOR);
             button.background.setScale(index === this._selectedAction ? 1.02 : 1);
         });
     }

@@ -62,7 +62,7 @@ export class Preloader extends Scene
         });
 
         this.load.on('fileprogress', (file: Phaser.Loader.File) => {
-            this._status.setText(`Loading ${this._playerSafeAssetName(file.key)}…`);
+            this._status.setText(`Loading ${this._getDisplayableAssetName(file.key)}…`);
         });
 
         this.load.on('loaderror', () => {
@@ -149,7 +149,7 @@ export class Preloader extends Scene
             .setWordWrapWidth(layout.safeArea.width);
     }
 
-    private _playerSafeAssetName (key: string | number): string
+    private _getDisplayableAssetName (key: string | number): string
     {
         const value = String(key).replace(/[-_]+/g, ' ').trim();
         return value.length > 32 ? 'game artwork' : value;

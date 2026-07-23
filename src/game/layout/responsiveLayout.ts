@@ -151,6 +151,7 @@ export function calculateGameOverLayout(width: number, height: number): GameOver
     const panelHeight = Math.min(safeArea.height, 414);
     const panelTop = (height - panelHeight) / 2;
     const panelBottom = panelTop + panelHeight;
+    // Preserve the recommended minimum logical touch target in short landscape viewports.
     const buttonHeight = clamp(44, height * 0.105, 48);
 
     return {
