@@ -1,6 +1,4 @@
 import { Math as PhaserMath, Scene } from 'phaser';
-import { registerCharacterAnimations } from '../animations/characterAnimations';
-import { ensureCharacterFallbackTextures } from '../assets/characterFallback';
 import { getCharacterAnimationKey, CharacterAnimationState } from '../constants/animationKeys';
 import { InputController } from '../input/InputController';
 import { MobileControls } from '../input/MobileControls';
@@ -10,7 +8,6 @@ import {
     PLAYER_HEIGHT,
     PLAYER_RUN_ANIMATION_THRESHOLD,
     PLAYER_SPRITE_SCALE,
-    PLAYER_WIDTH,
     CAMERA_LERP_X, CAMERA_LERP_Y,
     GAME_HEIGHT, GAME_WIDTH,
     GOAL_HEIGHT, GOAL_WIDTH, GOAL_X, GOAL_Y,
@@ -43,8 +40,6 @@ import {
     validateAndExtractLevelMapData,
 } from '../level/tiledLevelValidation';
 import { Enemy, EnemySpawnConfig } from '../entities/Enemy';
-import { ensurePresentationFallbackAssets } from '../assets/presentationFallback';
-import { registerPresentationAnimations } from '../animations/presentationAnimations';
 import {
     PlayerGameplayState,
     applyLifeLoss,
@@ -58,6 +53,9 @@ import {
 import { applyCollectiblePickup } from '../system/stage8Gameplay';
 import { recordLevelResult } from '../system/SaveSystem';
 import { PRESENTATION_ANIMATION_KEYS } from '../constants/presentationAnimationKeys';
+import { CHARACTER_VISUALS } from '../assets/characterVisualConfig';
+import { ENVIRONMENT_VISUALS } from '../assets/environmentVisualConfig';
+import { GAMEPLAY_VISUALS, PROP_VISUALS } from '../assets/gameplayVisualConfig';
 
 type SpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 type StaticSpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithStaticBody;
@@ -95,8 +93,6 @@ const ENEMY_STOMP_POINTS = 50;
 const LEVEL_CLEAR_LIFE_BONUS = 25;
 const CHECKPOINT_BODY_WIDTH = 18;
 const CHECKPOINT_BODY_HEIGHT = 40;
-const CHECKPOINT_DISPLAY_WIDTH = 28;
-const CHECKPOINT_DISPLAY_HEIGHT = 44;
 const COLLECTIBLE_BODY_SIZE = 20;
 const COLLECTIBLE_DISPLAY_SIZE = 24;
 const RUN_DUST_INTERVAL_MS = 130;
@@ -108,21 +104,13 @@ const MIN_CAMERA_DEADZONE_SIZE = 1;
 const HURT_FLASH_DURATION_MS = 120;
 
 // ─── Parallax backdrop (art-free depth cue, see art bible §7 first-pass polish) ──
-const SKY_TOP_COLOR = 0xbfe3f7;
-const SKY_HORIZON_COLOR = 0xeaf6ff;
-const HORIZON_Y_RATIO = 0.62;
-interface HillRowConfig {
-    yOffset: number;
-    bumpWidth: number;
-    bumpHeight: number;
-    color: number;
-    alpha: number;
+interface ParallaxLayerConfig {
     depth: number;
     scrollFactor: number;
 }
 
-const HILL_FAR_CONFIG: HillRowConfig = { yOffset: 10, bumpWidth: 220, bumpHeight: 60, color: 0x9fd6c6, alpha: 0.45, depth: -60, scrollFactor: 0.25 };
-const HILL_NEAR_CONFIG: HillRowConfig = { yOffset: 30, bumpWidth: 260, bumpHeight: 80, color: 0x7dc9a0, alpha: 0.65, depth: -40, scrollFactor: 0.5 };
+const HILL_FAR_CONFIG: ParallaxLayerConfig = { depth: -60, scrollFactor: 0.25 };
+const HILL_NEAR_CONFIG: ParallaxLayerConfig = { depth: -40, scrollFactor: 0.5 };
 const SKY_DEPTH = -90;
 const SKY_SCROLL_FACTOR = 0.02;
 
@@ -241,16 +229,12 @@ export class LevelOne extends Scene {
             g.destroy();
         }
 
-        ensureCharacterFallbackTextures(this, new Set<string>());
-        ensurePresentationFallbackAssets(this, new Set<string>());
-        registerCharacterAnimations(this.anims);
-        registerPresentationAnimations(this.anims);
-
         if (!this._buildLevelFromTiledMap()) {
             this._buildPrototypeFallbackLevel();
         }
 
         this._buildParallaxBackdrop();
+        this._spawnDecorativeProps();
 
         const deadzoneWidth = this._calculateDeadzoneDimension(GAME_WIDTH, CAMERA_DEADZONE_WIDTH_RATIO);
         const deadzoneHeight = this._calculateDeadzoneDimension(GAME_HEIGHT, CAMERA_DEADZONE_HEIGHT_RATIO);
@@ -392,7 +376,8 @@ export class LevelOne extends Scene {
             const goal = this.physics.add.staticSprite(
                 mapData.levelGoal.x + mapData.levelGoal.width / 2,
                 mapData.levelGoal.y + mapData.levelGoal.height / 2,
-                ASSET_KEYS.goal,
+                GAMEPLAY_VISUALS.goal.atlasKey,
+                GAMEPLAY_VISUALS.goal.frame,
             );
             goal
                 .setDisplaySize(mapData.levelGoal.width, mapData.levelGoal.height)
@@ -401,17 +386,13 @@ export class LevelOne extends Scene {
                 .play(PRESENTATION_ANIMATION_KEYS.goalIdle, true);
             this._goalSprite = goal;
 
-            this._player = this.physics.add.sprite(this._spawnX, this._spawnY, this._character.assetKey, 0);
-            this._player
-                .setDisplaySize(PLAYER_WIDTH * PLAYER_SPRITE_SCALE, PLAYER_HEIGHT * PLAYER_SPRITE_SCALE)
-                .setCollideWorldBounds(true);
-
-            const body = this._player.body;
-            body.setSize(this._character.collisionWidth, this._character.collisionHeight);
-            body.setOffset(
-                (this._player.width - this._character.collisionWidth) / 2,
-                this._player.height - this._character.collisionHeight,
+            this._player = this.physics.add.sprite(
+                this._spawnX,
+                this._spawnY,
+                this._character.assetKey,
+                CHARACTER_VISUALS[this._character.id].idleFrame,
             );
+            this._configurePlayerVisual();
 
             this.physics.add.collider(this._player, collision);
             this.physics.add.overlap(this._player, goal, () => {
@@ -439,7 +420,9 @@ export class LevelOne extends Scene {
                 if (!this._levelDone) this._applyPlayerDamage(this._player.x);
             });
 
-            this._drawDevMarkers(mapData);
+            if (import.meta.env.DEV) {
+                this._drawDevMarkers(mapData);
+            }
 
             return true;
         } catch (error) {
@@ -449,8 +432,11 @@ export class LevelOne extends Scene {
     }
 
     private _spawnEnemies(enemySpawns: EnemySpawnConfig[]): void {
-        for (const enemySpawn of enemySpawns) {
-            const enemy = new Enemy(this, enemySpawn, {
+        enemySpawns.forEach((enemySpawn, index) => {
+            const enemy = new Enemy(this, {
+                ...enemySpawn,
+                visualVariant: index % 3 === 2 ? 'large' : 'small',
+            }, {
                 hasGroundAhead: (x, y) => this._hasGroundTileAt(x, y),
             }).spawn();
 
@@ -461,7 +447,7 @@ export class LevelOne extends Scene {
             this.physics.add.collider(this._player, enemy, () => {
                 this._onPlayerEnemyCollision(enemy);
             });
-        }
+        });
     }
 
     private _spawnCheckpoints(checkpoints: Array<{ id: string; x: number; y: number }>): void {
@@ -469,11 +455,13 @@ export class LevelOne extends Scene {
             const marker = this.physics.add.staticSprite(
                 checkpointData.x,
                 checkpointData.y - 30,
-                ASSET_KEYS.checkpoint,
-                0,
+                GAMEPLAY_VISUALS.checkpoint.atlasKey,
+                GAMEPLAY_VISUALS.checkpoint.frame,
             );
             marker
-                .setDisplaySize(CHECKPOINT_DISPLAY_WIDTH, CHECKPOINT_DISPLAY_HEIGHT)
+                .setOrigin(0.5, 1)
+                .setPosition(checkpointData.x, checkpointData.y)
+                .setDisplaySize(GAMEPLAY_VISUALS.checkpoint.displayWidth, GAMEPLAY_VISUALS.checkpoint.displayHeight)
                 .setDepth(20)
                 .setBodySize(CHECKPOINT_BODY_WIDTH, CHECKPOINT_BODY_HEIGHT, true)
                 .refreshBody()
@@ -786,9 +774,14 @@ export class LevelOne extends Scene {
         const collectibles = this.physics.add.staticGroup();
 
         for (const spawn of spawns) {
-            const collectible = this.physics.add.staticSprite(spawn.x, spawn.y, ASSET_KEYS.collectible, 0);
+            const collectible = this.physics.add.staticSprite(
+                spawn.x,
+                spawn.y,
+                GAMEPLAY_VISUALS.collectible.atlasKey,
+                GAMEPLAY_VISUALS.collectible.frame,
+            );
             collectible
-                .setDisplaySize(COLLECTIBLE_DISPLAY_SIZE, COLLECTIBLE_DISPLAY_SIZE)
+                .setDisplaySize(GAMEPLAY_VISUALS.collectible.displaySize, GAMEPLAY_VISUALS.collectible.displaySize)
                 .setData('collectibleId', spawn.id)
                 .setBodySize(COLLECTIBLE_BODY_SIZE, COLLECTIBLE_BODY_SIZE, true)
                 .refreshBody()
@@ -844,7 +837,10 @@ export class LevelOne extends Scene {
         this.physics.world.setBounds(0, FALLBACK_WORLD_BOUNDS_Y, WORLD_WIDTH, WORLD_HEIGHT + FALLBACK_WORLD_BOUNDS_EXTRA_HEIGHT);
 
         const ground = this.physics.add.staticImage(
-            GROUND_WIDTH / 2, GROUND_Y, ASSET_KEYS.terrainGround,
+            GROUND_WIDTH / 2,
+            GROUND_Y,
+            ENVIRONMENT_VISUALS.atlasKey,
+            ENVIRONMENT_VISUALS.fallbackGround,
         );
         ground.setDisplaySize(GROUND_WIDTH, GROUND_HEIGHT)
             .refreshBody();
@@ -853,29 +849,35 @@ export class LevelOne extends Scene {
         platforms.add(ground, true);
 
         for (const [cx, cy, w] of PLATFORMS) {
-            const p = this.physics.add.staticImage(cx, cy, ASSET_KEYS.terrainPlatform);
+            const p = this.physics.add.staticImage(
+                cx,
+                cy,
+                ENVIRONMENT_VISUALS.atlasKey,
+                ENVIRONMENT_VISUALS.fallbackPlatform,
+            );
             p.setDisplaySize(w, PLATFORM_HEIGHT).refreshBody();
             platforms.add(p, true);
         }
 
-        const goal = this.physics.add.staticSprite(GOAL_X, GOAL_Y, ASSET_KEYS.goal, 0);
+        const goal = this.physics.add.staticSprite(
+            GOAL_X,
+            GOAL_Y,
+            GAMEPLAY_VISUALS.goal.atlasKey,
+            GAMEPLAY_VISUALS.goal.frame,
+        );
         goal.setDisplaySize(GOAL_WIDTH, GOAL_HEIGHT)
             .setBodySize(GOAL_WIDTH, GOAL_HEIGHT, true)
             .refreshBody()
             .play(PRESENTATION_ANIMATION_KEYS.goalIdle, true);
         this._goalSprite = goal;
 
-        this._player = this.physics.add.sprite(this._spawnX, this._spawnY, this._character.assetKey, 0);
-        this._player
-            .setDisplaySize(PLAYER_WIDTH * PLAYER_SPRITE_SCALE, PLAYER_HEIGHT * PLAYER_SPRITE_SCALE)
-            .setCollideWorldBounds(true);
-
-        const body = this._player.body;
-        body.setSize(this._character.collisionWidth, this._character.collisionHeight);
-        body.setOffset(
-            (this._player.width - this._character.collisionWidth) / 2,
-            this._player.height - this._character.collisionHeight,
+        this._player = this.physics.add.sprite(
+            this._spawnX,
+            this._spawnY,
+            this._character.assetKey,
+            CHARACTER_VISUALS[this._character.id].idleFrame,
         );
+        this._configurePlayerVisual();
 
         this.physics.add.collider(this._player, platforms);
         this.physics.add.overlap(this._player, goal, () => {
@@ -902,6 +904,42 @@ export class LevelOne extends Scene {
             { id: 'fallback-collectible-2', x: 1460, y: 260 },
             { id: 'fallback-collectible-3', x: 2440, y: 220 },
         ]);
+    }
+
+    private _configurePlayerVisual(): void {
+        const visual = CHARACTER_VISUALS[this._character.id];
+        const displayWidth = visual.displayHeight * (242 / 181);
+        this._player
+            .setOrigin(visual.originX, visual.originY)
+            .setDisplaySize(displayWidth, visual.displayHeight)
+            .setCollideWorldBounds(true)
+            .setDepth(6);
+
+        const body = this._player.body as DynamicBody;
+        const scaleX = Math.abs(this._player.scaleX) || 1;
+        const scaleY = Math.abs(this._player.scaleY) || 1;
+        const bodyWidth = this._character.collisionWidth / scaleX;
+        const bodyHeight = this._character.collisionHeight / scaleY;
+        body.setSize(bodyWidth, bodyHeight);
+        body.setOffset(
+            (this._player.width - bodyWidth) / 2,
+            this._player.height - bodyHeight,
+        );
+    }
+
+    private _spawnDecorativeProps(): void {
+        const groundY = this._usingPrototypeFallback
+            ? this._worldHeight - GROUND_HEIGHT
+            : this._worldHeight - 64;
+
+        for (const prop of PROP_VISUALS) {
+            this.add.image(
+                this._worldWidth * prop.xRatio,
+                groundY + prop.yOffset,
+                GAMEPLAY_VISUALS.goal.atlasKey,
+                prop.frame,
+            ).setOrigin(0.5, 1).setDepth(prop.depth);
+        }
     }
 
     private _togglePause(): void {
@@ -954,40 +992,31 @@ export class LevelOne extends Scene {
         });
     }
 
-    /**
-     * Draws a cheap, art-free parallax backdrop: a soft sky gradient plus two
-     * rows of desaturated, low-contrast hill silhouettes scrolling slower
-     * than the foreground. This gives the level a sense of depth without
-     * requiring any new art assets, per the first-pass polish plan.
-     */
     private _buildParallaxBackdrop(): void {
-        const width = this._worldWidth;
-        const horizonY = this._worldHeight * HORIZON_Y_RATIO;
-
-        const sky = this.add.graphics().setDepth(SKY_DEPTH).setScrollFactor(SKY_SCROLL_FACTOR, 0);
-        sky.fillGradientStyle(SKY_TOP_COLOR, SKY_TOP_COLOR, SKY_HORIZON_COLOR, SKY_HORIZON_COLOR, 1);
-        sky.fillRect(0, 0, width, this._worldHeight);
-
-        this._drawHillRow(width, horizonY, HILL_FAR_CONFIG);
-        this._drawHillRow(width, horizonY, HILL_NEAR_CONFIG);
-    }
-
-    /** Draws a single repeating row of soft rounded hill bumps used for parallax depth. */
-    private _drawHillRow(worldWidth: number, horizonY: number, config: HillRowConfig): void {
-        const baseY = horizonY + config.yOffset;
-        const graphics = this.add.graphics().setDepth(config.depth).setScrollFactor(config.scrollFactor, 0);
-        graphics.fillStyle(config.color, config.alpha);
-
-        // Solid base fills the area below the hill crests down to the world
-        // bottom, then overlapping circles bulge upward to form a simple,
-        // unambiguous rounded hill skyline (avoids arc-direction guesswork).
-        graphics.fillRect(0, baseY, worldWidth, this._worldHeight - baseY);
-
-        const bumpCount = Math.ceil(worldWidth / config.bumpWidth) + 2;
-        for (let i = 0; i < bumpCount; i += 1) {
-            const cx = -config.bumpWidth / 2 + i * config.bumpWidth;
-            graphics.fillEllipse(cx, baseY, config.bumpWidth, config.bumpHeight * 2);
-        }
+        this.add.tileSprite(
+            0,
+            0,
+            this._worldWidth,
+            this._worldHeight,
+            ENVIRONMENT_VISUALS.atlasKey,
+            ENVIRONMENT_VISUALS.sky,
+        ).setOrigin(0).setDepth(SKY_DEPTH).setScrollFactor(SKY_SCROLL_FACTOR, 0);
+        this.add.tileSprite(
+            0,
+            this._worldHeight * 0.28,
+            this._worldWidth,
+            this._worldHeight * 0.72,
+            ENVIRONMENT_VISUALS.atlasKey,
+            ENVIRONMENT_VISUALS.farMountains,
+        ).setOrigin(0).setDepth(HILL_FAR_CONFIG.depth).setScrollFactor(HILL_FAR_CONFIG.scrollFactor, 0);
+        this.add.tileSprite(
+            0,
+            this._worldHeight * 0.45,
+            this._worldWidth,
+            this._worldHeight * 0.55,
+            ENVIRONMENT_VISUALS.atlasKey,
+            ENVIRONMENT_VISUALS.hills,
+        ).setOrigin(0).setDepth(HILL_NEAR_CONFIG.depth).setScrollFactor(HILL_NEAR_CONFIG.scrollFactor, 0);
     }
 
     private _buildUI(): void {
@@ -1233,7 +1262,12 @@ export class LevelOne extends Scene {
     }
 
     private _playCollectiblePickupFeedback(collectible: StaticSpriteWithBody): void {
-        const glow = this.add.sprite(collectible.x, collectible.y, ASSET_KEYS.collectible, 0)
+        const glow = this.add.sprite(
+            collectible.x,
+            collectible.y,
+            GAMEPLAY_VISUALS.collectible.atlasKey,
+            GAMEPLAY_VISUALS.collectible.frame,
+        )
             .setDisplaySize(COLLECTIBLE_DISPLAY_SIZE, COLLECTIBLE_DISPLAY_SIZE)
             .setDepth((this._player.depth ?? 0) + 1);
         this.tweens.add({

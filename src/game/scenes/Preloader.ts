@@ -1,33 +1,18 @@
 import { Scene } from 'phaser';
 import { ASSET_KEYS } from '../constants/assetKeys';
-import {
-    CHARACTER_IDS,
-    CHARACTER_SPRITESHEET_SPEC,
-    EXPECTED_CHARACTER_SPRITE_FILES,
-    getCharacterAssetKey,
-} from '../constants/characterSpriteConfig';
-import { ensureCharacterFallbackTextures } from '../assets/characterFallback';
-import { registerCharacterAnimations } from '../animations/characterAnimations';
 import { SCENE_MAIN_MENU } from '../constants/sceneKeys';
 import {
     LEVEL_ONE_MAP_PATH,
     LEVEL_ONE_TILESET_IMAGE_PATH,
 } from '../constants/tiledLevel';
-import {
-    PRESENTATION_SPRITESHEETS,
-    PRESENTATION_TEXTURES,
-} from '../constants/presentationAssetConfig';
-import { ensurePresentationFallbackAssets } from '../assets/presentationFallback';
-import { registerPresentationAnimations } from '../animations/presentationAnimations';
+import { ATLAS_PATHS } from '../assets/assetPaths';
+import { REQUIRED_ATLAS_KEYS } from '../assets/assetKeys';
+import { registerAtlasAnimations } from '../assets/registerAnimations';
+import { getDevelopmentAssetScene } from './devAssetRoute';
 
 export class Preloader extends Scene
 {
-    private readonly _failedCharacterAssetKeys = new Set<string>();
-    private readonly _failedPresentationAssetKeys = new Set<string>();
-    private readonly _presentationAssetKeys = new Set<string>([
-        ...Object.values(PRESENTATION_SPRITESHEETS).map(({ key }) => key),
-        ...Object.values(PRESENTATION_TEXTURES).map(({ key }) => key),
-    ]);
+    private readonly _failedAtlasKeys = new Set<string>();
 
     constructor ()
     {
@@ -48,53 +33,32 @@ export class Preloader extends Scene
     preload ()
     {
         this.load.setPath('assets');
-        this._failedCharacterAssetKeys.clear();
-        this._failedPresentationAssetKeys.clear();
+        this._failedAtlasKeys.clear();
 
         this.load.image(ASSET_KEYS.logo, 'logo.png');
         this.load.tilemapTiledJSON(ASSET_KEYS.levelOneMap, LEVEL_ONE_MAP_PATH);
         this.load.image(ASSET_KEYS.levelOneTiles, LEVEL_ONE_TILESET_IMAGE_PATH);
 
         this.load.on('loaderror', (file: Phaser.Loader.File) => {
-            if (CHARACTER_IDS.some((id) => getCharacterAssetKey(id) === file.key)) {
-                this._failedCharacterAssetKeys.add(file.key);
-                return;
-            }
-
-            if (this._presentationAssetKeys.has(file.key)) {
-                this._failedPresentationAssetKeys.add(file.key);
+            if (REQUIRED_ATLAS_KEYS.includes(file.key as (typeof REQUIRED_ATLAS_KEYS)[number])) {
+                this._failedAtlasKeys.add(file.key);
+                console.error(`[assets] Failed to load atlas "${file.key}"`);
             }
         });
 
-        for (const characterId of CHARACTER_IDS) {
-            this.load.spritesheet(
-                getCharacterAssetKey(characterId),
-                EXPECTED_CHARACTER_SPRITE_FILES[characterId],
-                {
-                    frameWidth: CHARACTER_SPRITESHEET_SPEC.frameWidth,
-                    frameHeight: CHARACTER_SPRITESHEET_SPEC.frameHeight,
-                },
-            );
-        }
-
-        for (const spec of Object.values(PRESENTATION_SPRITESHEETS)) {
-            this.load.spritesheet(spec.key, spec.filePath, {
-                frameWidth: spec.frameWidth,
-                frameHeight: spec.frameHeight,
-            });
-        }
-
-        for (const texture of Object.values(PRESENTATION_TEXTURES)) {
-            this.load.image(texture.key, texture.filePath);
+        for (const atlasKey of REQUIRED_ATLAS_KEYS) {
+            const paths = ATLAS_PATHS[atlasKey];
+            this.load.atlas(atlasKey, paths.textureURL, paths.atlasURL);
         }
     }
 
     create ()
     {
-        ensureCharacterFallbackTextures(this, this._failedCharacterAssetKeys);
-        ensurePresentationFallbackAssets(this, this._failedPresentationAssetKeys);
-        registerCharacterAnimations(this.anims);
-        registerPresentationAnimations(this.anims);
-        this.scene.start(SCENE_MAIN_MENU);
+        registerAtlasAnimations(
+            this.anims,
+            undefined,
+        );
+        this.registry.set('failedAtlasKeys', [...this._failedAtlasKeys]);
+        this.scene.start(getDevelopmentAssetScene(window.location.pathname) ?? SCENE_MAIN_MENU);
     }
 }

@@ -4,8 +4,8 @@
     "data": "emma_atlas.json",
     "frameCount": 36,
     "size": {
-      "w": 2012,
-      "h": 472
+      "w": 2000,
+      "h": 420
     }
   },
   "orel_atlas": {
@@ -13,8 +13,8 @@
     "data": "orel_atlas.json",
     "frameCount": 36,
     "size": {
-      "w": 2040,
-      "h": 548
+      "w": 2044,
+      "h": 492
     }
   },
   "israel_atlas": {
@@ -22,8 +22,8 @@
     "data": "israel_atlas.json",
     "frameCount": 36,
     "size": {
-      "w": 1944,
-      "h": 504
+      "w": 2024,
+      "h": 468
     }
   },
   "gameplay_assets_atlas": {

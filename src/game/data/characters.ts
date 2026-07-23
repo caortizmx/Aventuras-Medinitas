@@ -1,4 +1,5 @@
-import { CharacterId, getCharacterAssetKey } from '../constants/characterSpriteConfig';
+import { CharacterId } from '../constants/characterSpriteConfig';
+import { CHARACTER_VISUALS } from '../assets/characterVisualConfig';
 
 // ── Character configuration ───────────────────────────────────────────────────
 // All playable characters keep identical gameplay abilities and collision body
@@ -28,7 +29,7 @@ export const CHARACTERS: readonly CharacterConfig[] = [
         id:             'emma',
         displayName:    'Emma',
         temporaryColor: 0xe91e8c,   // pink
-        assetKey:       getCharacterAssetKey('emma'),
+        assetKey:       CHARACTER_VISUALS.emma.atlasKey,
         collisionWidth:  28,
         collisionHeight: 42,
         movementSpeed:   220,
@@ -38,7 +39,7 @@ export const CHARACTERS: readonly CharacterConfig[] = [
         id:             'orel',
         displayName:    'Orel',
         temporaryColor: 0x3498db,   // blue
-        assetKey:       getCharacterAssetKey('orel'),
+        assetKey:       CHARACTER_VISUALS.orel.atlasKey,
         collisionWidth:  28,
         collisionHeight: 42,
         movementSpeed:   220,
@@ -48,7 +49,7 @@ export const CHARACTERS: readonly CharacterConfig[] = [
         id:             'israel',
         displayName:    'Israel',
         temporaryColor: 0x2ecc71,   // green
-        assetKey:       getCharacterAssetKey('israel'),
+        assetKey:       CHARACTER_VISUALS.israel.atlasKey,
         collisionWidth:  28,
         collisionHeight: 42,
         movementSpeed:   220,

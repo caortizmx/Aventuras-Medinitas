@@ -1,5 +1,5 @@
-const APP_CACHE = 'adventures-app-v1';
-const RUNTIME_CACHE = 'adventures-runtime-v1';
+const APP_CACHE = 'adventures-app-v2';
+const RUNTIME_CACHE = 'adventures-runtime-v2';
 const OFFLINE_FALLBACK_URL = './offline.html';
 
 const PRECACHE_URLS = [
@@ -17,6 +17,18 @@ const PRECACHE_URLS = [
     './assets/logo.png',
     './assets/maps/level-one.json',
     './assets/tiles/level-one-tiles.png',
+    './assets/game/atlases/characters/emma/emma_atlas.png',
+    './assets/game/atlases/characters/emma/emma_atlas.json',
+    './assets/game/atlases/characters/orel/orel_atlas.png',
+    './assets/game/atlases/characters/orel/orel_atlas.json',
+    './assets/game/atlases/characters/israel/israel_atlas.png',
+    './assets/game/atlases/characters/israel/israel_atlas.json',
+    './assets/game/atlases/gameplay/gameplay_assets_atlas.png',
+    './assets/game/atlases/gameplay/gameplay_assets_atlas.json',
+    './assets/game/atlases/environment/environment_atlas.png',
+    './assets/game/atlases/environment/environment_atlas.json',
+    './assets/game/manifests/atlas_manifest.json',
+    './assets/game/manifests/animations_manifest.json',
 ];
 
 self.addEventListener('install', (event) => {
@@ -97,7 +109,12 @@ self.addEventListener('fetch', (event) => {
     event.respondWith((async () => {
         const cache = await caches.open(RUNTIME_CACHE);
         const cachedResponse = await cache.match(request);
-        if (cachedResponse) return cachedResponse;
+        if (cachedResponse) {
+            if (requestUrl.pathname.includes('/assets/game/')) {
+                event.waitUntil(fetchAndCache(request, RUNTIME_CACHE).catch(() => undefined));
+            }
+            return cachedResponse;
+        }
 
         try {
             return await fetchAndCache(request, RUNTIME_CACHE);

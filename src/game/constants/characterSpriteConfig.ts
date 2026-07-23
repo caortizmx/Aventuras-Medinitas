@@ -5,9 +5,9 @@ export const CHARACTER_IDS = ['emma', 'orel', 'israel'] as const;
 export type CharacterId = typeof CHARACTER_IDS[number];
 
 export const CHARACTER_ASSET_KEYS: Record<CharacterId, string> = {
-    emma:   'character-emma',
-    orel:   'character-orel',
-    israel: 'character-israel',
+    emma:   'atlas-character-emma',
+    orel:   'atlas-character-orel',
+    israel: 'atlas-character-israel',
 };
 
 export const EXPECTED_CHARACTER_SPRITE_FILES: Record<CharacterId, string> = {

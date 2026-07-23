@@ -1,6 +1,6 @@
 import { Physics, Scene } from 'phaser';
-import { ASSET_KEYS } from '../constants/assetKeys';
-import { PRESENTATION_ANIMATION_KEYS } from '../constants/presentationAnimationKeys';
+import { GAMEPLAY_VISUALS } from '../assets/gameplayVisualConfig';
+import { GAMEPLAY_ANIMATION_KEYS } from '../assets/animationKeys';
 
 export interface EnemySpawnConfig {
     x: number;
@@ -9,34 +9,44 @@ export interface EnemySpawnConfig {
     patrolRight: number;
     patrolSpeed: number;
     avoidLedges: boolean;
+    visualVariant?: 'small' | 'large';
 }
 
 export interface EnemyGroundProbe {
     hasGroundAhead: (x: number, y: number) => boolean;
 }
 
-const DEFAULT_ENEMY_SIZE = { width: 42, height: 28 };
-
 export class Enemy extends Physics.Arcade.Sprite {
     private _direction: 1 | -1 = -1;
     private _alive = true;
     private readonly _groundProbe: EnemyGroundProbe;
     private readonly _spawn: EnemySpawnConfig;
+    private readonly _visual: typeof GAMEPLAY_VISUALS.enemySmall | typeof GAMEPLAY_VISUALS.enemyLarge;
 
     constructor(scene: Scene, spawn: EnemySpawnConfig, groundProbe: EnemyGroundProbe) {
-        super(scene, spawn.x, spawn.y, ASSET_KEYS.enemy, 0);
+        const visual = spawn.visualVariant === 'large'
+            ? GAMEPLAY_VISUALS.enemyLarge
+            : GAMEPLAY_VISUALS.enemySmall;
+        super(scene, spawn.x, spawn.y, visual.atlasKey, visual.frame);
         this._spawn = spawn;
         this._groundProbe = groundProbe;
+        this._visual = visual;
     }
 
     spawn(): this {
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this
-            .setDisplaySize(DEFAULT_ENEMY_SIZE.width, DEFAULT_ENEMY_SIZE.height)
+            .setOrigin(0.5, 1)
+            .setDisplaySize(this._visual.displayWidth, this._visual.displayHeight)
             .setCollideWorldBounds(true)
             .setDepth(6)
-            .play(PRESENTATION_ANIMATION_KEYS.enemyPatrol, true);
+            .play(
+                this._spawn.visualVariant === 'large'
+                    ? GAMEPLAY_ANIMATION_KEYS.enemyLargeWalk
+                    : GAMEPLAY_ANIMATION_KEYS.enemySmallWalk,
+                true,
+            );
 
         const body = this.body as Physics.Arcade.Body;
         body.setAllowGravity(true);
@@ -45,10 +55,12 @@ export class Enemy extends Physics.Arcade.Sprite {
         body.setMaxVelocity(220, 900);
         // Keep collision shape fixed to gameplay dimensions even if sprite display
         // size or frame art changes, so patrol collisions stay stable.
-        body.setSize(DEFAULT_ENEMY_SIZE.width, DEFAULT_ENEMY_SIZE.height);
+        const bodyWidth = this._visual.bodyWidth / (Math.abs(this.scaleX) || 1);
+        const bodyHeight = this._visual.bodyHeight / (Math.abs(this.scaleY) || 1);
+        body.setSize(bodyWidth, bodyHeight);
         body.setOffset(
-            (this.width - DEFAULT_ENEMY_SIZE.width) / 2,
-            this.height - DEFAULT_ENEMY_SIZE.height,
+            (this.width - bodyWidth) / 2,
+            this.height - bodyHeight,
         );
         return this;
     }
