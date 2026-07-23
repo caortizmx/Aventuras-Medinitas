@@ -1,8 +1,8 @@
 import { CharacterId, getCharacterAssetKey } from '../constants/characterSpriteConfig';
 
 // ── Character configuration ───────────────────────────────────────────────────
-// At Stage 5 all three characters keep identical gameplay abilities and
-// collision body dimensions for consistent platforming behavior.
+// All playable characters keep identical gameplay abilities and collision body
+// dimensions for consistent platforming behavior.
 
 export interface CharacterConfig {
     /** Unique identifier used in scene data and localStorage. */

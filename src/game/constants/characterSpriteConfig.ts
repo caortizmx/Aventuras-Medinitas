@@ -1,4 +1,4 @@
-// Canonical Stage 5 playable character ids. Add new playable characters here,
+// Canonical playable character ids. Add new playable characters here,
 // then provide entries in all maps below to keep asset and animation wiring in sync.
 export const CHARACTER_IDS = ['emma', 'orel', 'israel'] as const;
 
