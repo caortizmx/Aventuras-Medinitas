@@ -66,10 +66,13 @@ if [[ -z "$CURRENT_BRANCH" ]]; then
 fi
 
 echo "Current branch: $CURRENT_BRANCH"
-if [[ "$CURRENT_BRANCH" == "$TARGET_BRANCH" || "$CURRENT_BRANCH" == "main" || "$CURRENT_BRANCH" == "master" ]]; then
-  echo "Do not push directly to protected branch '$CURRENT_BRANCH'. Use a feature branch and PR."
-  exit 1
-fi
+PROTECTED_BRANCHES=("$TARGET_BRANCH" "main" "master")
+for protected_branch in "${PROTECTED_BRANCHES[@]}"; do
+  if [[ "$CURRENT_BRANCH" == "$protected_branch" ]]; then
+    echo "Do not push directly to protected branch '$CURRENT_BRANCH'. Use a feature branch and PR."
+    exit 1
+  fi
+done
 
 echo "Verifying remotes and heads..."
 git remote -v

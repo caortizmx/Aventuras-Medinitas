@@ -64,7 +64,8 @@ This helper enforces the workflow to reduce GH013 branch protection/ruleset fail
 - Verify branch and remote heads
 - Run required local checks (`npm run typecheck` and `npm run test`)
 
-If GH013 (GitHub branch/ruleset policy rejection) still appears, treat it as a policy rejection and fix the exact violated rule from the error output (required status checks, incorrect target branch, missing commit signatures/sign-offs, or PR-only workflow requirements).
+If GH013 (GitHub branch/ruleset policy rejection) still appears, treat it as a policy rejection and fix the exact violated rule from the error output.
+Common violations include required status checks, incorrect target branch, missing commit signatures/sign-offs, or PR-only workflow requirements.
 
 ## Writing Code
 
