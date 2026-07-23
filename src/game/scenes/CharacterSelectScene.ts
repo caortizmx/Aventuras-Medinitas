@@ -106,7 +106,9 @@ export class CharacterSelect extends Scene {
             const preview = this.add.sprite(cx, cy - 20, char.assetKey, 0)
                 .setDisplaySize(84, 84);
             const idleAnimationKey = getCharacterAnimationKey(char.id, 'idle');
-            if (this.anims.exists(idleAnimationKey)) {
+            const idleAnimation = this.anims.get(idleAnimationKey);
+            const firstFrame = idleAnimation?.frames?.[0];
+            if (idleAnimation && firstFrame && typeof firstFrame.duration === 'number') {
                 preview.play(idleAnimationKey);
             }
 
