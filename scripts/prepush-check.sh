@@ -6,7 +6,7 @@ REMOTE="origin"
 TARGET_BRANCH="main"
 RUN_BUILD=false
 SKIP_UNSHALLOW=false
-USAGE="Usage: npm run prepush:check -- [--build] [--skip-unshallow] [--target <branch>] [--remote <remote>]"
+USAGE="Usage: npm run prepush:check -- [--build] [--skip-unshallow] [--target <branch>] [--remote <remote>] (flags can be combined in any order)"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -79,7 +79,9 @@ done
 
 echo "Verifying remotes and heads..."
 git remote -v
-git ls-remote --heads "$REMOTE"
+if git ls-remote --heads "$REMOTE" >/dev/null; then
+  echo "Remote head refs are reachable for '$REMOTE'."
+fi
 
 if git rev-parse --abbrev-ref --symbolic-full-name '@{u}' >/dev/null 2>&1; then
   echo "Upstream: $(git rev-parse --abbrev-ref --symbolic-full-name '@{u}')"
@@ -96,7 +98,7 @@ if [[ "$RUN_BUILD" == "true" ]]; then
   npm run build
 fi
 
-echo
+printf '\n'
 echo "Pre-push checks completed."
 echo "If you still get GH013 (GitHub branch/ruleset policy rejection), fix the exact rule from the error message."
 echo "Common fixes: required status checks, correct target branch, missing commit signatures/sign-offs, and PR-only workflow requirements."
