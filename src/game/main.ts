@@ -7,6 +7,8 @@ import { LevelComplete } from './scenes/LevelCompleteScene';
 import { AUTO, Game, Scale } from 'phaser';
 import { Preloader } from './scenes/Preloader';
 import { GAME_HEIGHT, GAME_WIDTH, GRAVITY } from './constants/gameValues';
+import { AtlasSmoke } from './scenes/AtlasSmokeScene';
+import { AssetGallery } from './scenes/AssetGalleryScene';
 
 const config: Phaser.Types.Core.GameConfig = {
     type: AUTO,
@@ -16,6 +18,7 @@ const config: Phaser.Types.Core.GameConfig = {
     // whole-pixel positioning are the cheapest, highest-impact visual polish
     // wins available before any new art assets are produced.
     pixelArt: true,
+    antialias: false,
     roundPixels: true,
     scale: {
         mode:       Scale.FIT,
@@ -38,6 +41,7 @@ const config: Phaser.Types.Core.GameConfig = {
         LevelOne,
         LevelComplete,
         GameOver,
+        ...(import.meta.env.DEV ? [AtlasSmoke, AssetGallery] : []),
     ],
 };
 

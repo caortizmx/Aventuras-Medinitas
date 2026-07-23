@@ -5,6 +5,7 @@ import { SCENE_LEVEL_ONE } from '../constants/sceneKeys';
 import { GAME_WIDTH, GAME_HEIGHT } from '../constants/gameValues';
 import { getCharacterAnimationKey } from '../constants/animationKeys';
 import { LEVEL_ONE_COLLECTIBLE_TARGET_COUNT } from '../constants/tiledLevel';
+import { CHARACTER_VISUALS } from '../assets/characterVisualConfig';
 
 // ── Layout constants ──────────────────────────────────────────────────────────
 const CARD_W      = 160;
@@ -104,8 +105,10 @@ export class CharacterSelect extends Scene {
                 .setStrokeStyle(4, CLR_BORDER_SEL)
                 .setFillStyle(0, 0);   // transparent fill
 
-            const preview = this.add.sprite(cx, cy - 20, char.assetKey, 0)
-                .setDisplaySize(84, 84);
+            const visual = CHARACTER_VISUALS[char.id];
+            const preview = this.add.sprite(cx, cy + 18, visual.atlasKey, visual.idleFrame)
+                .setOrigin(visual.originX, visual.originY)
+                .setDisplaySize(92, 69);
             const idleAnimationKey = getCharacterAnimationKey(char.id, 'idle');
             const idleAnimation = this.anims.get(idleAnimationKey);
             const firstFrame = idleAnimation?.frames?.[0];

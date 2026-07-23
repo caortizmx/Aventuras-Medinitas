@@ -148,5 +148,52 @@
       "israel_celebrate_04",
       "israel_celebrate_05"
     ]
+  },
+  "gameplay_assets": {
+    "enemy_small_walk": [
+      "enemy_small_walk_00",
+      "enemy_small_walk_01",
+      "enemy_small_walk_02",
+      "enemy_small_walk_03",
+      "enemy_small_walk_04",
+      "enemy_small_walk_05",
+      "enemy_small_walk_06"
+    ],
+    "enemy_large_walk": [
+      "enemy_large_walk_00",
+      "enemy_large_walk_01",
+      "enemy_large_walk_02",
+      "enemy_large_walk_03",
+      "enemy_large_walk_04",
+      "enemy_large_walk_05"
+    ],
+    "collectible_gem": [
+      "collectible_gem_00",
+      "collectible_gem_01",
+      "collectible_gem_02",
+      "collectible_gem_03",
+      "collectible_gem_04",
+      "collectible_gem_05",
+      "collectible_gem_06",
+      "collectible_gem_07"
+    ],
+    "checkpoint_idle": [
+      "checkpoint_00",
+      "checkpoint_01",
+      "checkpoint_02"
+    ],
+    "checkpoint_active": [
+      "checkpoint_03",
+      "checkpoint_04",
+      "checkpoint_05"
+    ],
+    "goal_portal": [
+      "goal_portal_00",
+      "goal_portal_01",
+      "goal_portal_02",
+      "goal_portal_03",
+      "goal_portal_04",
+      "goal_portal_05"
+    ]
   }
 }
