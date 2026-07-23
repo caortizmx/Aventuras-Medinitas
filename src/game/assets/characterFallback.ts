@@ -94,11 +94,22 @@ function ensureFallbackTexture(
     }
 
     const sheetTexture = createFallbackSheet(scene, key, characterId);
-    const spriteSheetSource = sheetTexture.getSourceImage() as HTMLImageElement;
-    scene.textures.addSpriteSheet(key, spriteSheetSource, {
+    const spriteSheetSource = sheetTexture.getSourceImage();
+    const spriteSheetConfig = {
         frameWidth:  CHARACTER_SPRITESHEET_SPEC.frameWidth,
         frameHeight: CHARACTER_SPRITESHEET_SPEC.frameHeight,
-    });
+    };
+    if (spriteSheetSource instanceof HTMLImageElement) {
+        scene.textures.addSpriteSheet(key, spriteSheetSource, spriteSheetConfig);
+    } else if (spriteSheetSource instanceof HTMLCanvasElement) {
+        scene.textures.addSpriteSheet(
+            key,
+            spriteSheetSource as unknown as HTMLImageElement,
+            spriteSheetConfig,
+        );
+    } else {
+        throw new Error(`Unsupported fallback texture source for "${key}".`);
+    }
     scene.textures.remove(sheetTexture.key);
 }
 
