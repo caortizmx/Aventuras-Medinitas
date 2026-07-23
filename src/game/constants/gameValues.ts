@@ -8,6 +8,10 @@ export const JUMP_FORCE    = -480;  // px/s vertical (negative = up)
 export const PLAYER_COLOR  = 0xe74c3c;
 export const HURT_RECOVERY_DELAY_MS = 350;
 export const CELEBRATION_EXIT_DELAY_MS = 2500;
+export const PLAYER_INITIAL_LIVES = 3;
+export const PLAYER_INVULNERABILITY_MS = 1200;
+export const PLAYER_KNOCKBACK_X = 230;
+export const PLAYER_KNOCKBACK_Y = -260;
 
 // ─── Physics ──────────────────────────────────────────────────────────────────
 export const GRAVITY = 800; // px/s²
