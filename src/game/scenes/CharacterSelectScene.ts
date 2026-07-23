@@ -1,6 +1,6 @@
 import { Scene } from 'phaser';
 import { CHARACTERS, CharacterConfig, getDefaultCharacter } from '../data/characters';
-import { saveSelectedCharacter, loadSelectedCharacterId } from '../system/SaveSystem';
+import { saveSelectedCharacter, loadSelectedCharacterId, loadGameSaveData } from '../system/SaveSystem';
 import { SCENE_LEVEL_ONE } from '../constants/sceneKeys';
 import { GAME_WIDTH, GAME_HEIGHT } from '../constants/gameValues';
 import { getCharacterAnimationKey } from '../constants/animationKeys';
@@ -154,11 +154,22 @@ export class CharacterSelect extends Scene {
     }
 
     private _buildHint(): void {
+        const progress = loadGameSaveData();
+        const bestScore = progress.bestScores['level-1'] ?? 0;
+        const bestCollectibles = progress.bestCollectibleCounts['level-1'] ?? 0;
+
         this.add.text(GAME_WIDTH / 2, GAME_HEIGHT - 14,
             '← / → or A / D to navigate   •   Enter or Space to start', {
             fontFamily: 'monospace',
             fontSize:   '11px',
             color:      '#aaaaaa',
+        }).setOrigin(0.5);
+
+        this.add.text(GAME_WIDTH / 2, GAME_HEIGHT - 32,
+            `Unlocked level: ${progress.unlockedLevel}   •   Best score: ${bestScore}   •   Best collectibles: ${bestCollectibles}/3`, {
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            color: '#8ec5ff',
         }).setOrigin(0.5);
     }
 

@@ -3,6 +3,7 @@ import { GameOver } from './scenes/GameOverScene';
 import { MainMenu } from './scenes/MainMenuScene';
 import { CharacterSelect } from './scenes/CharacterSelectScene';
 import { LevelOne } from './scenes/LevelOneScene';
+import { LevelComplete } from './scenes/LevelCompleteScene';
 import { AUTO, Game, Scale } from 'phaser';
 import { Preloader } from './scenes/Preloader';
 import { GAME_HEIGHT, GAME_WIDTH, GRAVITY } from './constants/gameValues';
@@ -30,6 +31,7 @@ const config: Phaser.Types.Core.GameConfig = {
         MainMenu,
         CharacterSelect,
         LevelOne,
+        LevelComplete,
         GameOver,
     ],
 };
@@ -37,4 +39,3 @@ const config: Phaser.Types.Core.GameConfig = {
 const StartGame = (parent: string): Game => new Game({ ...config, parent });
 
 export default StartGame;
-
