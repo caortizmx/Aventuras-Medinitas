@@ -11,13 +11,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateNotice = document.createElement('aside');
     updateNotice.id = 'pwa-update-notice';
     updateNotice.hidden = true;
-    updateNotice.innerHTML = [
-        '<p>A new version is ready. Apply it when you are in a safe screen (menu/pause).</p>',
-        '<div class="pwa-update-actions">',
-        '<button id="pwa-apply-update" type="button">Apply update</button>',
-        '<button id="pwa-dismiss-update" type="button">Later</button>',
-        '</div>',
-    ].join('');
+    const updateMessage = document.createElement('p');
+    updateMessage.textContent = 'A new version is ready. Apply it when you are in a safe screen (menu/pause).';
+
+    const updateActions = document.createElement('div');
+    updateActions.className = 'pwa-update-actions';
+
+    const applyButton = document.createElement('button');
+    applyButton.id = 'pwa-apply-update';
+    applyButton.type = 'button';
+    applyButton.textContent = 'Apply update';
+
+    const dismissButton = document.createElement('button');
+    dismissButton.id = 'pwa-dismiss-update';
+    dismissButton.type = 'button';
+    dismissButton.textContent = 'Later';
+
+    updateActions.appendChild(applyButton);
+    updateActions.appendChild(dismissButton);
+    updateNotice.appendChild(updateMessage);
+    updateNotice.appendChild(updateActions);
     document.body.appendChild(updateNotice);
 
     registerPwa({
