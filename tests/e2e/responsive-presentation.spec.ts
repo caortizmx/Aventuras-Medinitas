@@ -15,6 +15,52 @@ async function waitForScene(page: Page, key: string): Promise<void> {
     }, key);
 }
 
+test('Preloader uses the logo loaded by Boot and keeps loading UI visible', async ({ page }) => {
+    await page.route('**/assets/game/**', async (route) => {
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+        await route.continue();
+    });
+    await page.goto('/');
+    await page.waitForFunction(() => {
+        const scene = window.__PHASER_GAME__?.scene.getScene('Preloader');
+        return scene?.children.list.some((child) => (
+            child.type === 'Image'
+            && (child as Phaser.GameObjects.Image).texture.key === 'logo'
+        )) === true;
+    });
+
+    const state = await page.evaluate(() => {
+        const game = window.__PHASER_GAME__!;
+        const scene = game.scene.getScene('Preloader');
+        const logo = scene.children.list.find((child) => (
+            child.type === 'Image'
+            && (child as Phaser.GameObjects.Image).texture.key === 'logo'
+        )) as Phaser.GameObjects.Image | undefined;
+        const loadingText = scene.children.list
+            .filter((child): child is Phaser.GameObjects.Text => child.type === 'Text')
+            .map((text) => text.text);
+        const bounds = logo?.getBounds();
+        return {
+            logoLoaded: game.textures.exists('logo'),
+            logoVisible: logo?.visible === true,
+            logoBounds: bounds
+                ? { left: bounds.left, top: bounds.top, right: bounds.right, bottom: bounds.bottom }
+                : undefined,
+            cameraWidth: scene.cameras.main.width,
+            cameraHeight: scene.cameras.main.height,
+            loadingText,
+        };
+    });
+
+    expect(state.logoLoaded).toBe(true);
+    expect(state.logoVisible).toBe(true);
+    expect(state.logoBounds?.left).toBeGreaterThanOrEqual(0);
+    expect(state.logoBounds?.top).toBeGreaterThanOrEqual(0);
+    expect(state.logoBounds?.right).toBeLessThanOrEqual(state.cameraWidth);
+    expect(state.logoBounds?.bottom).toBeLessThanOrEqual(state.cameraHeight);
+    expect(state.loadingText.some((text) => text.endsWith('%'))).toBe(true);
+});
+
 for (const viewport of LANDSCAPE_VIEWPORTS) {
     test(`menu and loading composition fits ${viewport.width}x${viewport.height}`, async ({ page }) => {
         const consoleErrors: string[] = [];

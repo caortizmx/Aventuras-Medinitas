@@ -9,6 +9,7 @@ export default defineConfig({
         headless: true,
         screenshot: 'only-on-failure',
         trace: 'retain-on-failure',
+        serviceWorkers: 'block',
     },
     webServer: {
         command: 'npm run dev-nolog -- --host 127.0.0.1',
