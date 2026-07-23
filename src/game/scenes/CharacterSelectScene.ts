@@ -3,6 +3,7 @@ import { CHARACTERS, CharacterConfig, getDefaultCharacter } from '../data/charac
 import { saveSelectedCharacter, loadSelectedCharacterId } from '../system/SaveSystem';
 import { SCENE_LEVEL_ONE } from '../constants/sceneKeys';
 import { GAME_WIDTH, GAME_HEIGHT } from '../constants/gameValues';
+import { getCharacterAnimationKey } from '../constants/animationKeys';
 
 // ── Layout constants ──────────────────────────────────────────────────────────
 const CARD_W      = 160;
@@ -32,7 +33,7 @@ const CARD_CENTERS_X = [
 interface CardObjects {
     bg:     Phaser.GameObjects.Rectangle;
     border: Phaser.GameObjects.Rectangle;
-    swatch: Phaser.GameObjects.Rectangle;
+    preview: Phaser.GameObjects.Sprite;
     name:   Phaser.GameObjects.Text;
 }
 
@@ -102,13 +103,9 @@ export class CharacterSelect extends Scene {
                 .setStrokeStyle(4, CLR_BORDER_SEL)
                 .setFillStyle(0, 0);   // transparent fill
 
-            // Character colour swatch (placeholder sprite)
-            const swatch = this.add.rectangle(
-                cx,
-                cy - 20,
-                80, 90,
-                char.temporaryColor,
-            );
+            const preview = this.add.sprite(cx, cy - 20, char.assetKey, 0)
+                .setDisplaySize(84, 84);
+            preview.play(getCharacterAnimationKey(char.id, 'idle'));
 
             // Character name below swatch
             const name = this.add.text(cx, cy + 66, char.displayName, {
@@ -117,7 +114,7 @@ export class CharacterSelect extends Scene {
                 color:      CLR_TEXT,
             }).setOrigin(0.5);
 
-            this._cards.push({ bg, border, swatch, name });
+            this._cards.push({ bg, border, preview, name });
 
             // Pointer interactions
             bg.on('pointerdown', () => {

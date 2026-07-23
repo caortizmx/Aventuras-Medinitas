@@ -1,7 +1,16 @@
 import { Scene } from 'phaser';
+import { registerCharacterAnimations } from '../animations/characterAnimations';
+import { ensureCharacterFallbackTextures } from '../assets/characterFallback';
+import { getCharacterAnimationKey, CharacterAnimationState } from '../constants/animationKeys';
 import { InputController } from '../input/InputController';
 import { MobileControls } from '../input/MobileControls';
 import {
+    CELEBRATION_EXIT_DELAY_MS,
+    HURT_RECOVERY_DELAY_MS,
+    PLAYER_HEIGHT,
+    PLAYER_RUN_ANIMATION_THRESHOLD,
+    PLAYER_SPRITE_SCALE,
+    PLAYER_WIDTH,
     CAMERA_LERP_X, CAMERA_LERP_Y,
     GAME_HEIGHT, GAME_WIDTH,
     GOAL_COLOR, GOAL_HEIGHT, GOAL_WIDTH, GOAL_X, GOAL_Y,
@@ -14,6 +23,7 @@ import {
 } from '../constants/gameValues';
 import { SCENE_MAIN_MENU } from '../constants/sceneKeys';
 import { CharacterConfig, findCharacterById, getDefaultCharacter } from '../data/characters';
+import { ASSET_KEYS } from '../constants/assetKeys';
 
 type SpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
@@ -32,8 +42,10 @@ export class LevelOne extends Scene {
 
     private _isPaused  = false;
     private _levelDone = false;
+    private _isHurt    = false;
     private _prevJump  = false;
     private _prevPause = false;
+    private _activeAnimState?: CharacterAnimationState;
 
     constructor() { super('LevelOne'); }
 
@@ -42,15 +54,19 @@ export class LevelOne extends Scene {
     init(data: { characterId?: string }): void {
         this._character = (data?.characterId ? findCharacterById(data.characterId) : undefined)
             ?? getDefaultCharacter();
-        // Compute spawn Y so every character lands flush on the ground
-        this._spawnY = WORLD_HEIGHT - GROUND_HEIGHT - this._character.collisionHeight / 2;
+        // Compute spawn Y so every character lands flush on the ground.
+        // Use half the scaled display height (not the collision body) because
+        // Phaser positions the sprite by its visual centre.
+        this._spawnY = WORLD_HEIGHT - GROUND_HEIGHT - (PLAYER_HEIGHT * PLAYER_SPRITE_SCALE) / 2;
     }
 
     create(): void {
         this._isPaused  = false;
         this._levelDone = false;
+        this._isHurt    = false;
         this._prevJump  = false;
         this._prevPause = false;
+        this._activeAnimState = undefined;
 
         // ── Input ────────────────────────────────────────────────────────────
         this._input  = new InputController();
@@ -66,19 +82,22 @@ export class LevelOne extends Scene {
         });
 
         // ── Textures (1-px white; resize per object) ──────────────────────────
-        if (!this.textures.exists('px')) {
+        if (!this.textures.exists(ASSET_KEYS.pixel)) {
             const g = this.add.graphics();
             g.fillStyle(0xffffff).fillRect(0, 0, 1, 1);
-            g.generateTexture('px', 1, 1);
+            g.generateTexture(ASSET_KEYS.pixel, 1, 1);
             g.destroy();
         }
+
+        ensureCharacterFallbackTextures(this, new Set<string>());
+        registerCharacterAnimations(this.anims);
 
         // ── World bounds (tall enough that kill-zone fires before bottom) ─────
         this.physics.world.setBounds(0, -200, WORLD_WIDTH, WORLD_HEIGHT + 2200);
 
         // ── Ground ───────────────────────────────────────────────────────────
         const ground = this.physics.add.staticImage(
-            GROUND_WIDTH / 2, GROUND_Y, 'px',
+            GROUND_WIDTH / 2, GROUND_Y, ASSET_KEYS.pixel,
         );
         ground.setDisplaySize(GROUND_WIDTH, GROUND_HEIGHT)
               .setTint(GROUND_COLOR)
@@ -89,21 +108,27 @@ export class LevelOne extends Scene {
         platforms.add(ground, true);
 
         for (const [cx, cy, w] of PLATFORMS) {
-            const p = this.physics.add.staticImage(cx, cy, 'px');
+            const p = this.physics.add.staticImage(cx, cy, ASSET_KEYS.pixel);
             p.setDisplaySize(w, PLATFORM_HEIGHT).setTint(PLATFORM_COLOR).refreshBody();
             platforms.add(p, true);
         }
 
         // ── Goal zone ────────────────────────────────────────────────────────
-        const goal = this.physics.add.staticImage(GOAL_X, GOAL_Y, 'px');
+        const goal = this.physics.add.staticImage(GOAL_X, GOAL_Y, ASSET_KEYS.pixel);
         goal.setDisplaySize(GOAL_WIDTH, GOAL_HEIGHT).setTint(GOAL_COLOR).refreshBody();
 
         // ── Player (appearance driven by character config) ────────────────────
-        this._player = this.physics.add.sprite(SPAWN_X, this._spawnY, 'px');
+        this._player = this.physics.add.sprite(SPAWN_X, this._spawnY, this._character.assetKey, 0);
         this._player
-            .setDisplaySize(this._character.collisionWidth, this._character.collisionHeight)
-            .setTint(this._character.temporaryColor)
+            .setDisplaySize(PLAYER_WIDTH * PLAYER_SPRITE_SCALE, PLAYER_HEIGHT * PLAYER_SPRITE_SCALE)
             .setCollideWorldBounds(true);
+
+        const body = this._player.body;
+        body.setSize(this._character.collisionWidth, this._character.collisionHeight);
+        body.setOffset(
+            (this._player.width - this._character.collisionWidth) / 2,
+            this._player.height - this._character.collisionHeight,
+        );
 
         // ── Physics / Collisions ──────────────────────────────────────────────
         this.physics.add.collider(this._player, platforms);
@@ -116,6 +141,7 @@ export class LevelOne extends Scene {
         this.cameras.main.startFollow(
             this._player, false, CAMERA_LERP_X, CAMERA_LERP_Y,
         );
+        this._playCharacterAnimation('idle');
 
         // ── UI decorations ────────────────────────────────────────────────────
         this._buildUI();
@@ -130,13 +156,15 @@ export class LevelOne extends Scene {
         if (state.pause && !this._prevPause) this._togglePause();
         this._prevPause = state.pause;
 
-        if (this._isPaused || this._levelDone) return;
+        if (this._isPaused || this._levelDone || this._isHurt) return;
 
         // ── Horizontal movement ───────────────────────────────────────────────
         if (state.left && !state.right) {
             this._player.setVelocityX(-this._character.movementSpeed);
+            this._player.setFlipX(true);
         } else if (state.right && !state.left) {
             this._player.setVelocityX(this._character.movementSpeed);
+            this._player.setFlipX(false);
         } else {
             this._player.setVelocityX(0);
         }
@@ -147,9 +175,10 @@ export class LevelOne extends Scene {
             this._player.setVelocityY(this._character.jumpVelocity);
         }
         this._prevJump = state.jump;
+        this._updateMovementAnimation();
 
         // ── Kill zone ─────────────────────────────────────────────────────────
-        if (this._player.y > KILL_ZONE_Y) this._respawn();
+        if (this._player.y > KILL_ZONE_Y && !this._isHurt) this._enterHurtState();
     }
 
     // ── Private helpers ───────────────────────────────────────────────────────
@@ -159,6 +188,21 @@ export class LevelOne extends Scene {
         this._player.setVelocity(0, 0);
         this._input.resetAll();
         this._prevJump = false;
+        this._isHurt = false;
+        this._player.body.moves = true;
+        this._playCharacterAnimation('idle');
+    }
+
+    private _enterHurtState(): void {
+        this._isHurt = true;
+        this._input.resetAll();
+        this._player.setVelocity(0, 0);
+        this._player.body.moves = false;
+        this._playCharacterAnimation('hurt');
+
+        this.time.delayedCall(HURT_RECOVERY_DELAY_MS, () => {
+            this._respawn();
+        });
     }
 
     private _togglePause(): void {
@@ -181,10 +225,11 @@ export class LevelOne extends Scene {
         this._levelDone = true;
         this._input.resetAll();
         this._player.setVelocity(0, 0);
-        this.physics.pause();
+        this._player.body.moves = false;
+        this._playCharacterAnimation('celebrate');
         this._goalBanner.setVisible(true);
 
-        this.time.delayedCall(2500, () => {
+        this.time.delayedCall(CELEBRATION_EXIT_DELAY_MS, () => {
             this.scene.start(SCENE_MAIN_MENU);
         });
     }
@@ -253,5 +298,36 @@ export class LevelOne extends Scene {
                 align:      'right',
             })
             .setOrigin(1, 0).setScrollFactor(0).setDepth(depth);
+    }
+
+    private _updateMovementAnimation(): void {
+        const body = this._player.body;
+        const grounded = body.blocked.down || body.touching.down;
+        const velocityX = this._player.body.velocity.x;
+        const velocityY = this._player.body.velocity.y;
+
+        if (!grounded) {
+            if (velocityY < 0) {
+                this._playCharacterAnimation('jump');
+            } else {
+                this._playCharacterAnimation('fall');
+            }
+            return;
+        }
+
+        if (Math.abs(velocityX) > PLAYER_RUN_ANIMATION_THRESHOLD) {
+            this._playCharacterAnimation('run');
+            return;
+        }
+
+        this._playCharacterAnimation('idle');
+    }
+
+    private _playCharacterAnimation(state: CharacterAnimationState): void {
+        if (this._activeAnimState === state) {
+            return;
+        }
+        this._activeAnimState = state;
+        this._player.play(getCharacterAnimationKey(this._character.id, state), true);
     }
 }

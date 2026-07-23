@@ -1,11 +1,12 @@
+import { CharacterId, getCharacterAssetKey } from '../constants/characterSpriteConfig';
+
 // ── Character configuration ───────────────────────────────────────────────────
-// At Stage 4 all three characters have identical gameplay abilities (speed and
-// jump velocity). Physical dimensions differ slightly to define each character's
-// visual placeholder; these are intentional per-character values.
+// All playable characters keep identical gameplay abilities and collision body
+// dimensions for consistent platforming behavior.
 
 export interface CharacterConfig {
     /** Unique identifier used in scene data and localStorage. */
-    id: string;
+    id: CharacterId;
     /** Human-readable label shown in the selection UI. */
     displayName: string;
     /** Temporary placeholder tint colour (hex number) until real sprites land. */
@@ -27,9 +28,9 @@ export const CHARACTERS: readonly CharacterConfig[] = [
         id:             'emma',
         displayName:    'Emma',
         temporaryColor: 0xe91e8c,   // pink
-        assetKey:       'emma',
+        assetKey:       getCharacterAssetKey('emma'),
         collisionWidth:  28,
-        collisionHeight: 44,
+        collisionHeight: 42,
         movementSpeed:   220,
         jumpVelocity:   -480,
     },
@@ -37,9 +38,9 @@ export const CHARACTERS: readonly CharacterConfig[] = [
         id:             'orel',
         displayName:    'Orel',
         temporaryColor: 0x3498db,   // blue
-        assetKey:       'orel',
-        collisionWidth:  30,
-        collisionHeight: 46,
+        assetKey:       getCharacterAssetKey('orel'),
+        collisionWidth:  28,
+        collisionHeight: 42,
         movementSpeed:   220,
         jumpVelocity:   -480,
     },
@@ -47,9 +48,9 @@ export const CHARACTERS: readonly CharacterConfig[] = [
         id:             'israel',
         displayName:    'Israel',
         temporaryColor: 0x2ecc71,   // green
-        assetKey:       'israel',
-        collisionWidth:  34,
-        collisionHeight: 50,
+        assetKey:       getCharacterAssetKey('israel'),
+        collisionWidth:  28,
+        collisionHeight: 42,
         movementSpeed:   220,
         jumpVelocity:   -480,
     },
