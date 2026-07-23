@@ -43,6 +43,12 @@ Optional build preflight:
 npm run prepush:check -- --build
 ```
 
+Optional remote override (default is `origin`):
+
+```bash
+npm run prepush:check -- --remote upstream
+```
+
 This helper enforces the workflow to reduce GH013 branch protection/ruleset failures (default remote is `origin`, override with `--remote <remote>`):
 
 - Sync refs with `git fetch --prune origin`
@@ -52,7 +58,7 @@ This helper enforces the workflow to reduce GH013 branch protection/ruleset fail
 - Verify branch and remote heads
 - Run required local checks (`npm run typecheck` and `npm run test`)
 
-If GH013 still appears, treat it as a policy rejection and fix the exact violated rule from the error output (required checks, branch target, signed commits/signoff, or PR requirement).
+If GH013 still appears, treat it as a policy rejection and fix the exact violated rule from the error output (required status checks, incorrect target branch, missing commit signatures/sign-offs, or PR-only workflow requirements).
 
 ## Writing Code
 

@@ -57,7 +57,7 @@ fi
 
 echo "Current branch: $CURRENT_BRANCH"
 if [[ "$CURRENT_BRANCH" == "main" || "$CURRENT_BRANCH" == "master" ]]; then
-  echo "Do not push directly to protected branches '$CURRENT_BRANCH'. Use a feature branch and PR."
+  echo "Do not push directly to protected branch '$CURRENT_BRANCH'. Use a feature branch and PR."
   exit 1
 fi
 
