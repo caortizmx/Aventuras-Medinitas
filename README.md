@@ -29,7 +29,7 @@ This template has been updated for:
 | `npm run build-nolog` | Create a production build in the `dist` folder without sending anonymous data (see "About log.js" below) |
 | `npm run prepush:check` | Sync refs, verify branch/remote state, and run local checks before pushing |
 
-## GH013-safe Workflow (Future Work)
+## GH013-safe Workflow
 
 Before any rebase, merge, or push, run:
 

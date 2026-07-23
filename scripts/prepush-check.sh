@@ -13,10 +13,20 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --target)
+      if [[ $# -lt 2 || "$2" == --* ]]; then
+        echo "Missing value for --target"
+        echo "Usage: npm run prepush:check -- [--build] [--target <branch>] [--remote <remote>]"
+        exit 1
+      fi
       TARGET_BRANCH="${2:-}"
       shift 2
       ;;
     --remote)
+      if [[ $# -lt 2 || "$2" == --* ]]; then
+        echo "Missing value for --remote"
+        echo "Usage: npm run prepush:check -- [--build] [--target <branch>] [--remote <remote>]"
+        exit 1
+      fi
       REMOTE="${2:-}"
       shift 2
       ;;
