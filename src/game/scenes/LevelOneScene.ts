@@ -60,7 +60,7 @@ export class LevelOne extends Scene {
         );
 
         // Cleanup on scene stop so listeners aren't duplicated on restart
-        this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+        this.events.once('shutdown', () => {
             this._input.destroy();
             this._mobile.destroy();
         });
