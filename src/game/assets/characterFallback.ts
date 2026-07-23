@@ -67,17 +67,49 @@ function createFallbackSheet(scene: Phaser.Scene, textureKey: string, characterI
     return canvasTexture;
 }
 
-function ensureFallbackTexture(scene: Phaser.Scene, characterId: CharacterId): void {
+const REQUIRED_CHARACTER_FRAME_INDEX = Math.max(
+    ...Object.values(CHARACTER_SPRITESHEET_SPEC.animations).map(({ end }) => end),
+);
+
+function hasExpectedCharacterFrames(scene: Phaser.Scene, textureKey: string): boolean {
+    if (!scene.textures.exists(textureKey)) {
+        return false;
+    }
+
+    const texture = scene.textures.get(textureKey);
+    return texture.has(String(REQUIRED_CHARACTER_FRAME_INDEX));
+}
+
+function ensureFallbackTexture(
+    scene: Phaser.Scene,
+    characterId: CharacterId,
+    forceReplaceExisting = false,
+): void {
     const key = getCharacterAssetKey(characterId);
+    if (scene.textures.exists(key) && (forceReplaceExisting || !hasExpectedCharacterFrames(scene, key))) {
+        scene.textures.remove(key);
+    }
     if (scene.textures.exists(key)) {
         return;
     }
 
     const sheetTexture = createFallbackSheet(scene, key, characterId);
-    scene.textures.addSpriteSheet(key, sheetTexture.canvas, {
+    const spriteSheetSource = sheetTexture.getSourceImage();
+    const spriteSheetConfig = {
         frameWidth:  CHARACTER_SPRITESHEET_SPEC.frameWidth,
         frameHeight: CHARACTER_SPRITESHEET_SPEC.frameHeight,
-    });
+    };
+    if (spriteSheetSource instanceof HTMLImageElement) {
+        scene.textures.addSpriteSheet(key, spriteSheetSource, spriteSheetConfig);
+    } else if (spriteSheetSource instanceof HTMLCanvasElement) {
+        scene.textures.addSpriteSheet(
+            key,
+            spriteSheetSource as unknown as HTMLImageElement,
+            spriteSheetConfig,
+        );
+    } else {
+        throw new Error(`Unsupported fallback texture source for "${key}".`);
+    }
     scene.textures.remove(sheetTexture.key);
 }
 
@@ -88,7 +120,7 @@ export function ensureCharacterFallbackTextures(
     for (const key of failedAssetKeys) {
         const characterId = findCharacterIdByAssetKey(key);
         if (characterId) {
-            ensureFallbackTexture(scene, characterId);
+            ensureFallbackTexture(scene, characterId, true);
         }
     }
 

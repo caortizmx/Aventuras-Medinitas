@@ -27,6 +27,51 @@ This template has been updated for:
 | `npm run build` | Create a production build in the `dist` folder |
 | `npm run dev-nolog` | Launch a development web server without sending anonymous data (see "About log.js" below) |
 | `npm run build-nolog` | Create a production build in the `dist` folder without sending anonymous data (see "About log.js" below) |
+| `npm run prepush:check` | Sync refs, verify branch/remote state, and run local checks before pushing |
+
+## GH013-safe Workflow
+
+Before any rebase, merge, or push, run:
+
+```bash
+npm run prepush:check
+```
+
+Optional build preflight:
+
+```bash
+npm run prepush:check -- --build
+```
+
+Optional remote override (default is `origin`):
+
+```bash
+npm run prepush:check -- --remote upstream
+```
+
+Optional target branch override (default is `main`):
+
+```bash
+npm run prepush:check -- --target develop
+```
+
+Optional skip for unshallow step:
+
+```bash
+npm run prepush:check -- --skip-unshallow
+```
+
+This helper enforces the workflow to reduce GH013 branch protection/ruleset failures:
+
+- Sync refs with `git fetch --prune <remote>` (default: `origin`)
+- Unshallow when needed with `git fetch --unshallow <remote>`
+- Fetch explicit target branch ref (`<remote>/<target-branch>`)
+- Block direct pushes from protected branches (`main` / `master`)
+- Verify branch and remote heads
+- Run required local checks (`npm run typecheck` and `npm run test`)
+
+If GH013 (GitHub branch/ruleset policy rejection) still appears, treat it as a policy rejection and fix the exact violated rule from the error output.
+Common violations include required status checks, incorrect target branch, missing commit signatures/sign-offs, or PR-only workflow requirements.
 
 ## Writing Code
 
