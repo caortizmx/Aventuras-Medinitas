@@ -1,0 +1,15 @@
+export const RENDER_DEPTHS = {
+    backgroundSky: -90,
+    backgroundMountains: -60,
+    backgroundHills: -40,
+    rearDecoration: -10,
+    terrain: 0,
+    collisionDebug: 4,
+    gameplay: 5,
+    player: 6,
+    enemies: 7,
+    foregroundDecoration: 15,
+    hud: 100,
+    modal: 200,
+    orientationWarning: 300,
+} as const;

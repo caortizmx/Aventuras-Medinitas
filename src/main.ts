@@ -7,7 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('standalone-mode');
     }
 
-    StartGame('game-container');
+    const game = StartGame('game-container');
+    if (import.meta.env.DEV) {
+        window.__PHASER_GAME__ = game;
+    }
     const updateNotice = document.createElement('aside');
     updateNotice.id = 'pwa-update-notice';
     updateNotice.hidden = true;
