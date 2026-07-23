@@ -1,0 +1,4992 @@
+{
+  "emma": {
+    "emma_idle_00": {
+      "sourceRowBand": [
+        35,
+        191
+      ],
+      "assignedComponents": [
+        {
+          "area": 7803,
+          "bbox": [
+            114,
+            51,
+            211,
+            181
+          ],
+          "centroid": [
+            167.301,
+            110.113
+          ]
+        }
+      ],
+      "mainComponentArea": 7803,
+      "translation": [
+        -46,
+        -5
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        68,
+        46,
+        165,
+        176
+      ]
+    },
+    "emma_idle_01": {
+      "sourceRowBand": [
+        35,
+        191
+      ],
+      "assignedComponents": [
+        {
+          "area": 7433,
+          "bbox": [
+            346,
+            54,
+            439,
+            182
+          ],
+          "centroid": [
+            396.688,
+            112.264
+          ]
+        }
+      ],
+      "mainComponentArea": 7433,
+      "translation": [
+        -276,
+        -6
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        70,
+        48,
+        163,
+        176
+      ]
+    },
+    "emma_idle_02": {
+      "sourceRowBand": [
+        35,
+        191
+      ],
+      "assignedComponents": [
+        {
+          "area": 7375,
+          "bbox": [
+            573,
+            55,
+            667,
+            181
+          ],
+          "centroid": [
+            624.363,
+            112.613
+          ]
+        }
+      ],
+      "mainComponentArea": 7375,
+      "translation": [
+        -503,
+        -5
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        70,
+        50,
+        164,
+        176
+      ]
+    },
+    "emma_idle_03": {
+      "sourceRowBand": [
+        35,
+        191
+      ],
+      "assignedComponents": [
+        {
+          "area": 7368,
+          "bbox": [
+            804,
+            56,
+            898,
+            182
+          ],
+          "centroid": [
+            855.877,
+            113.069
+          ]
+        }
+      ],
+      "mainComponentArea": 7368,
+      "translation": [
+        -735,
+        -6
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        69,
+        50,
+        163,
+        176
+      ]
+    },
+    "emma_idle_04": {
+      "sourceRowBand": [
+        35,
+        191
+      ],
+      "assignedComponents": [
+        {
+          "area": 7349,
+          "bbox": [
+            1028,
+            55,
+            1120,
+            182
+          ],
+          "centroid": [
+            1078.078,
+            112.93
+          ]
+        }
+      ],
+      "mainComponentArea": 7349,
+      "translation": [
+        -957,
+        -6
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        71,
+        49,
+        163,
+        176
+      ]
+    },
+    "emma_idle_05": {
+      "sourceRowBand": [
+        35,
+        191
+      ],
+      "assignedComponents": [
+        {
+          "area": 7192,
+          "bbox": [
+            1256,
+            57,
+            1348,
+            182
+          ],
+          "centroid": [
+            1306.057,
+            113.359
+          ]
+        }
+      ],
+      "mainComponentArea": 7192,
+      "translation": [
+        -1185,
+        -6
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        71,
+        51,
+        163,
+        176
+      ]
+    },
+    "emma_run_00": {
+      "sourceRowBand": [
+        200,
+        360
+      ],
+      "assignedComponents": [
+        {
+          "area": 8814,
+          "bbox": [
+            91,
+            219,
+            220,
+            349
+          ],
+          "centroid": [
+            162.981,
+            277.012
+          ]
+        }
+      ],
+      "mainComponentArea": 8814,
+      "translation": [
+        -42,
+        -173
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        49,
+        46,
+        178,
+        176
+      ]
+    },
+    "emma_run_01": {
+      "sourceRowBand": [
+        200,
+        360
+      ],
+      "assignedComponents": [
+        {
+          "area": 8932,
+          "bbox": [
+            331,
+            220,
+            450,
+            351
+          ],
+          "centroid": [
+            394.954,
+            277.779
+          ]
+        }
+      ],
+      "mainComponentArea": 8932,
+      "translation": [
+        -274,
+        -175
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        57,
+        45,
+        176,
+        176
+      ]
+    },
+    "emma_run_02": {
+      "sourceRowBand": [
+        200,
+        360
+      ],
+      "assignedComponents": [
+        {
+          "area": 8619,
+          "bbox": [
+            560,
+            222,
+            675,
+            350
+          ],
+          "centroid": [
+            621.039,
+            279.215
+          ]
+        }
+      ],
+      "mainComponentArea": 8619,
+      "translation": [
+        -500,
+        -174
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        60,
+        48,
+        175,
+        176
+      ]
+    },
+    "emma_run_03": {
+      "sourceRowBand": [
+        200,
+        360
+      ],
+      "assignedComponents": [
+        {
+          "area": 8660,
+          "bbox": [
+            786,
+            222,
+            904,
+            350
+          ],
+          "centroid": [
+            849.837,
+            279.806
+          ]
+        }
+      ],
+      "mainComponentArea": 8660,
+      "translation": [
+        -729,
+        -174
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        57,
+        48,
+        175,
+        176
+      ]
+    },
+    "emma_run_04": {
+      "sourceRowBand": [
+        200,
+        360
+      ],
+      "assignedComponents": [
+        {
+          "area": 8569,
+          "bbox": [
+            1015,
+            221,
+            1126,
+            350
+          ],
+          "centroid": [
+            1072.122,
+            278.941
+          ]
+        }
+      ],
+      "mainComponentArea": 8569,
+      "translation": [
+        -951,
+        -174
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        64,
+        47,
+        175,
+        176
+      ]
+    },
+    "emma_run_05": {
+      "sourceRowBand": [
+        200,
+        360
+      ],
+      "assignedComponents": [
+        {
+          "area": 8588,
+          "bbox": [
+            1237,
+            222,
+            1355,
+            350
+          ],
+          "centroid": [
+            1300.728,
+            279.059
+          ]
+        }
+      ],
+      "mainComponentArea": 8588,
+      "translation": [
+        -1180,
+        -174
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        57,
+        48,
+        175,
+        176
+      ]
+    },
+    "emma_jump_00": {
+      "sourceRowBand": [
+        360,
+        520
+      ],
+      "assignedComponents": [
+        {
+          "area": 8372,
+          "bbox": [
+            109,
+            378,
+            211,
+            509
+          ],
+          "centroid": [
+            161.361,
+            435.061
+          ]
+        }
+      ],
+      "mainComponentArea": 8372,
+      "translation": [
+        -40,
+        -333
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        69,
+        45,
+        171,
+        176
+      ]
+    },
+    "emma_jump_01": {
+      "sourceRowBand": [
+        360,
+        520
+      ],
+      "assignedComponents": [
+        {
+          "area": 8925,
+          "bbox": [
+            334,
+            378,
+            460,
+            510
+          ],
+          "centroid": [
+            391.99,
+            433.902
+          ]
+        }
+      ],
+      "mainComponentArea": 8925,
+      "translation": [
+        -271,
+        -334
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        63,
+        44,
+        189,
+        176
+      ]
+    },
+    "emma_jump_02": {
+      "sourceRowBand": [
+        360,
+        520
+      ],
+      "assignedComponents": [
+        {
+          "area": 8671,
+          "bbox": [
+            556,
+            371,
+            682,
+            496
+          ],
+          "centroid": [
+            616.293,
+            425.455
+          ]
+        }
+      ],
+      "mainComponentArea": 8671,
+      "translation": [
+        -496,
+        -320
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        60,
+        51,
+        186,
+        176
+      ]
+    },
+    "emma_jump_03": {
+      "sourceRowBand": [
+        360,
+        520
+      ],
+      "assignedComponents": [
+        {
+          "area": 8555,
+          "bbox": [
+            785,
+            371,
+            908,
+            498
+          ],
+          "centroid": [
+            842.676,
+            424.932
+          ]
+        }
+      ],
+      "mainComponentArea": 8555,
+      "translation": [
+        -722,
+        -322
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        63,
+        49,
+        186,
+        176
+      ]
+    },
+    "emma_jump_04": {
+      "sourceRowBand": [
+        360,
+        520
+      ],
+      "assignedComponents": [
+        {
+          "area": 8705,
+          "bbox": [
+            1006,
+            373,
+            1134,
+            494
+          ],
+          "centroid": [
+            1071.09,
+            426.018
+          ]
+        }
+      ],
+      "mainComponentArea": 8705,
+      "translation": [
+        -950,
+        -318
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        56,
+        55,
+        184,
+        176
+      ]
+    },
+    "emma_jump_05": {
+      "sourceRowBand": [
+        360,
+        520
+      ],
+      "assignedComponents": [
+        {
+          "area": 8413,
+          "bbox": [
+            1249,
+            382,
+            1353,
+            510
+          ],
+          "centroid": [
+            1302.012,
+            440.249
+          ]
+        }
+      ],
+      "mainComponentArea": 8413,
+      "translation": [
+        -1181,
+        -334
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        68,
+        48,
+        172,
+        176
+      ]
+    },
+    "emma_fall_00": {
+      "sourceRowBand": [
+        520,
+        690
+      ],
+      "assignedComponents": [
+        {
+          "area": 9031,
+          "bbox": [
+            97,
+            535,
+            223,
+            673
+          ],
+          "centroid": [
+            155.969,
+            605.424
+          ]
+        }
+      ],
+      "mainComponentArea": 9031,
+      "translation": [
+        -35,
+        -497
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        62,
+        38,
+        188,
+        176
+      ]
+    },
+    "emma_fall_01": {
+      "sourceRowBand": [
+        520,
+        690
+      ],
+      "assignedComponents": [
+        {
+          "area": 9069,
+          "bbox": [
+            329,
+            535,
+            454,
+            670
+          ],
+          "centroid": [
+            388.653,
+            603.813
+          ]
+        }
+      ],
+      "mainComponentArea": 9069,
+      "translation": [
+        -268,
+        -494
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        61,
+        41,
+        186,
+        176
+      ]
+    },
+    "emma_fall_02": {
+      "sourceRowBand": [
+        520,
+        690
+      ],
+      "assignedComponents": [
+        {
+          "area": 9058,
+          "bbox": [
+            553,
+            534,
+            675,
+            671
+          ],
+          "centroid": [
+            612.104,
+            604.819
+          ]
+        }
+      ],
+      "mainComponentArea": 9058,
+      "translation": [
+        -491,
+        -495
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        62,
+        39,
+        184,
+        176
+      ]
+    },
+    "emma_fall_03": {
+      "sourceRowBand": [
+        520,
+        690
+      ],
+      "assignedComponents": [
+        {
+          "area": 9218,
+          "bbox": [
+            788,
+            538,
+            913,
+            679
+          ],
+          "centroid": [
+            846.566,
+            610.901
+          ]
+        }
+      ],
+      "mainComponentArea": 9218,
+      "translation": [
+        -726,
+        -503
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        62,
+        35,
+        187,
+        176
+      ]
+    },
+    "emma_fall_04": {
+      "sourceRowBand": [
+        520,
+        690
+      ],
+      "assignedComponents": [
+        {
+          "area": 8897,
+          "bbox": [
+            1016,
+            543,
+            1137,
+            674
+          ],
+          "centroid": [
+            1073.957,
+            609.377
+          ]
+        }
+      ],
+      "mainComponentArea": 8897,
+      "translation": [
+        -953,
+        -498
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        63,
+        45,
+        184,
+        176
+      ]
+    },
+    "emma_fall_05": {
+      "sourceRowBand": [
+        520,
+        690
+      ],
+      "assignedComponents": [
+        {
+          "area": 7951,
+          "bbox": [
+            1250,
+            546,
+            1358,
+            678
+          ],
+          "centroid": [
+            1305.448,
+            609.978
+          ]
+        }
+      ],
+      "mainComponentArea": 7951,
+      "translation": [
+        -1185,
+        -502
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        65,
+        44,
+        173,
+        176
+      ]
+    },
+    "emma_hurt_00": {
+      "sourceRowBand": [
+        680,
+        840
+      ],
+      "assignedComponents": [
+        {
+          "area": 7709,
+          "bbox": [
+            97,
+            701,
+            214,
+            819
+          ],
+          "centroid": [
+            154.035,
+            754.782
+          ]
+        },
+        {
+          "area": 269,
+          "bbox": [
+            201,
+            720,
+            223,
+            742
+          ],
+          "centroid": [
+            211.071,
+            731.699
+          ]
+        }
+      ],
+      "mainComponentArea": 7709,
+      "translation": [
+        -33,
+        -643
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        64,
+        58,
+        190,
+        176
+      ]
+    },
+    "emma_hurt_01": {
+      "sourceRowBand": [
+        680,
+        840
+      ],
+      "assignedComponents": [
+        {
+          "area": 7688,
+          "bbox": [
+            325,
+            698,
+            440,
+            819
+          ],
+          "centroid": [
+            380.424,
+            752.492
+          ]
+        },
+        {
+          "area": 270,
+          "bbox": [
+            425,
+            714,
+            447,
+            737
+          ],
+          "centroid": [
+            435.437,
+            725.559
+          ]
+        }
+      ],
+      "mainComponentArea": 7688,
+      "translation": [
+        -259,
+        -643
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        66,
+        55,
+        188,
+        176
+      ]
+    },
+    "emma_hurt_02": {
+      "sourceRowBand": [
+        680,
+        840
+      ],
+      "assignedComponents": [
+        {
+          "area": 7657,
+          "bbox": [
+            550,
+            704,
+            658,
+            824
+          ],
+          "centroid": [
+            606.913,
+            757.418
+          ]
+        },
+        {
+          "area": 272,
+          "bbox": [
+            654,
+            711,
+            677,
+            733
+          ],
+          "centroid": [
+            665.132,
+            722.143
+          ]
+        }
+      ],
+      "mainComponentArea": 7657,
+      "translation": [
+        -486,
+        -648
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        64,
+        56,
+        191,
+        176
+      ]
+    },
+    "emma_hurt_03": {
+      "sourceRowBand": [
+        680,
+        840
+      ],
+      "assignedComponents": [
+        {
+          "area": 7400,
+          "bbox": [
+            790,
+            705,
+            894,
+            824
+          ],
+          "centroid": [
+            843.624,
+            758.551
+          ]
+        },
+        {
+          "area": 271,
+          "bbox": [
+            893,
+            719,
+            914,
+            741
+          ],
+          "centroid": [
+            902.79,
+            730.229
+          ]
+        }
+      ],
+      "mainComponentArea": 7400,
+      "translation": [
+        -723,
+        -648
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        67,
+        57,
+        191,
+        176
+      ]
+    },
+    "emma_hurt_04": {
+      "sourceRowBand": [
+        680,
+        840
+      ],
+      "assignedComponents": [
+        {
+          "area": 7114,
+          "bbox": [
+            1017,
+            708,
+            1112,
+            825
+          ],
+          "centroid": [
+            1069.803,
+            762.824
+          ]
+        },
+        {
+          "area": 239,
+          "bbox": [
+            1116,
+            721,
+            1136,
+            742
+          ],
+          "centroid": [
+            1125.372,
+            731.799
+          ]
+        }
+      ],
+      "mainComponentArea": 7114,
+      "translation": [
+        -949,
+        -649
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        68,
+        59,
+        187,
+        176
+      ]
+    },
+    "emma_hurt_05": {
+      "sourceRowBand": [
+        680,
+        840
+      ],
+      "assignedComponents": [
+        {
+          "area": 7178,
+          "bbox": [
+            1246,
+            706,
+            1339,
+            825
+          ],
+          "centroid": [
+            1294.978,
+            761.268
+          ]
+        },
+        {
+          "area": 275,
+          "bbox": [
+            1343,
+            718,
+            1365,
+            741
+          ],
+          "centroid": [
+            1353.498,
+            729.236
+          ]
+        }
+      ],
+      "mainComponentArea": 7178,
+      "translation": [
+        -1174,
+        -649
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        72,
+        57,
+        191,
+        176
+      ]
+    },
+    "emma_celebrate_00": {
+      "sourceRowBand": [
+        840,
+        1030
+      ],
+      "assignedComponents": [
+        {
+          "area": 9579,
+          "bbox": [
+            98,
+            860,
+            224,
+            1007
+          ],
+          "centroid": [
+            162.954,
+            923.328
+          ]
+        },
+        {
+          "area": 155,
+          "bbox": [
+            220,
+            866,
+            237,
+            889
+          ],
+          "centroid": [
+            228.381,
+            877.374
+          ]
+        },
+        {
+          "area": 143,
+          "bbox": [
+            92,
+            912,
+            108,
+            934
+          ],
+          "centroid": [
+            99.706,
+            922.007
+          ]
+        }
+      ],
+      "mainComponentArea": 9579,
+      "translation": [
+        -42,
+        -831
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        50,
+        29,
+        195,
+        176
+      ]
+    },
+    "emma_celebrate_01": {
+      "sourceRowBand": [
+        840,
+        1030
+      ],
+      "assignedComponents": [
+        {
+          "area": 9370,
+          "bbox": [
+            330,
+            861,
+            449,
+            1008
+          ],
+          "centroid": [
+            390.134,
+            923.758
+          ]
+        },
+        {
+          "area": 148,
+          "bbox": [
+            321,
+            867,
+            337,
+            890
+          ],
+          "centroid": [
+            328.169,
+            878.507
+          ]
+        },
+        {
+          "area": 154,
+          "bbox": [
+            442,
+            872,
+            459,
+            893
+          ],
+          "centroid": [
+            449.922,
+            881.727
+          ]
+        },
+        {
+          "area": 135,
+          "bbox": [
+            439,
+            923,
+            454,
+            944
+          ],
+          "centroid": [
+            446.326,
+            933.193
+          ]
+        },
+        {
+          "area": 4,
+          "bbox": [
+            419,
+            944,
+            421,
+            946
+          ],
+          "centroid": [
+            419.5,
+            944.5
+          ]
+        }
+      ],
+      "mainComponentArea": 9370,
+      "translation": [
+        -269,
+        -832
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        52,
+        29,
+        190,
+        176
+      ]
+    },
+    "emma_celebrate_02": {
+      "sourceRowBand": [
+        840,
+        1030
+      ],
+      "assignedComponents": [
+        {
+          "area": 9561,
+          "bbox": [
+            550,
+            855,
+            676,
+            1003
+          ],
+          "centroid": [
+            614.838,
+            915.701
+          ]
+        },
+        {
+          "area": 154,
+          "bbox": [
+            679,
+            861,
+            695,
+            883
+          ],
+          "centroid": [
+            686.721,
+            871.292
+          ]
+        },
+        {
+          "area": 147,
+          "bbox": [
+            664,
+            923,
+            679,
+            945
+          ],
+          "centroid": [
+            670.755,
+            933.503
+          ]
+        }
+      ],
+      "mainComponentArea": 9561,
+      "translation": [
+        -494,
+        -827
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        56,
+        28,
+        201,
+        176
+      ]
+    },
+    "emma_celebrate_03": {
+      "sourceRowBand": [
+        840,
+        1030
+      ],
+      "assignedComponents": [
+        {
+          "area": 8919,
+          "bbox": [
+            786,
+            862,
+            915,
+            1007
+          ],
+          "centroid": [
+            850.232,
+            921.773
+          ]
+        },
+        {
+          "area": 139,
+          "bbox": [
+            895,
+            923,
+            911,
+            944
+          ],
+          "centroid": [
+            902.655,
+            933.201
+          ]
+        }
+      ],
+      "mainComponentArea": 8919,
+      "translation": [
+        -729,
+        -831
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        57,
+        31,
+        186,
+        176
+      ]
+    },
+    "emma_celebrate_04": {
+      "sourceRowBand": [
+        840,
+        1030
+      ],
+      "assignedComponents": [
+        {
+          "area": 8835,
+          "bbox": [
+            1012,
+            865,
+            1123,
+            1009
+          ],
+          "centroid": [
+            1065.905,
+            927.297
+          ]
+        },
+        {
+          "area": 151,
+          "bbox": [
+            997,
+            868,
+            1013,
+            890
+          ],
+          "centroid": [
+            1004.166,
+            878.762
+          ]
+        },
+        {
+          "area": 147,
+          "bbox": [
+            1117,
+            880,
+            1134,
+            902
+          ],
+          "centroid": [
+            1124.633,
+            889.844
+          ]
+        },
+        {
+          "area": 154,
+          "bbox": [
+            1114,
+            934,
+            1132,
+            956
+          ],
+          "centroid": [
+            1122.487,
+            944.519
+          ]
+        }
+      ],
+      "mainComponentArea": 8835,
+      "translation": [
+        -945,
+        -833
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        52,
+        32,
+        189,
+        176
+      ]
+    },
+    "emma_celebrate_05": {
+      "sourceRowBand": [
+        840,
+        1030
+      ],
+      "assignedComponents": [
+        {
+          "area": 10046,
+          "bbox": [
+            1235,
+            864,
+            1371,
+            1009
+          ],
+          "centroid": [
+            1302.589,
+            925.31
+          ]
+        },
+        {
+          "area": 138,
+          "bbox": [
+            1352,
+            934,
+            1368,
+            956
+          ],
+          "centroid": [
+            1359.246,
+            944.891
+          ]
+        }
+      ],
+      "mainComponentArea": 10046,
+      "translation": [
+        -1182,
+        -833
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        53,
+        31,
+        189,
+        176
+      ]
+    }
+  },
+  "orel": {
+    "orel_idle_00": {
+      "sourceRowBand": [
+        0,
+        185
+      ],
+      "assignedComponents": [
+        {
+          "area": 10726,
+          "bbox": [
+            117,
+            17,
+            219,
+            178
+          ],
+          "centroid": [
+            170.087,
+            91.704
+          ]
+        }
+      ],
+      "mainComponentArea": 10726,
+      "translation": [
+        -49,
+        -2
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        68,
+        15,
+        170,
+        176
+      ]
+    },
+    "orel_idle_01": {
+      "sourceRowBand": [
+        0,
+        185
+      ],
+      "assignedComponents": [
+        {
+          "area": 11365,
+          "bbox": [
+            344,
+            15,
+            451,
+            179
+          ],
+          "centroid": [
+            401.386,
+            89.717
+          ]
+        }
+      ],
+      "mainComponentArea": 11365,
+      "translation": [
+        -280,
+        -3
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        64,
+        12,
+        171,
+        176
+      ]
+    },
+    "orel_idle_02": {
+      "sourceRowBand": [
+        0,
+        185
+      ],
+      "assignedComponents": [
+        {
+          "area": 10889,
+          "bbox": [
+            579,
+            17,
+            684,
+            179
+          ],
+          "centroid": [
+            634.971,
+            91.336
+          ]
+        }
+      ],
+      "mainComponentArea": 10889,
+      "translation": [
+        -514,
+        -3
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        65,
+        14,
+        170,
+        176
+      ]
+    },
+    "orel_idle_03": {
+      "sourceRowBand": [
+        0,
+        185
+      ],
+      "assignedComponents": [
+        {
+          "area": 11001,
+          "bbox": [
+            805,
+            16,
+            909,
+            179
+          ],
+          "centroid": [
+            860.197,
+            90.88
+          ]
+        }
+      ],
+      "mainComponentArea": 11001,
+      "translation": [
+        -739,
+        -3
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        66,
+        13,
+        170,
+        176
+      ]
+    },
+    "orel_idle_04": {
+      "sourceRowBand": [
+        0,
+        185
+      ],
+      "assignedComponents": [
+        {
+          "area": 10999,
+          "bbox": [
+            1033,
+            17,
+            1138,
+            179
+          ],
+          "centroid": [
+            1088.99,
+            91.031
+          ]
+        }
+      ],
+      "mainComponentArea": 10999,
+      "translation": [
+        -968,
+        -3
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        65,
+        14,
+        170,
+        176
+      ]
+    },
+    "orel_idle_05": {
+      "sourceRowBand": [
+        0,
+        185
+      ],
+      "assignedComponents": [
+        {
+          "area": 10796,
+          "bbox": [
+            1244,
+            17,
+            1347,
+            179
+          ],
+          "centroid": [
+            1299.029,
+            91.597
+          ]
+        }
+      ],
+      "mainComponentArea": 10796,
+      "translation": [
+        -1178,
+        -3
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        66,
+        14,
+        169,
+        176
+      ]
+    },
+    "orel_run_00": {
+      "sourceRowBand": [
+        185,
+        350
+      ],
+      "assignedComponents": [
+        {
+          "area": 11183,
+          "bbox": [
+            94,
+            197,
+            226,
+            343
+          ],
+          "centroid": [
+            165.187,
+            264.554
+          ]
+        },
+        {
+          "area": 6,
+          "bbox": [
+            119,
+            288,
+            122,
+            291
+          ],
+          "centroid": [
+            119.833,
+            289.167
+          ]
+        }
+      ],
+      "mainComponentArea": 11183,
+      "translation": [
+        -44,
+        -167
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        50,
+        30,
+        182,
+        176
+      ]
+    },
+    "orel_run_01": {
+      "sourceRowBand": [
+        185,
+        350
+      ],
+      "assignedComponents": [
+        {
+          "area": 11527,
+          "bbox": [
+            331,
+            191,
+            460,
+            344
+          ],
+          "centroid": [
+            400.957,
+            262.349
+          ]
+        }
+      ],
+      "mainComponentArea": 11527,
+      "translation": [
+        -280,
+        -168
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        51,
+        23,
+        180,
+        176
+      ]
+    },
+    "orel_run_02": {
+      "sourceRowBand": [
+        185,
+        350
+      ],
+      "assignedComponents": [
+        {
+          "area": 11121,
+          "bbox": [
+            560,
+            198,
+            686,
+            346
+          ],
+          "centroid": [
+            627.751,
+            266.269
+          ]
+        }
+      ],
+      "mainComponentArea": 11121,
+      "translation": [
+        -507,
+        -170
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        53,
+        28,
+        179,
+        176
+      ]
+    },
+    "orel_run_03": {
+      "sourceRowBand": [
+        185,
+        350
+      ],
+      "assignedComponents": [
+        {
+          "area": 11439,
+          "bbox": [
+            786,
+            197,
+            916,
+            346
+          ],
+          "centroid": [
+            855.123,
+            265.439
+          ]
+        },
+        {
+          "area": 5,
+          "bbox": [
+            784,
+            242,
+            785,
+            247
+          ],
+          "centroid": [
+            784.0,
+            244.0
+          ]
+        }
+      ],
+      "mainComponentArea": 11439,
+      "translation": [
+        -734,
+        -170
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        50,
+        27,
+        182,
+        176
+      ]
+    },
+    "orel_run_04": {
+      "sourceRowBand": [
+        185,
+        350
+      ],
+      "assignedComponents": [
+        {
+          "area": 11625,
+          "bbox": [
+            1005,
+            194,
+            1140,
+            344
+          ],
+          "centroid": [
+            1078.843,
+            262.414
+          ]
+        }
+      ],
+      "mainComponentArea": 11625,
+      "translation": [
+        -958,
+        -168
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        47,
+        26,
+        182,
+        176
+      ]
+    },
+    "orel_run_05": {
+      "sourceRowBand": [
+        185,
+        350
+      ],
+      "assignedComponents": [
+        {
+          "area": 11220,
+          "bbox": [
+            1224,
+            197,
+            1353,
+            346
+          ],
+          "centroid": [
+            1293.396,
+            265.227
+          ]
+        }
+      ],
+      "mainComponentArea": 11220,
+      "translation": [
+        -1172,
+        -170
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        52,
+        27,
+        181,
+        176
+      ]
+    },
+    "orel_jump_00": {
+      "sourceRowBand": [
+        345,
+        515
+      ],
+      "assignedComponents": [
+        {
+          "area": 10640,
+          "bbox": [
+            93,
+            356,
+            211,
+            505
+          ],
+          "centroid": [
+            146.214,
+            420.486
+          ]
+        }
+      ],
+      "mainComponentArea": 10640,
+      "translation": [
+        -25,
+        -329
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        68,
+        27,
+        186,
+        176
+      ]
+    },
+    "orel_jump_01": {
+      "sourceRowBand": [
+        345,
+        515
+      ],
+      "assignedComponents": [
+        {
+          "area": 11317,
+          "bbox": [
+            327,
+            355,
+            452,
+            509
+          ],
+          "centroid": [
+            382.389,
+            423.208
+          ]
+        }
+      ],
+      "mainComponentArea": 11317,
+      "translation": [
+        -261,
+        -333
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        66,
+        22,
+        191,
+        176
+      ]
+    },
+    "orel_jump_02": {
+      "sourceRowBand": [
+        345,
+        515
+      ],
+      "assignedComponents": [
+        {
+          "area": 9,
+          "bbox": [
+            649,
+            345,
+            658,
+            346
+          ],
+          "centroid": [
+            653.0,
+            345.0
+          ]
+        },
+        {
+          "area": 10834,
+          "bbox": [
+            556,
+            354,
+            683,
+            507
+          ],
+          "centroid": [
+            615.424,
+            422.217
+          ]
+        }
+      ],
+      "mainComponentArea": 10834,
+      "translation": [
+        -494,
+        -331
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        62,
+        14,
+        189,
+        176
+      ]
+    },
+    "orel_jump_03": {
+      "sourceRowBand": [
+        345,
+        515
+      ],
+      "assignedComponents": [
+        {
+          "area": 8,
+          "bbox": [
+            877,
+            345,
+            885,
+            346
+          ],
+          "centroid": [
+            880.5,
+            345.0
+          ]
+        },
+        {
+          "area": 11080,
+          "bbox": [
+            777,
+            356,
+            905,
+            508
+          ],
+          "centroid": [
+            837.119,
+            422.788
+          ]
+        }
+      ],
+      "mainComponentArea": 11080,
+      "translation": [
+        -716,
+        -332
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        61,
+        13,
+        189,
+        176
+      ]
+    },
+    "orel_jump_04": {
+      "sourceRowBand": [
+        345,
+        515
+      ],
+      "assignedComponents": [
+        {
+          "area": 10693,
+          "bbox": [
+            1023,
+            355,
+            1146,
+            507
+          ],
+          "centroid": [
+            1082.718,
+            423.096
+          ]
+        }
+      ],
+      "mainComponentArea": 10693,
+      "translation": [
+        -962,
+        -331
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        61,
+        24,
+        184,
+        176
+      ]
+    },
+    "orel_jump_05": {
+      "sourceRowBand": [
+        345,
+        515
+      ],
+      "assignedComponents": [
+        {
+          "area": 9,
+          "bbox": [
+            1313,
+            345,
+            1322,
+            346
+          ],
+          "centroid": [
+            1317.0,
+            345.0
+          ]
+        },
+        {
+          "area": 10376,
+          "bbox": [
+            1241,
+            358,
+            1359,
+            510
+          ],
+          "centroid": [
+            1298.32,
+            427.301
+          ]
+        }
+      ],
+      "mainComponentArea": 10376,
+      "translation": [
+        -1177,
+        -334
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        64,
+        11,
+        182,
+        176
+      ]
+    },
+    "orel_fall_00": {
+      "sourceRowBand": [
+        510,
+        680
+      ],
+      "assignedComponents": [
+        {
+          "area": 10911,
+          "bbox": [
+            83,
+            526,
+            218,
+            670
+          ],
+          "centroid": [
+            147.005,
+            596.292
+          ]
+        }
+      ],
+      "mainComponentArea": 10911,
+      "translation": [
+        -26,
+        -494
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        57,
+        32,
+        192,
+        176
+      ]
+    },
+    "orel_fall_01": {
+      "sourceRowBand": [
+        510,
+        680
+      ],
+      "assignedComponents": [
+        {
+          "area": 10692,
+          "bbox": [
+            316,
+            523,
+            449,
+            668
+          ],
+          "centroid": [
+            378.63,
+            596.276
+          ]
+        }
+      ],
+      "mainComponentArea": 10692,
+      "translation": [
+        -258,
+        -492
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        58,
+        31,
+        191,
+        176
+      ]
+    },
+    "orel_fall_02": {
+      "sourceRowBand": [
+        510,
+        680
+      ],
+      "assignedComponents": [
+        {
+          "area": 10771,
+          "bbox": [
+            541,
+            524,
+            676,
+            666
+          ],
+          "centroid": [
+            606.584,
+            593.604
+          ]
+        }
+      ],
+      "mainComponentArea": 10771,
+      "translation": [
+        -486,
+        -490
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        55,
+        34,
+        190,
+        176
+      ]
+    },
+    "orel_fall_03": {
+      "sourceRowBand": [
+        510,
+        680
+      ],
+      "assignedComponents": [
+        {
+          "area": 10678,
+          "bbox": [
+            775,
+            523,
+            911,
+            668
+          ],
+          "centroid": [
+            838.989,
+            595.649
+          ]
+        }
+      ],
+      "mainComponentArea": 10678,
+      "translation": [
+        -718,
+        -492
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        57,
+        31,
+        193,
+        176
+      ]
+    },
+    "orel_fall_04": {
+      "sourceRowBand": [
+        510,
+        680
+      ],
+      "assignedComponents": [
+        {
+          "area": 10657,
+          "bbox": [
+            1014,
+            526,
+            1150,
+            668
+          ],
+          "centroid": [
+            1078.594,
+            596.884
+          ]
+        }
+      ],
+      "mainComponentArea": 10657,
+      "translation": [
+        -958,
+        -492
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        56,
+        34,
+        192,
+        176
+      ]
+    },
+    "orel_fall_05": {
+      "sourceRowBand": [
+        510,
+        680
+      ],
+      "assignedComponents": [
+        {
+          "area": 10189,
+          "bbox": [
+            1238,
+            529,
+            1368,
+            667
+          ],
+          "centroid": [
+            1300.067,
+            597.186
+          ]
+        }
+      ],
+      "mainComponentArea": 10189,
+      "translation": [
+        -1179,
+        -491
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        59,
+        38,
+        189,
+        176
+      ]
+    },
+    "orel_hurt_00": {
+      "sourceRowBand": [
+        675,
+        840
+      ],
+      "assignedComponents": [
+        {
+          "area": 9859,
+          "bbox": [
+            93,
+            690,
+            214,
+            826
+          ],
+          "centroid": [
+            150.282,
+            755.178
+          ]
+        },
+        {
+          "area": 334,
+          "bbox": [
+            199,
+            704,
+            223,
+            729
+          ],
+          "centroid": [
+            210.293,
+            716.886
+          ]
+        },
+        {
+          "area": 4,
+          "bbox": [
+            216,
+            709,
+            219,
+            711
+          ],
+          "centroid": [
+            217.0,
+            709.75
+          ]
+        }
+      ],
+      "mainComponentArea": 9859,
+      "translation": [
+        -29,
+        -650
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        64,
+        40,
+        194,
+        176
+      ]
+    },
+    "orel_hurt_01": {
+      "sourceRowBand": [
+        675,
+        840
+      ],
+      "assignedComponents": [
+        {
+          "area": 9341,
+          "bbox": [
+            331,
+            690,
+            451,
+            825
+          ],
+          "centroid": [
+            386.405,
+            754.59
+          ]
+        },
+        {
+          "area": 352,
+          "bbox": [
+            427,
+            704,
+            451,
+            728
+          ],
+          "centroid": [
+            438.693,
+            716.545
+          ]
+        }
+      ],
+      "mainComponentArea": 9341,
+      "translation": [
+        -265,
+        -649
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        66,
+        41,
+        186,
+        176
+      ]
+    },
+    "orel_hurt_02": {
+      "sourceRowBand": [
+        675,
+        840
+      ],
+      "assignedComponents": [
+        {
+          "area": 9565,
+          "bbox": [
+            554,
+            688,
+            669,
+            826
+          ],
+          "centroid": [
+            608.174,
+            754.308
+          ]
+        },
+        {
+          "area": 344,
+          "bbox": [
+            652,
+            704,
+            677,
+            728
+          ],
+          "centroid": [
+            663.648,
+            716.5
+          ]
+        }
+      ],
+      "mainComponentArea": 9565,
+      "translation": [
+        -487,
+        -650
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        67,
+        38,
+        190,
+        176
+      ]
+    },
+    "orel_hurt_03": {
+      "sourceRowBand": [
+        675,
+        840
+      ],
+      "assignedComponents": [
+        {
+          "area": 9574,
+          "bbox": [
+            787,
+            686,
+            895,
+            825
+          ],
+          "centroid": [
+            839.165,
+            753.772
+          ]
+        },
+        {
+          "area": 338,
+          "bbox": [
+            886,
+            704,
+            910,
+            728
+          ],
+          "centroid": [
+            897.796,
+            716.796
+          ]
+        }
+      ],
+      "mainComponentArea": 9574,
+      "translation": [
+        -718,
+        -649
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        69,
+        37,
+        192,
+        176
+      ]
+    },
+    "orel_hurt_04": {
+      "sourceRowBand": [
+        675,
+        840
+      ],
+      "assignedComponents": [
+        {
+          "area": 9440,
+          "bbox": [
+            1018,
+            688,
+            1135,
+            823
+          ],
+          "centroid": [
+            1072.96,
+            752.466
+          ]
+        },
+        {
+          "area": 339,
+          "bbox": [
+            1121,
+            704,
+            1145,
+            728
+          ],
+          "centroid": [
+            1132.696,
+            716.782
+          ]
+        }
+      ],
+      "mainComponentArea": 9440,
+      "translation": [
+        -952,
+        -647
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        66,
+        41,
+        193,
+        176
+      ]
+    },
+    "orel_hurt_05": {
+      "sourceRowBand": [
+        675,
+        840
+      ],
+      "assignedComponents": [
+        {
+          "area": 9168,
+          "bbox": [
+            1248,
+            688,
+            1354,
+            824
+          ],
+          "centroid": [
+            1299.744,
+            753.742
+          ]
+        },
+        {
+          "area": 331,
+          "bbox": [
+            1345,
+            704,
+            1369,
+            728
+          ],
+          "centroid": [
+            1356.831,
+            716.483
+          ]
+        }
+      ],
+      "mainComponentArea": 9168,
+      "translation": [
+        -1179,
+        -648
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        69,
+        40,
+        190,
+        176
+      ]
+    },
+    "orel_celebrate_00": {
+      "sourceRowBand": [
+        835,
+        1045
+      ],
+      "assignedComponents": [
+        {
+          "area": 11765,
+          "bbox": [
+            89,
+            853,
+            214,
+            1022
+          ],
+          "centroid": [
+            151.25,
+            927.71
+          ]
+        },
+        {
+          "area": 173,
+          "bbox": [
+            215,
+            865,
+            232,
+            888
+          ],
+          "centroid": [
+            223.092,
+            875.884
+          ]
+        },
+        {
+          "area": 176,
+          "bbox": [
+            71,
+            870,
+            89,
+            895
+          ],
+          "centroid": [
+            79.216,
+            881.909
+          ]
+        },
+        {
+          "area": 165,
+          "bbox": [
+            210,
+            925,
+            226,
+            948
+          ],
+          "centroid": [
+            217.418,
+            936.436
+          ]
+        }
+      ],
+      "mainComponentArea": 11765,
+      "translation": [
+        -30,
+        -846
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        41,
+        7,
+        202,
+        176
+      ]
+    },
+    "orel_celebrate_01": {
+      "sourceRowBand": [
+        835,
+        1045
+      ],
+      "assignedComponents": [
+        {
+          "area": 11663,
+          "bbox": [
+            322,
+            859,
+            446,
+            1027
+          ],
+          "centroid": [
+            381.752,
+            929.985
+          ]
+        },
+        {
+          "area": 226,
+          "bbox": [
+            306,
+            871,
+            325,
+            900
+          ],
+          "centroid": [
+            314.916,
+            884.695
+          ]
+        },
+        {
+          "area": 174,
+          "bbox": [
+            444,
+            877,
+            461,
+            899
+          ],
+          "centroid": [
+            451.966,
+            887.408
+          ]
+        },
+        {
+          "area": 167,
+          "bbox": [
+            439,
+            933,
+            456,
+            956
+          ],
+          "centroid": [
+            447.072,
+            944.174
+          ]
+        }
+      ],
+      "mainComponentArea": 11663,
+      "translation": [
+        -261,
+        -851
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        45,
+        8,
+        200,
+        176
+      ]
+    },
+    "orel_celebrate_02": {
+      "sourceRowBand": [
+        835,
+        1045
+      ],
+      "assignedComponents": [
+        {
+          "area": 12196,
+          "bbox": [
+            540,
+            851,
+            670,
+            1025
+          ],
+          "centroid": [
+            604.915,
+            922.748
+          ]
+        },
+        {
+          "area": 189,
+          "bbox": [
+            668,
+            861,
+            686,
+            885
+          ],
+          "centroid": [
+            676.915,
+            872.376
+          ]
+        },
+        {
+          "area": 181,
+          "bbox": [
+            657,
+            923,
+            674,
+            947
+          ],
+          "centroid": [
+            665.022,
+            935.0
+          ]
+        }
+      ],
+      "mainComponentArea": 12196,
+      "translation": [
+        -484,
+        -849
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        56,
+        2,
+        202,
+        176
+      ]
+    },
+    "orel_celebrate_03": {
+      "sourceRowBand": [
+        835,
+        1045
+      ],
+      "assignedComponents": [
+        {
+          "area": 12500,
+          "bbox": [
+            776,
+            852,
+            916,
+            1023
+          ],
+          "centroid": [
+            846.28,
+            923.676
+          ]
+        },
+        {
+          "area": 171,
+          "bbox": [
+            896,
+            928,
+            913,
+            951
+          ],
+          "centroid": [
+            904.257,
+            938.573
+          ]
+        }
+      ],
+      "mainComponentArea": 12500,
+      "translation": [
+        -725,
+        -847
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        51,
+        5,
+        191,
+        176
+      ]
+    },
+    "orel_celebrate_04": {
+      "sourceRowBand": [
+        835,
+        1045
+      ],
+      "assignedComponents": [
+        {
+          "area": 11199,
+          "bbox": [
+            1008,
+            851,
+            1128,
+            1023
+          ],
+          "centroid": [
+            1067.484,
+            924.039
+          ]
+        },
+        {
+          "area": 209,
+          "bbox": [
+            992,
+            861,
+            1012,
+            888
+          ],
+          "centroid": [
+            1001.675,
+            873.775
+          ]
+        },
+        {
+          "area": 172,
+          "bbox": [
+            1128,
+            865,
+            1146,
+            889
+          ],
+          "centroid": [
+            1136.599,
+            876.831
+          ]
+        },
+        {
+          "area": 167,
+          "bbox": [
+            1120,
+            925,
+            1138,
+            948
+          ],
+          "centroid": [
+            1128.701,
+            935.772
+          ]
+        }
+      ],
+      "mainComponentArea": 11199,
+      "translation": [
+        -947,
+        -847
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        45,
+        4,
+        199,
+        176
+      ]
+    },
+    "orel_celebrate_05": {
+      "sourceRowBand": [
+        835,
+        1045
+      ],
+      "assignedComponents": [
+        {
+          "area": 11537,
+          "bbox": [
+            1242,
+            855,
+            1371,
+            1023
+          ],
+          "centroid": [
+            1304.296,
+            928.237
+          ]
+        },
+        {
+          "area": 194,
+          "bbox": [
+            1234,
+            862,
+            1253,
+            887
+          ],
+          "centroid": [
+            1243.392,
+            874.289
+          ]
+        },
+        {
+          "area": 176,
+          "bbox": [
+            1364,
+            871,
+            1380,
+            895
+          ],
+          "centroid": [
+            1371.188,
+            882.131
+          ]
+        },
+        {
+          "area": 185,
+          "bbox": [
+            1358,
+            933,
+            1376,
+            957
+          ],
+          "centroid": [
+            1366.789,
+            944.897
+          ]
+        }
+      ],
+      "mainComponentArea": 11537,
+      "translation": [
+        -1183,
+        -847
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        51,
+        8,
+        197,
+        176
+      ]
+    }
+  },
+  "israel": {
+    "israel_idle_00": {
+      "sourceRowBand": [
+        5,
+        180
+      ],
+      "assignedComponents": [
+        {
+          "area": 8224,
+          "bbox": [
+            115,
+            22,
+            206,
+            170
+          ],
+          "centroid": [
+            163.205,
+            93.064
+          ]
+        }
+      ],
+      "mainComponentArea": 8224,
+      "translation": [
+        -42,
+        6
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        73,
+        28,
+        164,
+        176
+      ]
+    },
+    "israel_idle_01": {
+      "sourceRowBand": [
+        5,
+        180
+      ],
+      "assignedComponents": [
+        {
+          "area": 8432,
+          "bbox": [
+            351,
+            22,
+            439,
+            170
+          ],
+          "centroid": [
+            396.419,
+            92.249
+          ]
+        }
+      ],
+      "mainComponentArea": 8432,
+      "translation": [
+        -276,
+        6
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        75,
+        28,
+        163,
+        176
+      ]
+    },
+    "israel_idle_02": {
+      "sourceRowBand": [
+        5,
+        180
+      ],
+      "assignedComponents": [
+        {
+          "area": 8505,
+          "bbox": [
+            591,
+            22,
+            680,
+            170
+          ],
+          "centroid": [
+            637.634,
+            92.301
+          ]
+        }
+      ],
+      "mainComponentArea": 8505,
+      "translation": [
+        -517,
+        6
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        74,
+        28,
+        163,
+        176
+      ]
+    },
+    "israel_idle_03": {
+      "sourceRowBand": [
+        5,
+        180
+      ],
+      "assignedComponents": [
+        {
+          "area": 8442,
+          "bbox": [
+            821,
+            22,
+            908,
+            170
+          ],
+          "centroid": [
+            866.181,
+            92.434
+          ]
+        }
+      ],
+      "mainComponentArea": 8442,
+      "translation": [
+        -745,
+        6
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        76,
+        28,
+        163,
+        176
+      ]
+    },
+    "israel_idle_04": {
+      "sourceRowBand": [
+        5,
+        180
+      ],
+      "assignedComponents": [
+        {
+          "area": 8471,
+          "bbox": [
+            1048,
+            22,
+            1137,
+            170
+          ],
+          "centroid": [
+            1093.759,
+            92.188
+          ]
+        }
+      ],
+      "mainComponentArea": 8471,
+      "translation": [
+        -973,
+        6
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        75,
+        28,
+        164,
+        176
+      ]
+    },
+    "israel_idle_05": {
+      "sourceRowBand": [
+        5,
+        180
+      ],
+      "assignedComponents": [
+        {
+          "area": 8396,
+          "bbox": [
+            1277,
+            22,
+            1364,
+            170
+          ],
+          "centroid": [
+            1322.006,
+            92.132
+          ]
+        }
+      ],
+      "mainComponentArea": 8396,
+      "translation": [
+        -1201,
+        6
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        76,
+        28,
+        163,
+        176
+      ]
+    },
+    "israel_run_00": {
+      "sourceRowBand": [
+        180,
+        345
+      ],
+      "assignedComponents": [
+        {
+          "area": 9194,
+          "bbox": [
+            92,
+            193,
+            211,
+            332
+          ],
+          "centroid": [
+            158.842,
+            259.788
+          ]
+        }
+      ],
+      "mainComponentArea": 9194,
+      "translation": [
+        -38,
+        -156
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        54,
+        37,
+        173,
+        176
+      ]
+    },
+    "israel_run_01": {
+      "sourceRowBand": [
+        180,
+        345
+      ],
+      "assignedComponents": [
+        {
+          "area": 9005,
+          "bbox": [
+            329,
+            195,
+            446,
+            336
+          ],
+          "centroid": [
+            395.384,
+            261.723
+          ]
+        }
+      ],
+      "mainComponentArea": 9005,
+      "translation": [
+        -274,
+        -160
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        55,
+        35,
+        172,
+        176
+      ]
+    },
+    "israel_run_02": {
+      "sourceRowBand": [
+        180,
+        345
+      ],
+      "assignedComponents": [
+        {
+          "area": 9148,
+          "bbox": [
+            567,
+            194,
+            685,
+            339
+          ],
+          "centroid": [
+            634.006,
+            261.609
+          ]
+        }
+      ],
+      "mainComponentArea": 9148,
+      "translation": [
+        -513,
+        -163
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        54,
+        31,
+        172,
+        176
+      ]
+    },
+    "israel_run_03": {
+      "sourceRowBand": [
+        180,
+        345
+      ],
+      "assignedComponents": [
+        {
+          "area": 9350,
+          "bbox": [
+            795,
+            193,
+            915,
+            334
+          ],
+          "centroid": [
+            863.372,
+            260.07
+          ]
+        }
+      ],
+      "mainComponentArea": 9350,
+      "translation": [
+        -742,
+        -158
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        53,
+        35,
+        173,
+        176
+      ]
+    },
+    "israel_run_04": {
+      "sourceRowBand": [
+        180,
+        345
+      ],
+      "assignedComponents": [
+        {
+          "area": 9245,
+          "bbox": [
+            1020,
+            193,
+            1140,
+            334
+          ],
+          "centroid": [
+            1088.448,
+            260.39
+          ]
+        }
+      ],
+      "mainComponentArea": 9245,
+      "translation": [
+        -967,
+        -158
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        53,
+        35,
+        173,
+        176
+      ]
+    },
+    "israel_run_05": {
+      "sourceRowBand": [
+        180,
+        345
+      ],
+      "assignedComponents": [
+        {
+          "area": 9261,
+          "bbox": [
+            1249,
+            193,
+            1368,
+            335
+          ],
+          "centroid": [
+            1316.582,
+            260.335
+          ]
+        },
+        {
+          "area": 4,
+          "bbox": [
+            1357,
+            204,
+            1361,
+            205
+          ],
+          "centroid": [
+            1358.5,
+            204.0
+          ]
+        },
+        {
+          "area": 8,
+          "bbox": [
+            1337,
+            290,
+            1339,
+            295
+          ],
+          "centroid": [
+            1337.375,
+            292.0
+          ]
+        }
+      ],
+      "mainComponentArea": 9261,
+      "translation": [
+        -1196,
+        -159
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        53,
+        34,
+        172,
+        176
+      ]
+    },
+    "israel_jump_00": {
+      "sourceRowBand": [
+        345,
+        520
+      ],
+      "assignedComponents": [
+        {
+          "area": 8672,
+          "bbox": [
+            103,
+            362,
+            196,
+            508
+          ],
+          "centroid": [
+            150.86,
+            430.978
+          ]
+        }
+      ],
+      "mainComponentArea": 8672,
+      "translation": [
+        -30,
+        -332
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        73,
+        30,
+        166,
+        176
+      ]
+    },
+    "israel_jump_01": {
+      "sourceRowBand": [
+        345,
+        520
+      ],
+      "assignedComponents": [
+        {
+          "area": 9768,
+          "bbox": [
+            318,
+            354,
+            451,
+            508
+          ],
+          "centroid": [
+            384.8,
+            423.334
+          ]
+        }
+      ],
+      "mainComponentArea": 9768,
+      "translation": [
+        -264,
+        -332
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        54,
+        22,
+        187,
+        176
+      ]
+    },
+    "israel_jump_02": {
+      "sourceRowBand": [
+        345,
+        520
+      ],
+      "assignedComponents": [
+        {
+          "area": 8721,
+          "bbox": [
+            579,
+            355,
+            690,
+            493
+          ],
+          "centroid": [
+            629.308,
+            417.113
+          ]
+        }
+      ],
+      "mainComponentArea": 8721,
+      "translation": [
+        -508,
+        -317
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        71,
+        38,
+        182,
+        176
+      ]
+    },
+    "israel_jump_03": {
+      "sourceRowBand": [
+        345,
+        520
+      ],
+      "assignedComponents": [
+        {
+          "area": 8527,
+          "bbox": [
+            806,
+            354,
+            920,
+            492
+          ],
+          "centroid": [
+            858.21,
+            415.562
+          ]
+        }
+      ],
+      "mainComponentArea": 8527,
+      "translation": [
+        -737,
+        -316
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        69,
+        38,
+        183,
+        176
+      ]
+    },
+    "israel_jump_04": {
+      "sourceRowBand": [
+        345,
+        520
+      ],
+      "assignedComponents": [
+        {
+          "area": 8767,
+          "bbox": [
+            1037,
+            355,
+            1147,
+            492
+          ],
+          "centroid": [
+            1089.787,
+            419.313
+          ]
+        }
+      ],
+      "mainComponentArea": 8767,
+      "translation": [
+        -969,
+        -316
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        68,
+        39,
+        178,
+        176
+      ]
+    },
+    "israel_jump_05": {
+      "sourceRowBand": [
+        345,
+        520
+      ],
+      "assignedComponents": [
+        {
+          "area": 9004,
+          "bbox": [
+            1262,
+            366,
+            1360,
+            509
+          ],
+          "centroid": [
+            1312.731,
+            434.213
+          ]
+        }
+      ],
+      "mainComponentArea": 9004,
+      "translation": [
+        -1192,
+        -333
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        70,
+        33,
+        168,
+        176
+      ]
+    },
+    "israel_fall_00": {
+      "sourceRowBand": [
+        525,
+        695
+      ],
+      "assignedComponents": [
+        {
+          "area": 9779,
+          "bbox": [
+            97,
+            545,
+            226,
+            682
+          ],
+          "centroid": [
+            157.632,
+            610.959
+          ]
+        }
+      ],
+      "mainComponentArea": 9779,
+      "translation": [
+        -37,
+        -506
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        60,
+        39,
+        189,
+        176
+      ]
+    },
+    "israel_fall_01": {
+      "sourceRowBand": [
+        525,
+        695
+      ],
+      "assignedComponents": [
+        {
+          "area": 9473,
+          "bbox": [
+            327,
+            541,
+            453,
+            677
+          ],
+          "centroid": [
+            388.176,
+            605.899
+          ]
+        }
+      ],
+      "mainComponentArea": 9473,
+      "translation": [
+        -268,
+        -501
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        59,
+        40,
+        185,
+        176
+      ]
+    },
+    "israel_fall_02": {
+      "sourceRowBand": [
+        525,
+        695
+      ],
+      "assignedComponents": [
+        {
+          "area": 8723,
+          "bbox": [
+            568,
+            541,
+            688,
+            671
+          ],
+          "centroid": [
+            627.874,
+            604.254
+          ]
+        }
+      ],
+      "mainComponentArea": 8723,
+      "translation": [
+        -507,
+        -495
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        61,
+        46,
+        181,
+        176
+      ]
+    },
+    "israel_fall_03": {
+      "sourceRowBand": [
+        525,
+        695
+      ],
+      "assignedComponents": [
+        {
+          "area": 9602,
+          "bbox": [
+            801,
+            544,
+            928,
+            684
+          ],
+          "centroid": [
+            861.776,
+            612.491
+          ]
+        }
+      ],
+      "mainComponentArea": 9602,
+      "translation": [
+        -741,
+        -508
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        60,
+        36,
+        187,
+        176
+      ]
+    },
+    "israel_fall_04": {
+      "sourceRowBand": [
+        525,
+        695
+      ],
+      "assignedComponents": [
+        {
+          "area": 9610,
+          "bbox": [
+            1034,
+            543,
+            1156,
+            681
+          ],
+          "centroid": [
+            1091.38,
+            610.781
+          ]
+        }
+      ],
+      "mainComponentArea": 9610,
+      "translation": [
+        -971,
+        -505
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        63,
+        38,
+        185,
+        176
+      ]
+    },
+    "israel_fall_05": {
+      "sourceRowBand": [
+        525,
+        695
+      ],
+      "assignedComponents": [
+        {
+          "area": 8253,
+          "bbox": [
+            1264,
+            555,
+            1365,
+            685
+          ],
+          "centroid": [
+            1317.068,
+            617.024
+          ]
+        }
+      ],
+      "mainComponentArea": 8253,
+      "translation": [
+        -1196,
+        -509
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        68,
+        46,
+        169,
+        176
+      ]
+    },
+    "israel_hurt_00": {
+      "sourceRowBand": [
+        690,
+        855
+      ],
+      "assignedComponents": [
+        {
+          "area": 8730,
+          "bbox": [
+            101,
+            704,
+            210,
+            842
+          ],
+          "centroid": [
+            152.596,
+            768.655
+          ]
+        },
+        {
+          "area": 402,
+          "bbox": [
+            196,
+            739,
+            222,
+            765
+          ],
+          "centroid": [
+            208.771,
+            752.851
+          ]
+        }
+      ],
+      "mainComponentArea": 8730,
+      "translation": [
+        -32,
+        -666
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        69,
+        38,
+        190,
+        176
+      ]
+    },
+    "israel_hurt_01": {
+      "sourceRowBand": [
+        690,
+        855
+      ],
+      "assignedComponents": [
+        {
+          "area": 7984,
+          "bbox": [
+            329,
+            705,
+            438,
+            842
+          ],
+          "centroid": [
+            381.503,
+            768.471
+          ]
+        },
+        {
+          "area": 370,
+          "bbox": [
+            421,
+            721,
+            447,
+            747
+          ],
+          "centroid": [
+            433.841,
+            735.208
+          ]
+        }
+      ],
+      "mainComponentArea": 7984,
+      "translation": [
+        -261,
+        -666
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        68,
+        39,
+        186,
+        176
+      ]
+    },
+    "israel_hurt_02": {
+      "sourceRowBand": [
+        690,
+        855
+      ],
+      "assignedComponents": [
+        {
+          "area": 8345,
+          "bbox": [
+            573,
+            704,
+            672,
+            844
+          ],
+          "centroid": [
+            623.862,
+            767.374
+          ]
+        },
+        {
+          "area": 433,
+          "bbox": [
+            666,
+            707,
+            694,
+            736
+          ],
+          "centroid": [
+            679.764,
+            722.196
+          ]
+        }
+      ],
+      "mainComponentArea": 8345,
+      "translation": [
+        -503,
+        -668
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        70,
+        36,
+        191,
+        176
+      ]
+    },
+    "israel_hurt_03": {
+      "sourceRowBand": [
+        690,
+        855
+      ],
+      "assignedComponents": [
+        {
+          "area": 8259,
+          "bbox": [
+            805,
+            705,
+            907,
+            842
+          ],
+          "centroid": [
+            855.754,
+            768.587
+          ]
+        },
+        {
+          "area": 321,
+          "bbox": [
+            907,
+            722,
+            931,
+            746
+          ],
+          "centroid": [
+            917.72,
+            734.255
+          ]
+        }
+      ],
+      "mainComponentArea": 8259,
+      "translation": [
+        -735,
+        -666
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        70,
+        39,
+        196,
+        176
+      ]
+    },
+    "israel_hurt_04": {
+      "sourceRowBand": [
+        690,
+        855
+      ],
+      "assignedComponents": [
+        {
+          "area": 8124,
+          "bbox": [
+            1039,
+            710,
+            1129,
+            843
+          ],
+          "centroid": [
+            1088.115,
+            772.569
+          ]
+        },
+        {
+          "area": 346,
+          "bbox": [
+            1135,
+            726,
+            1159,
+            751
+          ],
+          "centroid": [
+            1146.63,
+            738.821
+          ]
+        }
+      ],
+      "mainComponentArea": 8124,
+      "translation": [
+        -967,
+        -667
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        72,
+        43,
+        192,
+        176
+      ]
+    },
+    "israel_hurt_05": {
+      "sourceRowBand": [
+        690,
+        855
+      ],
+      "assignedComponents": [
+        {
+          "area": 8169,
+          "bbox": [
+            1260,
+            709,
+            1350,
+            843
+          ],
+          "centroid": [
+            1306.154,
+            773.832
+          ]
+        },
+        {
+          "area": 334,
+          "bbox": [
+            1353,
+            722,
+            1377,
+            746
+          ],
+          "centroid": [
+            1363.982,
+            734.338
+          ]
+        }
+      ],
+      "mainComponentArea": 8169,
+      "translation": [
+        -1185,
+        -667
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        75,
+        42,
+        192,
+        176
+      ]
+    },
+    "israel_celebrate_00": {
+      "sourceRowBand": [
+        850,
+        1050
+      ],
+      "assignedComponents": [
+        {
+          "area": 10299,
+          "bbox": [
+            102,
+            874,
+            220,
+            1035
+          ],
+          "centroid": [
+            157.596,
+            948.947
+          ]
+        },
+        {
+          "area": 169,
+          "bbox": [
+            212,
+            884,
+            227,
+            908
+          ],
+          "centroid": [
+            219.083,
+            895.243
+          ]
+        },
+        {
+          "area": 203,
+          "bbox": [
+            87,
+            899,
+            106,
+            924
+          ],
+          "centroid": [
+            96.167,
+            911.458
+          ]
+        },
+        {
+          "area": 167,
+          "bbox": [
+            78,
+            944,
+            93,
+            968
+          ],
+          "centroid": [
+            84.88,
+            954.838
+          ]
+        }
+      ],
+      "mainComponentArea": 10299,
+      "translation": [
+        -37,
+        -859
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        41,
+        15,
+        190,
+        176
+      ]
+    },
+    "israel_celebrate_01": {
+      "sourceRowBand": [
+        850,
+        1050
+      ],
+      "assignedComponents": [
+        {
+          "area": 9892,
+          "bbox": [
+            334,
+            870,
+            444,
+            1034
+          ],
+          "centroid": [
+            386.334,
+            943.145
+          ]
+        },
+        {
+          "area": 207,
+          "bbox": [
+            308,
+            884,
+            325,
+            911
+          ],
+          "centroid": [
+            316.029,
+            896.923
+          ]
+        },
+        {
+          "area": 164,
+          "bbox": [
+            441,
+            885,
+            457,
+            908
+          ],
+          "centroid": [
+            448.579,
+            896.073
+          ]
+        },
+        {
+          "area": 97,
+          "bbox": [
+            323,
+            922,
+            334,
+            936
+          ],
+          "centroid": [
+            327.649,
+            928.557
+          ]
+        },
+        {
+          "area": 187,
+          "bbox": [
+            435,
+            943,
+            452,
+            966
+          ],
+          "centroid": [
+            443.176,
+            953.898
+          ]
+        }
+      ],
+      "mainComponentArea": 9892,
+      "translation": [
+        -265,
+        -858
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        43,
+        12,
+        192,
+        176
+      ]
+    },
+    "israel_celebrate_02": {
+      "sourceRowBand": [
+        850,
+        1050
+      ],
+      "assignedComponents": [
+        {
+          "area": 9620,
+          "bbox": [
+            569,
+            865,
+            682,
+            1028
+          ],
+          "centroid": [
+            623.162,
+            935.224
+          ]
+        },
+        {
+          "area": 173,
+          "bbox": [
+            684,
+            882,
+            701,
+            905
+          ],
+          "centroid": [
+            691.942,
+            893.734
+          ]
+        },
+        {
+          "area": 169,
+          "bbox": [
+            551,
+            894,
+            567,
+            918
+          ],
+          "centroid": [
+            558.58,
+            905.864
+          ]
+        },
+        {
+          "area": 26,
+          "bbox": [
+            548,
+            897,
+            553,
+            904
+          ],
+          "centroid": [
+            550.231,
+            899.769
+          ]
+        },
+        {
+          "area": 28,
+          "bbox": [
+            566,
+            930,
+            572,
+            936
+          ],
+          "centroid": [
+            568.5,
+            932.393
+          ]
+        },
+        {
+          "area": 193,
+          "bbox": [
+            669,
+            940,
+            687,
+            963
+          ],
+          "centroid": [
+            677.254,
+            951.238
+          ]
+        }
+      ],
+      "mainComponentArea": 9620,
+      "translation": [
+        -502,
+        -852
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        46,
+        13,
+        199,
+        176
+      ]
+    },
+    "israel_celebrate_03": {
+      "sourceRowBand": [
+        850,
+        1050
+      ],
+      "assignedComponents": [
+        {
+          "area": 9575,
+          "bbox": [
+            811,
+            865,
+            926,
+            1032
+          ],
+          "centroid": [
+            863.782,
+            936.204
+          ]
+        },
+        {
+          "area": 197,
+          "bbox": [
+            793,
+            893,
+            811,
+            918
+          ],
+          "centroid": [
+            801.137,
+            905.462
+          ]
+        },
+        {
+          "area": 91,
+          "bbox": [
+            807,
+            927,
+            817,
+            941
+          ],
+          "centroid": [
+            811.143,
+            933.516
+          ]
+        },
+        {
+          "area": 172,
+          "bbox": [
+            906,
+            936,
+            923,
+            959
+          ],
+          "centroid": [
+            913.988,
+            946.948
+          ]
+        }
+      ],
+      "mainComponentArea": 9575,
+      "translation": [
+        -743,
+        -856
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        50,
+        9,
+        183,
+        176
+      ]
+    },
+    "israel_celebrate_04": {
+      "sourceRowBand": [
+        850,
+        1050
+      ],
+      "assignedComponents": [
+        {
+          "area": 9781,
+          "bbox": [
+            1035,
+            870,
+            1145,
+            1035
+          ],
+          "centroid": [
+            1085.17,
+            943.777
+          ]
+        },
+        {
+          "area": 213,
+          "bbox": [
+            1005,
+            884,
+            1024,
+            911
+          ],
+          "centroid": [
+            1013.864,
+            896.981
+          ]
+        },
+        {
+          "area": 160,
+          "bbox": [
+            1141,
+            891,
+            1157,
+            913
+          ],
+          "centroid": [
+            1148.681,
+            901.606
+          ]
+        },
+        {
+          "area": 93,
+          "bbox": [
+            1019,
+            927,
+            1030,
+            943
+          ],
+          "centroid": [
+            1024.462,
+            934.129
+          ]
+        },
+        {
+          "area": 163,
+          "bbox": [
+            1138,
+            946,
+            1154,
+            969
+          ],
+          "centroid": [
+            1145.656,
+            957.129
+          ]
+        }
+      ],
+      "mainComponentArea": 9781,
+      "translation": [
+        -964,
+        -859
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        41,
+        11,
+        193,
+        176
+      ]
+    },
+    "israel_celebrate_05": {
+      "sourceRowBand": [
+        850,
+        1050
+      ],
+      "assignedComponents": [
+        {
+          "area": 10094,
+          "bbox": [
+            1263,
+            875,
+            1385,
+            1032
+          ],
+          "centroid": [
+            1320.564,
+            945.204
+          ]
+        },
+        {
+          "area": 201,
+          "bbox": [
+            1248,
+            889,
+            1267,
+            914
+          ],
+          "centroid": [
+            1256.841,
+            901.169
+          ]
+        },
+        {
+          "area": 95,
+          "bbox": [
+            1262,
+            928,
+            1273,
+            944
+          ],
+          "centroid": [
+            1267.126,
+            935.358
+          ]
+        },
+        {
+          "area": 191,
+          "bbox": [
+            1369,
+            949,
+            1386,
+            974
+          ],
+          "centroid": [
+            1377.021,
+            961.031
+          ]
+        }
+      ],
+      "mainComponentArea": 10094,
+      "translation": [
+        -1200,
+        -856
+      ],
+      "logicalCanvas": {
+        "w": 242,
+        "h": 181
+      },
+      "baseline": 175,
+      "opaqueBBox": [
+        48,
+        19,
+        186,
+        176
+      ]
+    }
+  }
+}

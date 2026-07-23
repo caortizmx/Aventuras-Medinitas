@@ -1,0 +1,152 @@
+{
+  "emma": {
+    "idle": [
+      "emma_idle_00",
+      "emma_idle_01",
+      "emma_idle_02",
+      "emma_idle_03",
+      "emma_idle_04",
+      "emma_idle_05"
+    ],
+    "run": [
+      "emma_run_00",
+      "emma_run_01",
+      "emma_run_02",
+      "emma_run_03",
+      "emma_run_04",
+      "emma_run_05"
+    ],
+    "jump": [
+      "emma_jump_00",
+      "emma_jump_01",
+      "emma_jump_02",
+      "emma_jump_03",
+      "emma_jump_04",
+      "emma_jump_05"
+    ],
+    "fall": [
+      "emma_fall_00",
+      "emma_fall_01",
+      "emma_fall_02",
+      "emma_fall_03",
+      "emma_fall_04",
+      "emma_fall_05"
+    ],
+    "hurt": [
+      "emma_hurt_00",
+      "emma_hurt_01",
+      "emma_hurt_02",
+      "emma_hurt_03",
+      "emma_hurt_04",
+      "emma_hurt_05"
+    ],
+    "celebrate": [
+      "emma_celebrate_00",
+      "emma_celebrate_01",
+      "emma_celebrate_02",
+      "emma_celebrate_03",
+      "emma_celebrate_04",
+      "emma_celebrate_05"
+    ]
+  },
+  "orel": {
+    "idle": [
+      "orel_idle_00",
+      "orel_idle_01",
+      "orel_idle_02",
+      "orel_idle_03",
+      "orel_idle_04",
+      "orel_idle_05"
+    ],
+    "run": [
+      "orel_run_00",
+      "orel_run_01",
+      "orel_run_02",
+      "orel_run_03",
+      "orel_run_04",
+      "orel_run_05"
+    ],
+    "jump": [
+      "orel_jump_00",
+      "orel_jump_01",
+      "orel_jump_02",
+      "orel_jump_03",
+      "orel_jump_04",
+      "orel_jump_05"
+    ],
+    "fall": [
+      "orel_fall_00",
+      "orel_fall_01",
+      "orel_fall_02",
+      "orel_fall_03",
+      "orel_fall_04",
+      "orel_fall_05"
+    ],
+    "hurt": [
+      "orel_hurt_00",
+      "orel_hurt_01",
+      "orel_hurt_02",
+      "orel_hurt_03",
+      "orel_hurt_04",
+      "orel_hurt_05"
+    ],
+    "celebrate": [
+      "orel_celebrate_00",
+      "orel_celebrate_01",
+      "orel_celebrate_02",
+      "orel_celebrate_03",
+      "orel_celebrate_04",
+      "orel_celebrate_05"
+    ]
+  },
+  "israel": {
+    "idle": [
+      "israel_idle_00",
+      "israel_idle_01",
+      "israel_idle_02",
+      "israel_idle_03",
+      "israel_idle_04",
+      "israel_idle_05"
+    ],
+    "run": [
+      "israel_run_00",
+      "israel_run_01",
+      "israel_run_02",
+      "israel_run_03",
+      "israel_run_04",
+      "israel_run_05"
+    ],
+    "jump": [
+      "israel_jump_00",
+      "israel_jump_01",
+      "israel_jump_02",
+      "israel_jump_03",
+      "israel_jump_04",
+      "israel_jump_05"
+    ],
+    "fall": [
+      "israel_fall_00",
+      "israel_fall_01",
+      "israel_fall_02",
+      "israel_fall_03",
+      "israel_fall_04",
+      "israel_fall_05"
+    ],
+    "hurt": [
+      "israel_hurt_00",
+      "israel_hurt_01",
+      "israel_hurt_02",
+      "israel_hurt_03",
+      "israel_hurt_04",
+      "israel_hurt_05"
+    ],
+    "celebrate": [
+      "israel_celebrate_00",
+      "israel_celebrate_01",
+      "israel_celebrate_02",
+      "israel_celebrate_03",
+      "israel_celebrate_04",
+      "israel_celebrate_05"
+    ]
+  }
+}

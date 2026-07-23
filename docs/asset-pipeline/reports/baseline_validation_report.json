@@ -1,0 +1,4144 @@
+{
+  "valid": false,
+  "atlases": [
+    {
+      "atlas": "emma",
+      "valid": false,
+      "image": "emma_atlas.png",
+      "json": "emma_atlas.json",
+      "imageSize": {
+        "w": 2012,
+        "h": 472
+      },
+      "hasAlpha": true,
+      "sourceSizes": [
+        [
+          241,
+          181
+        ],
+        [
+          242,
+          181
+        ]
+      ],
+      "expectedFrameCount": 36,
+      "actualFrameCount": 36,
+      "errors": [
+        "emma_idle_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_idle_00: Character/effect pixels touch logical canvas boundary",
+        "emma_idle_00: Foot baseline 180; expected 175",
+        "emma_idle_01: Character/effect pixels touch logical canvas boundary",
+        "emma_idle_01: Foot baseline 180; expected 175",
+        "emma_idle_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_idle_02: Character/effect pixels touch logical canvas boundary",
+        "emma_idle_02: Foot baseline 180; expected 175",
+        "emma_idle_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_idle_03: Character/effect pixels touch logical canvas boundary",
+        "emma_idle_03: Foot baseline 180; expected 175",
+        "emma_idle_04: Character/effect pixels touch logical canvas boundary",
+        "emma_idle_04: Foot baseline 180; expected 175",
+        "emma_idle_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_idle_05: Character/effect pixels touch logical canvas boundary",
+        "emma_idle_05: Foot baseline 180; expected 175",
+        "emma_run_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_run_00: Foot baseline 166; expected 175",
+        "emma_run_01: Foot baseline 169; expected 175",
+        "emma_run_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_run_02: Foot baseline 168; expected 175",
+        "emma_run_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_run_03: Foot baseline 168; expected 175",
+        "emma_run_04: Foot baseline 168; expected 175",
+        "emma_run_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_run_05: Character/effect pixels touch logical canvas boundary",
+        "emma_run_05: Foot baseline 168; expected 175",
+        "emma_jump_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_jump_00: Character/effect pixels touch logical canvas boundary",
+        "emma_jump_00: Foot baseline 146; expected 175",
+        "emma_jump_01: Unexpected disconnected components: 2 > 1",
+        "emma_jump_01: Character/effect pixels touch logical canvas boundary",
+        "emma_jump_01: Foot baseline 147; expected 175",
+        "emma_jump_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_jump_02: Unexpected disconnected components: 2 > 1",
+        "emma_jump_02: Character/effect pixels touch logical canvas boundary",
+        "emma_jump_02: Foot baseline 133; expected 175",
+        "emma_jump_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_jump_03: Unexpected disconnected components: 2 > 1",
+        "emma_jump_03: Character/effect pixels touch logical canvas boundary",
+        "emma_jump_03: Foot baseline 135; expected 175",
+        "emma_jump_04: Foot baseline 131; expected 175",
+        "emma_jump_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_jump_05: Foot baseline 147; expected 175",
+        "emma_fall_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_fall_00: Multiple large components; likely split character",
+        "emma_fall_00: Internal fully transparent horizontal band divides character",
+        "emma_fall_00: Unexpected disconnected components: 2 > 1",
+        "emma_fall_00: Character/effect pixels touch logical canvas boundary",
+        "emma_fall_00: Foot baseline 129; expected 175",
+        "emma_fall_01: Multiple large components; likely split character",
+        "emma_fall_01: Internal fully transparent horizontal band divides character",
+        "emma_fall_01: Unexpected disconnected components: 3 > 1",
+        "emma_fall_01: Character/effect pixels touch logical canvas boundary",
+        "emma_fall_01: Foot baseline 126; expected 175",
+        "emma_fall_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_fall_02: Unexpected disconnected components: 3 > 1",
+        "emma_fall_02: Character/effect pixels touch logical canvas boundary",
+        "emma_fall_02: Foot baseline 127; expected 175",
+        "emma_fall_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_fall_03: Unexpected disconnected components: 2 > 1",
+        "emma_fall_03: Character/effect pixels touch logical canvas boundary",
+        "emma_fall_03: Foot baseline 135; expected 175",
+        "emma_fall_04: Unexpected disconnected components: 2 > 1",
+        "emma_fall_04: Character/effect pixels touch logical canvas boundary",
+        "emma_fall_04: Foot baseline 130; expected 175",
+        "emma_fall_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_fall_05: Unexpected disconnected components: 2 > 1",
+        "emma_fall_05: Character/effect pixels touch logical canvas boundary",
+        "emma_fall_05: Foot baseline 133; expected 175",
+        "emma_hurt_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_hurt_00: Multiple large components; likely split character",
+        "emma_hurt_00: Internal fully transparent horizontal band divides character",
+        "emma_hurt_00: Unexpected disconnected components: 5 > 2",
+        "emma_hurt_00: Character/effect pixels touch logical canvas boundary",
+        "emma_hurt_00: Foot baseline 93; expected 175",
+        "emma_hurt_01: Multiple large components; likely split character",
+        "emma_hurt_01: Internal fully transparent horizontal band divides character",
+        "emma_hurt_01: Unexpected disconnected components: 5 > 2",
+        "emma_hurt_01: Character/effect pixels touch logical canvas boundary",
+        "emma_hurt_01: Foot baseline 94; expected 175",
+        "emma_hurt_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_hurt_02: Multiple large components; likely split character",
+        "emma_hurt_02: Internal fully transparent horizontal band divides character",
+        "emma_hurt_02: Unexpected disconnected components: 4 > 2",
+        "emma_hurt_02: Character/effect pixels touch logical canvas boundary",
+        "emma_hurt_02: Foot baseline 99; expected 175",
+        "emma_hurt_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_hurt_03: Multiple large components; likely split character",
+        "emma_hurt_03: Internal fully transparent horizontal band divides character",
+        "emma_hurt_03: Unexpected disconnected components: 4 > 2",
+        "emma_hurt_03: Character/effect pixels touch logical canvas boundary",
+        "emma_hurt_03: Foot baseline 99; expected 175",
+        "emma_hurt_04: Multiple large components; likely split character",
+        "emma_hurt_04: Internal fully transparent horizontal band divides character",
+        "emma_hurt_04: Unexpected disconnected components: 5 > 2",
+        "emma_hurt_04: Character/effect pixels touch logical canvas boundary",
+        "emma_hurt_04: Foot baseline 100; expected 175",
+        "emma_hurt_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_hurt_05: Multiple large components; likely split character",
+        "emma_hurt_05: Internal fully transparent horizontal band divides character",
+        "emma_hurt_05: Unexpected disconnected components: 3 > 2",
+        "emma_hurt_05: Character/effect pixels touch logical canvas boundary",
+        "emma_hurt_05: Foot baseline 100; expected 175",
+        "emma_celebrate_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_celebrate_00: Character/effect pixels touch logical canvas boundary",
+        "emma_celebrate_00: Foot baseline 101; expected 175",
+        "emma_celebrate_01: Character/effect pixels touch logical canvas boundary",
+        "emma_celebrate_01: Foot baseline 102; expected 175",
+        "emma_celebrate_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_celebrate_02: Character/effect pixels touch logical canvas boundary",
+        "emma_celebrate_02: Foot baseline 97; expected 175",
+        "emma_celebrate_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_celebrate_03: Character/effect pixels touch logical canvas boundary",
+        "emma_celebrate_03: Foot baseline 100; expected 175",
+        "emma_celebrate_04: Character/effect pixels touch logical canvas boundary",
+        "emma_celebrate_04: Foot baseline 103; expected 175",
+        "emma_celebrate_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "emma_celebrate_05: Character/effect pixels touch logical canvas boundary",
+        "emma_celebrate_05: Foot baseline 103; expected 175",
+        "emma_idle: excessive horizontal center movement 18.779px",
+        "emma_run: excessive horizontal center movement 18.481px",
+        "emma_jump: excessive horizontal center movement 17.744px",
+        "emma_fall: excessive horizontal center movement 18.425px",
+        "emma_hurt: excessive horizontal center movement 16.952px",
+        "emma_celebrate: excessive horizontal center movement 22.089px"
+      ],
+      "warnings": [
+        "emma_idle_00: Main horizontal center is 167.299",
+        "emma_idle_01: Main horizontal center is 155.745",
+        "emma_idle_02: Main horizontal center is 141.314",
+        "emma_idle_03: Main horizontal center is 131.981",
+        "emma_idle_04: Main horizontal center is 113.202",
+        "emma_idle_05: Main horizontal center is 99.086",
+        "emma_run_00: Main horizontal center is 163.1",
+        "emma_run_01: Main horizontal center is 154.075",
+        "emma_run_02: Main horizontal center is 138.169",
+        "emma_run_03: Main horizontal center is 125.852",
+        "emma_run_04: Main horizontal center is 107.371",
+        "emma_run_05: Main horizontal center is 93.822",
+        "emma_jump_00: Main horizontal center is 161.432",
+        "emma_jump_01: Main horizontal center is 151.255",
+        "emma_jump_02: Main horizontal center is 133.511",
+        "emma_jump_04: Main horizontal center is 106.288",
+        "emma_jump_05: Main horizontal center is 95.164",
+        "emma_fall_00: Main horizontal center is 156.335",
+        "emma_fall_01: Main horizontal center is 147.951",
+        "emma_fall_02: Main horizontal center is 129.526",
+        "emma_fall_04: Main horizontal center is 108.93",
+        "emma_fall_05: Main horizontal center is 98.583",
+        "emma_hurt_00: Main horizontal center is 156.279",
+        "emma_hurt_01: Main horizontal center is 142.629",
+        "emma_hurt_02: Main horizontal center is 125.98",
+        "emma_hurt_04: Main horizontal center is 105.943",
+        "emma_hurt_05: Main horizontal center is 88.991",
+        "emma_celebrate_00: Main horizontal center is 170.056",
+        "emma_celebrate_01: Main horizontal center is 151.586",
+        "emma_celebrate_02: Main horizontal center is 136.387",
+        "emma_celebrate_03: Main horizontal center is 125.757",
+        "emma_celebrate_04: Main horizontal center is 103.668",
+        "emma_celebrate_05: Main horizontal center is 98.403"
+      ],
+      "frames": {
+        "emma_idle_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 180; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 167.299"
+          ],
+          "metrics": {
+            "opaquePixels": 7735,
+            "componentCount": 1,
+            "componentSizes": [
+              7735
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 180,
+            "mainCentroidX": 167.299,
+            "mainBBox": [
+              114,
+              51,
+              211,
+              181
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_idle_01": {
+          "valid": false,
+          "errors": [
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 180; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 155.745"
+          ],
+          "metrics": {
+            "opaquePixels": 7397,
+            "componentCount": 1,
+            "componentSizes": [
+              7397
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 180,
+            "mainCentroidX": 155.745,
+            "mainBBox": [
+              105,
+              55,
+              198,
+              181
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_idle_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 180; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 141.314"
+          ],
+          "metrics": {
+            "opaquePixels": 7345,
+            "componentCount": 1,
+            "componentSizes": [
+              7345
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 180,
+            "mainCentroidX": 141.314,
+            "mainBBox": [
+              90,
+              55,
+              184,
+              181
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_idle_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 180; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 131.981"
+          ],
+          "metrics": {
+            "opaquePixels": 7338,
+            "componentCount": 1,
+            "componentSizes": [
+              7338
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 180,
+            "mainCentroidX": 131.981,
+            "mainBBox": [
+              81,
+              56,
+              174,
+              181
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_idle_04": {
+          "valid": false,
+          "errors": [
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 180; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 113.202"
+          ],
+          "metrics": {
+            "opaquePixels": 7281,
+            "componentCount": 1,
+            "componentSizes": [
+              7281
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 180,
+            "mainCentroidX": 113.202,
+            "mainBBox": [
+              63,
+              55,
+              155,
+              181
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_idle_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 180; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 99.086"
+          ],
+          "metrics": {
+            "opaquePixels": 7130,
+            "componentCount": 1,
+            "componentSizes": [
+              7130
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 180,
+            "mainCentroidX": 99.086,
+            "mainBBox": [
+              49,
+              57,
+              141,
+              181
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_run_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 166; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 163.1"
+          ],
+          "metrics": {
+            "opaquePixels": 8730,
+            "componentCount": 1,
+            "componentSizes": [
+              8730
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 166,
+            "mainCentroidX": 163.1,
+            "mainBBox": [
+              91,
+              39,
+              220,
+              167
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_run_01": {
+          "valid": false,
+          "errors": [
+            "Foot baseline 169; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 154.075"
+          ],
+          "metrics": {
+            "opaquePixels": 8865,
+            "componentCount": 1,
+            "componentSizes": [
+              8865
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 169,
+            "mainCentroidX": 154.075,
+            "mainBBox": [
+              91,
+              39,
+              209,
+              170
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_run_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 168; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 138.169"
+          ],
+          "metrics": {
+            "opaquePixels": 8568,
+            "componentCount": 1,
+            "componentSizes": [
+              8568
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 168,
+            "mainCentroidX": 138.169,
+            "mainBBox": [
+              77,
+              41,
+              192,
+              169
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_run_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 168; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 125.852"
+          ],
+          "metrics": {
+            "opaquePixels": 8592,
+            "componentCount": 1,
+            "componentSizes": [
+              8592
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 168,
+            "mainCentroidX": 125.852,
+            "mainBBox": [
+              62,
+              41,
+              180,
+              169
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_run_04": {
+          "valid": false,
+          "errors": [
+            "Foot baseline 168; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 107.371"
+          ],
+          "metrics": {
+            "opaquePixels": 8517,
+            "componentCount": 1,
+            "componentSizes": [
+              8517
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 168,
+            "mainCentroidX": 107.371,
+            "mainBBox": [
+              50,
+              41,
+              160,
+              169
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_run_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 168; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 93.822"
+          ],
+          "metrics": {
+            "opaquePixels": 8533,
+            "componentCount": 3,
+            "componentSizes": [
+              8528,
+              3,
+              2
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 168,
+            "mainCentroidX": 93.822,
+            "mainBBox": [
+              31,
+              41,
+              148,
+              169
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_jump_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 146; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 161.432"
+          ],
+          "metrics": {
+            "opaquePixels": 8390,
+            "componentCount": 2,
+            "componentSizes": [
+              8344,
+              46
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 146,
+            "mainCentroidX": 161.432,
+            "mainBBox": [
+              109,
+              16,
+              211,
+              147
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_jump_01": {
+          "valid": false,
+          "errors": [
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 147; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 151.255"
+          ],
+          "metrics": {
+            "opaquePixels": 8939,
+            "componentCount": 3,
+            "componentSizes": [
+              8874,
+              61,
+              4
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 147,
+            "mainCentroidX": 151.255,
+            "mainBBox": [
+              94,
+              16,
+              219,
+              148
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_jump_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 133; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 133.511"
+          ],
+          "metrics": {
+            "opaquePixels": 8734,
+            "componentCount": 2,
+            "componentSizes": [
+              8662,
+              72
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 133,
+            "mainCentroidX": 133.511,
+            "mainBBox": [
+              74,
+              9,
+              198,
+              134
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_jump_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 135; expected 175"
+          ],
+          "warnings": [],
+          "metrics": {
+            "opaquePixels": 8615,
+            "componentCount": 2,
+            "componentSizes": [
+              8547,
+              68
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 135,
+            "mainCentroidX": 118.75,
+            "mainBBox": [
+              61,
+              9,
+              184,
+              136
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_jump_04": {
+          "valid": false,
+          "errors": [
+            "Foot baseline 131; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 106.288"
+          ],
+          "metrics": {
+            "opaquePixels": 8700,
+            "componentCount": 1,
+            "componentSizes": [
+              8700
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 131,
+            "mainCentroidX": 106.288,
+            "mainBBox": [
+              41,
+              11,
+              169,
+              132
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_jump_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 147; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 95.164"
+          ],
+          "metrics": {
+            "opaquePixels": 8407,
+            "componentCount": 1,
+            "componentSizes": [
+              8407
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 147,
+            "mainCentroidX": 95.164,
+            "mainBBox": [
+              42,
+              20,
+              145,
+              148
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_fall_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 129; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 156.335"
+          ],
+          "metrics": {
+            "opaquePixels": 10383,
+            "componentCount": 3,
+            "componentSizes": [
+              8926,
+              1443,
+              14
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 2,
+            "mainBottom": 129,
+            "mainCentroidX": 156.335,
+            "mainBBox": [
+              97,
+              0,
+              222,
+              130
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_fall_01": {
+          "valid": false,
+          "errors": [
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 3 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 126; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 147.951"
+          ],
+          "metrics": {
+            "opaquePixels": 10703,
+            "componentCount": 3,
+            "componentSizes": [
+              8944,
+              1663,
+              96
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 2,
+            "mainBottom": 126,
+            "mainCentroidX": 147.951,
+            "mainBBox": [
+              88,
+              0,
+              212,
+              127
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_fall_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 3 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 127; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 129.526"
+          ],
+          "metrics": {
+            "opaquePixels": 10237,
+            "componentCount": 3,
+            "componentSizes": [
+              8945,
+              1138,
+              154
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 1,
+            "mainBottom": 127,
+            "mainCentroidX": 129.526,
+            "mainBBox": [
+              71,
+              0,
+              192,
+              128
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_fall_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 135; expected 175"
+          ],
+          "warnings": [],
+          "metrics": {
+            "opaquePixels": 10198,
+            "componentCount": 3,
+            "componentSizes": [
+              9125,
+              1052,
+              21
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 135,
+            "mainCentroidX": 122.891,
+            "mainBBox": [
+              64,
+              0,
+              189,
+              136
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_fall_04": {
+          "valid": false,
+          "errors": [
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 130; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 108.93"
+          ],
+          "metrics": {
+            "opaquePixels": 9510,
+            "componentCount": 3,
+            "componentSizes": [
+              8868,
+              633,
+              9
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 130,
+            "mainCentroidX": 108.93,
+            "mainBBox": [
+              51,
+              0,
+              172,
+              131
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_fall_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 133; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 98.583"
+          ],
+          "metrics": {
+            "opaquePixels": 8789,
+            "componentCount": 3,
+            "componentSizes": [
+              7936,
+              827,
+              26
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 133,
+            "mainCentroidX": 98.583,
+            "mainBBox": [
+              43,
+              3,
+              151,
+              134
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_hurt_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 5 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 93; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 156.279"
+          ],
+          "metrics": {
+            "opaquePixels": 10316,
+            "componentCount": 5,
+            "componentSizes": [
+              6229,
+              3596,
+              238,
+              144,
+              109
+            ],
+            "significantComponentCount": 5,
+            "largeComponentCount": 2,
+            "mainBottom": 93,
+            "mainCentroidX": 156.279,
+            "mainBBox": [
+              97,
+              0,
+              214,
+              94
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_hurt_01": {
+          "valid": false,
+          "errors": [
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 5 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 94; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 142.629"
+          ],
+          "metrics": {
+            "opaquePixels": 9757,
+            "componentCount": 5,
+            "componentSizes": [
+              5954,
+              3381,
+              153,
+              136,
+              133
+            ],
+            "significantComponentCount": 5,
+            "largeComponentCount": 2,
+            "mainBottom": 94,
+            "mainCentroidX": 142.629,
+            "mainBBox": [
+              84,
+              0,
+              199,
+              95
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_hurt_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 4 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 99; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 125.98"
+          ],
+          "metrics": {
+            "opaquePixels": 11043,
+            "componentCount": 4,
+            "componentSizes": [
+              6460,
+              4350,
+              138,
+              95
+            ],
+            "significantComponentCount": 4,
+            "largeComponentCount": 2,
+            "mainBottom": 99,
+            "mainCentroidX": 125.98,
+            "mainBBox": [
+              67,
+              0,
+              175,
+              100
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_hurt_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 4 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 99; expected 175"
+          ],
+          "warnings": [],
+          "metrics": {
+            "opaquePixels": 9912,
+            "componentCount": 4,
+            "componentSizes": [
+              6285,
+              2878,
+              525,
+              224
+            ],
+            "significantComponentCount": 4,
+            "largeComponentCount": 2,
+            "mainBottom": 99,
+            "mainCentroidX": 121.106,
+            "mainBBox": [
+              67,
+              0,
+              170,
+              100
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_hurt_04": {
+          "valid": false,
+          "errors": [
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 5 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 100; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 105.943"
+          ],
+          "metrics": {
+            "opaquePixels": 9572,
+            "componentCount": 5,
+            "componentSizes": [
+              6434,
+              2654,
+              218,
+              140,
+              126
+            ],
+            "significantComponentCount": 5,
+            "largeComponentCount": 2,
+            "mainBottom": 100,
+            "mainCentroidX": 105.943,
+            "mainBBox": [
+              52,
+              0,
+              147,
+              101
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_hurt_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 3 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 100; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 88.991"
+          ],
+          "metrics": {
+            "opaquePixels": 10028,
+            "componentCount": 3,
+            "componentSizes": [
+              6326,
+              3475,
+              227
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 2,
+            "mainBottom": 100,
+            "mainCentroidX": 88.991,
+            "mainBBox": [
+              39,
+              0,
+              132,
+              101
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_celebrate_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 101; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 170.056"
+          ],
+          "metrics": {
+            "opaquePixels": 5936,
+            "componentCount": 3,
+            "componentSizes": [
+              5679,
+              131,
+              126
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 1,
+            "mainBottom": 101,
+            "mainCentroidX": 170.056,
+            "mainBBox": [
+              119,
+              0,
+              223,
+              102
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_celebrate_01": {
+          "valid": false,
+          "errors": [
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 102; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 151.586"
+          ],
+          "metrics": {
+            "opaquePixels": 6048,
+            "componentCount": 2,
+            "componentSizes": [
+              5919,
+              129
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 102,
+            "mainCentroidX": 151.586,
+            "mainBBox": [
+              91,
+              0,
+              208,
+              103
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_celebrate_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 97; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 136.387"
+          ],
+          "metrics": {
+            "opaquePixels": 5236,
+            "componentCount": 2,
+            "componentSizes": [
+              5106,
+              130
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 97,
+            "mainCentroidX": 136.387,
+            "mainBBox": [
+              87,
+              0,
+              186,
+              98
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_celebrate_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 100; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 125.757"
+          ],
+          "metrics": {
+            "opaquePixels": 5634,
+            "componentCount": 2,
+            "componentSizes": [
+              5510,
+              124
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 100,
+            "mainCentroidX": 125.757,
+            "mainBBox": [
+              66,
+              0,
+              180,
+              101
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_celebrate_04": {
+          "valid": false,
+          "errors": [
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 103; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 103.668"
+          ],
+          "metrics": {
+            "opaquePixels": 6285,
+            "componentCount": 2,
+            "componentSizes": [
+              6143,
+              142
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 103,
+            "mainCentroidX": 103.668,
+            "mainBBox": [
+              47,
+              0,
+              157,
+              104
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "emma_celebrate_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 103; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 98.403"
+          ],
+          "metrics": {
+            "opaquePixels": 6619,
+            "componentCount": 3,
+            "componentSizes": [
+              6444,
+              128,
+              47
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 103,
+            "mainCentroidX": 98.403,
+            "mainBBox": [
+              42,
+              0,
+              164,
+              104
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        }
+      }
+    },
+    {
+      "atlas": "orel",
+      "valid": false,
+      "image": "orel_atlas.png",
+      "json": "orel_atlas.json",
+      "imageSize": {
+        "w": 2040,
+        "h": 548
+      },
+      "hasAlpha": true,
+      "sourceSizes": [
+        [
+          241,
+          181
+        ],
+        [
+          242,
+          181
+        ]
+      ],
+      "expectedFrameCount": 36,
+      "actualFrameCount": 36,
+      "errors": [
+        "orel_idle_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_idle_00: Foot baseline 177; expected 175",
+        "orel_idle_01: Foot baseline 177; expected 175",
+        "orel_idle_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_idle_02: Foot baseline 178; expected 175",
+        "orel_idle_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_idle_03: Foot baseline 177; expected 175",
+        "orel_idle_04: Foot baseline 178; expected 175",
+        "orel_idle_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_idle_05: Foot baseline 178; expected 175",
+        "orel_run_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_run_00: Unexpected disconnected components: 2 > 1",
+        "orel_run_00: Character/effect pixels touch logical canvas boundary",
+        "orel_run_00: Foot baseline 161; expected 175",
+        "orel_run_01: Unexpected disconnected components: 2 > 1",
+        "orel_run_01: Character/effect pixels touch logical canvas boundary",
+        "orel_run_01: Foot baseline 162; expected 175",
+        "orel_run_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_run_02: Unexpected disconnected components: 2 > 1",
+        "orel_run_02: Character/effect pixels touch logical canvas boundary",
+        "orel_run_02: Foot baseline 164; expected 175",
+        "orel_run_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_run_03: Unexpected disconnected components: 2 > 1",
+        "orel_run_03: Character/effect pixels touch logical canvas boundary",
+        "orel_run_03: Foot baseline 164; expected 175",
+        "orel_run_04: Unexpected disconnected components: 2 > 1",
+        "orel_run_04: Character/effect pixels touch logical canvas boundary",
+        "orel_run_04: Foot baseline 162; expected 175",
+        "orel_run_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_run_05: Unexpected disconnected components: 2 > 1",
+        "orel_run_05: Character/effect pixels touch logical canvas boundary",
+        "orel_run_05: Foot baseline 164; expected 175",
+        "orel_jump_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_jump_00: Unexpected disconnected components: 2 > 1",
+        "orel_jump_00: Character/effect pixels touch logical canvas boundary",
+        "orel_jump_00: Foot baseline 141; expected 175",
+        "orel_jump_01: Unexpected disconnected components: 2 > 1",
+        "orel_jump_01: Character/effect pixels touch logical canvas boundary",
+        "orel_jump_01: Foot baseline 146; expected 175",
+        "orel_jump_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_jump_02: Unexpected disconnected components: 2 > 1",
+        "orel_jump_02: Character/effect pixels touch logical canvas boundary",
+        "orel_jump_02: Foot baseline 144; expected 175",
+        "orel_jump_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_jump_03: Unexpected disconnected components: 2 > 1",
+        "orel_jump_03: Character/effect pixels touch logical canvas boundary",
+        "orel_jump_03: Foot baseline 145; expected 175",
+        "orel_jump_04: Unexpected disconnected components: 2 > 1",
+        "orel_jump_04: Character/effect pixels touch logical canvas boundary",
+        "orel_jump_04: Foot baseline 143; expected 175",
+        "orel_jump_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_jump_05: Unexpected disconnected components: 2 > 1",
+        "orel_jump_05: Character/effect pixels touch logical canvas boundary",
+        "orel_jump_05: Foot baseline 147; expected 175",
+        "orel_fall_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_fall_00: Multiple large components; likely split character",
+        "orel_fall_00: Internal fully transparent horizontal band divides character",
+        "orel_fall_00: Unexpected disconnected components: 3 > 1",
+        "orel_fall_00: Character/effect pixels touch logical canvas boundary",
+        "orel_fall_00: Foot baseline 126; expected 175",
+        "orel_fall_01: Multiple large components; likely split character",
+        "orel_fall_01: Internal fully transparent horizontal band divides character",
+        "orel_fall_01: Unexpected disconnected components: 3 > 1",
+        "orel_fall_01: Character/effect pixels touch logical canvas boundary",
+        "orel_fall_01: Foot baseline 124; expected 175",
+        "orel_fall_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_fall_02: Multiple large components; likely split character",
+        "orel_fall_02: Internal fully transparent horizontal band divides character",
+        "orel_fall_02: Unexpected disconnected components: 3 > 1",
+        "orel_fall_02: Character/effect pixels touch logical canvas boundary",
+        "orel_fall_02: Foot baseline 122; expected 175",
+        "orel_fall_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_fall_03: Multiple large components; likely split character",
+        "orel_fall_03: Internal fully transparent horizontal band divides character",
+        "orel_fall_03: Unexpected disconnected components: 3 > 1",
+        "orel_fall_03: Character/effect pixels touch logical canvas boundary",
+        "orel_fall_03: Foot baseline 124; expected 175",
+        "orel_fall_04: Multiple large components; likely split character",
+        "orel_fall_04: Internal fully transparent horizontal band divides character",
+        "orel_fall_04: Unexpected disconnected components: 3 > 1",
+        "orel_fall_04: Character/effect pixels touch logical canvas boundary",
+        "orel_fall_04: Foot baseline 124; expected 175",
+        "orel_fall_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_fall_05: Multiple large components; likely split character",
+        "orel_fall_05: Internal fully transparent horizontal band divides character",
+        "orel_fall_05: Unexpected disconnected components: 3 > 1",
+        "orel_fall_05: Character/effect pixels touch logical canvas boundary",
+        "orel_fall_05: Foot baseline 123; expected 175",
+        "orel_hurt_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_hurt_00: Multiple large components; likely split character",
+        "orel_hurt_00: Internal fully transparent horizontal band divides character",
+        "orel_hurt_00: Unexpected disconnected components: 4 > 2",
+        "orel_hurt_00: Character/effect pixels touch logical canvas boundary",
+        "orel_hurt_00: Foot baseline 101; expected 175",
+        "orel_hurt_01: Multiple large components; likely split character",
+        "orel_hurt_01: Internal fully transparent horizontal band divides character",
+        "orel_hurt_01: Unexpected disconnected components: 4 > 2",
+        "orel_hurt_01: Character/effect pixels touch logical canvas boundary",
+        "orel_hurt_01: Foot baseline 100; expected 175",
+        "orel_hurt_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_hurt_02: Multiple large components; likely split character",
+        "orel_hurt_02: Internal fully transparent horizontal band divides character",
+        "orel_hurt_02: Unexpected disconnected components: 3 > 2",
+        "orel_hurt_02: Character/effect pixels touch logical canvas boundary",
+        "orel_hurt_02: Foot baseline 101; expected 175",
+        "orel_hurt_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_hurt_03: Multiple large components; likely split character",
+        "orel_hurt_03: Internal fully transparent horizontal band divides character",
+        "orel_hurt_03: Character/effect pixels touch logical canvas boundary",
+        "orel_hurt_03: Foot baseline 100; expected 175",
+        "orel_hurt_04: Multiple large components; likely split character",
+        "orel_hurt_04: Internal fully transparent horizontal band divides character",
+        "orel_hurt_04: Unexpected disconnected components: 4 > 2",
+        "orel_hurt_04: Character/effect pixels touch logical canvas boundary",
+        "orel_hurt_04: Foot baseline 98; expected 175",
+        "orel_hurt_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_hurt_05: Multiple large components; likely split character",
+        "orel_hurt_05: Internal fully transparent horizontal band divides character",
+        "orel_hurt_05: Unexpected disconnected components: 4 > 2",
+        "orel_hurt_05: Character/effect pixels touch logical canvas boundary",
+        "orel_hurt_05: Foot baseline 98; expected 175",
+        "orel_celebrate_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_celebrate_00: Character/effect pixels touch logical canvas boundary",
+        "orel_celebrate_00: Foot baseline 116; expected 175",
+        "orel_celebrate_01: Character/effect pixels touch logical canvas boundary",
+        "orel_celebrate_01: Foot baseline 121; expected 175",
+        "orel_celebrate_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_celebrate_02: Character/effect pixels touch logical canvas boundary",
+        "orel_celebrate_02: Foot baseline 119; expected 175",
+        "orel_celebrate_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_celebrate_03: Character/effect pixels touch logical canvas boundary",
+        "orel_celebrate_03: Foot baseline 116; expected 175",
+        "orel_celebrate_04: Character/effect pixels touch logical canvas boundary",
+        "orel_celebrate_04: Foot baseline 117; expected 175",
+        "orel_celebrate_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "orel_celebrate_05: Character/effect pixels touch logical canvas boundary",
+        "orel_celebrate_05: Foot baseline 117; expected 175",
+        "orel_idle: excessive horizontal center movement 31.898px",
+        "orel_run: excessive horizontal center movement 27.496px",
+        "orel_jump: excessive horizontal center movement 26.502px",
+        "orel_fall: excessive horizontal center movement 20.633px",
+        "orel_hurt: excessive horizontal center movement 20.988px",
+        "orel_celebrate: excessive horizontal center movement 19.214px"
+      ],
+      "warnings": [
+        "orel_idle_00: Main horizontal center is 170.12",
+        "orel_idle_01: Main horizontal center is 160.534",
+        "orel_idle_02: Main horizontal center is 152.0",
+        "orel_idle_03: Main horizontal center is 136.187",
+        "orel_idle_04: Main horizontal center is 124.041",
+        "orel_idle_05: Main horizontal center is 92.143",
+        "orel_run_00: Main horizontal center is 165.24",
+        "orel_run_01: Main horizontal center is 159.959",
+        "orel_run_02: Main horizontal center is 144.71",
+        "orel_run_03: Main horizontal center is 131.052",
+        "orel_run_04: Main horizontal center is 113.893",
+        "orel_run_05: Main horizontal center is 86.397",
+        "orel_jump_00: Main horizontal center is 146.503",
+        "orel_jump_01: Main horizontal center is 141.82",
+        "orel_jump_02: Main horizontal center is 132.646",
+        "orel_jump_03: Main horizontal center is 113.388",
+        "orel_jump_05: Main horizontal center is 91.575",
+        "orel_fall_00: Main horizontal center is 148.719",
+        "orel_fall_01: Main horizontal center is 139.172",
+        "orel_fall_02: Main horizontal center is 125.908",
+        "orel_fall_03: Main horizontal center is 116.512",
+        "orel_fall_04: Main horizontal center is 114.797",
+        "orel_fall_05: Main horizontal center is 94.164",
+        "orel_hurt_00: Main horizontal center is 152.52",
+        "orel_hurt_01: Main horizontal center is 148.054",
+        "orel_hurt_02: Main horizontal center is 127.066",
+        "orel_hurt_03: Main horizontal center is 116.983",
+        "orel_hurt_04: Main horizontal center is 109.99",
+        "orel_hurt_05: Main horizontal center is 94.332",
+        "orel_celebrate_00: Main horizontal center is 150.653",
+        "orel_celebrate_01: Main horizontal center is 141.611",
+        "orel_celebrate_04: Main horizontal center is 102.448",
+        "orel_celebrate_05: Main horizontal center is 96.0"
+      ],
+      "frames": {
+        "orel_idle_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 177; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 170.12"
+          ],
+          "metrics": {
+            "opaquePixels": 10663,
+            "componentCount": 1,
+            "componentSizes": [
+              10663
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 177,
+            "mainCentroidX": 170.12,
+            "mainBBox": [
+              117,
+              18,
+              219,
+              178
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_idle_01": {
+          "valid": false,
+          "errors": [
+            "Foot baseline 177; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 160.534"
+          ],
+          "metrics": {
+            "opaquePixels": 11267,
+            "componentCount": 1,
+            "componentSizes": [
+              11267
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 177,
+            "mainCentroidX": 160.534,
+            "mainBBox": [
+              103,
+              15,
+              210,
+              178
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_idle_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 178; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 152.0"
+          ],
+          "metrics": {
+            "opaquePixels": 10828,
+            "componentCount": 1,
+            "componentSizes": [
+              10828
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 178,
+            "mainCentroidX": 152.0,
+            "mainBBox": [
+              97,
+              17,
+              201,
+              179
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_idle_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 177; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 136.187"
+          ],
+          "metrics": {
+            "opaquePixels": 10924,
+            "componentCount": 1,
+            "componentSizes": [
+              10924
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 177,
+            "mainCentroidX": 136.187,
+            "mainBBox": [
+              81,
+              16,
+              185,
+              178
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_idle_04": {
+          "valid": false,
+          "errors": [
+            "Foot baseline 178; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 124.041"
+          ],
+          "metrics": {
+            "opaquePixels": 10919,
+            "componentCount": 1,
+            "componentSizes": [
+              10919
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 178,
+            "mainCentroidX": 124.041,
+            "mainBBox": [
+              68,
+              17,
+              173,
+              179
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_idle_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 178; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 92.143"
+          ],
+          "metrics": {
+            "opaquePixels": 10718,
+            "componentCount": 1,
+            "componentSizes": [
+              10718
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 178,
+            "mainCentroidX": 92.143,
+            "mainBBox": [
+              37,
+              17,
+              140,
+              179
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_run_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 161; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 165.24"
+          ],
+          "metrics": {
+            "opaquePixels": 11244,
+            "componentCount": 2,
+            "componentSizes": [
+              11119,
+              125
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 161,
+            "mainCentroidX": 165.24,
+            "mainBBox": [
+              95,
+              16,
+              226,
+              162
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_run_01": {
+          "valid": false,
+          "errors": [
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 162; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 159.959"
+          ],
+          "metrics": {
+            "opaquePixels": 11583,
+            "componentCount": 2,
+            "componentSizes": [
+              11424,
+              159
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 162,
+            "mainCentroidX": 159.959,
+            "mainBBox": [
+              90,
+              11,
+              219,
+              163
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_run_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 164; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 144.71"
+          ],
+          "metrics": {
+            "opaquePixels": 11242,
+            "componentCount": 2,
+            "componentSizes": [
+              11045,
+              197
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 164,
+            "mainCentroidX": 144.71,
+            "mainBBox": [
+              77,
+              17,
+              203,
+              165
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_run_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 164; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 131.052"
+          ],
+          "metrics": {
+            "opaquePixels": 11423,
+            "componentCount": 2,
+            "componentSizes": [
+              11322,
+              101
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 164,
+            "mainCentroidX": 131.052,
+            "mainBBox": [
+              62,
+              16,
+              192,
+              165
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_run_04": {
+          "valid": false,
+          "errors": [
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 162; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 113.893"
+          ],
+          "metrics": {
+            "opaquePixels": 11698,
+            "componentCount": 2,
+            "componentSizes": [
+              11527,
+              171
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 162,
+            "mainCentroidX": 113.893,
+            "mainBBox": [
+              40,
+              13,
+              175,
+              163
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_run_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 164; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 86.397"
+          ],
+          "metrics": {
+            "opaquePixels": 11164,
+            "componentCount": 2,
+            "componentSizes": [
+              11107,
+              57
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 164,
+            "mainCentroidX": 86.397,
+            "mainBBox": [
+              17,
+              16,
+              146,
+              165
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_jump_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 141; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 146.503"
+          ],
+          "metrics": {
+            "opaquePixels": 10974,
+            "componentCount": 4,
+            "componentSizes": [
+              10481,
+              486,
+              5,
+              2
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 141,
+            "mainCentroidX": 146.503,
+            "mainBBox": [
+              93,
+              0,
+              211,
+              142
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_jump_01": {
+          "valid": false,
+          "errors": [
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 146; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 141.82"
+          ],
+          "metrics": {
+            "opaquePixels": 11526,
+            "componentCount": 4,
+            "componentSizes": [
+              11079,
+              439,
+              5,
+              3
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 146,
+            "mainCentroidX": 141.82,
+            "mainBBox": [
+              86,
+              0,
+              210,
+              147
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_jump_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 144; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 132.646"
+          ],
+          "metrics": {
+            "opaquePixels": 11168,
+            "componentCount": 4,
+            "componentSizes": [
+              10567,
+              584,
+              10,
+              7
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 144,
+            "mainCentroidX": 132.646,
+            "mainBBox": [
+              73,
+              0,
+              200,
+              145
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_jump_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 145; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 113.388"
+          ],
+          "metrics": {
+            "opaquePixels": 11387,
+            "componentCount": 4,
+            "componentSizes": [
+              10926,
+              446,
+              9,
+              6
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 145,
+            "mainCentroidX": 113.388,
+            "mainBBox": [
+              53,
+              0,
+              181,
+              146
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_jump_04": {
+          "valid": false,
+          "errors": [
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 143; expected 175"
+          ],
+          "warnings": [],
+          "metrics": {
+            "opaquePixels": 10777,
+            "componentCount": 3,
+            "componentSizes": [
+              10458,
+              275,
+              44
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 143,
+            "mainCentroidX": 118.077,
+            "mainBBox": [
+              58,
+              0,
+              181,
+              144
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_jump_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 147; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 91.575"
+          ],
+          "metrics": {
+            "opaquePixels": 10509,
+            "componentCount": 2,
+            "componentSizes": [
+              10239,
+              270
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 147,
+            "mainCentroidX": 91.575,
+            "mainBBox": [
+              34,
+              0,
+              152,
+              148
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_fall_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 3 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 126; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 148.719"
+          ],
+          "metrics": {
+            "opaquePixels": 12863,
+            "componentCount": 4,
+            "componentSizes": [
+              10333,
+              2265,
+              259,
+              6
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 2,
+            "mainBottom": 126,
+            "mainCentroidX": 148.719,
+            "mainBBox": [
+              83,
+              0,
+              218,
+              127
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_fall_01": {
+          "valid": false,
+          "errors": [
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 3 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 124; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 139.172"
+          ],
+          "metrics": {
+            "opaquePixels": 12623,
+            "componentCount": 3,
+            "componentSizes": [
+              10139,
+              2209,
+              275
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 2,
+            "mainBottom": 124,
+            "mainCentroidX": 139.172,
+            "mainBBox": [
+              75,
+              0,
+              208,
+              125
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_fall_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 3 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 122; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 125.908"
+          ],
+          "metrics": {
+            "opaquePixels": 12607,
+            "componentCount": 4,
+            "componentSizes": [
+              10067,
+              2262,
+              272,
+              6
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 2,
+            "mainBottom": 122,
+            "mainCentroidX": 125.908,
+            "mainBBox": [
+              58,
+              0,
+              193,
+              123
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_fall_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 3 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 124; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 116.512"
+          ],
+          "metrics": {
+            "opaquePixels": 12757,
+            "componentCount": 3,
+            "componentSizes": [
+              10134,
+              2366,
+              257
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 2,
+            "mainBottom": 124,
+            "mainCentroidX": 116.512,
+            "mainBBox": [
+              51,
+              0,
+              186,
+              125
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_fall_04": {
+          "valid": false,
+          "errors": [
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 3 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 124; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 114.797"
+          ],
+          "metrics": {
+            "opaquePixels": 12901,
+            "componentCount": 4,
+            "componentSizes": [
+              10247,
+              2388,
+              262,
+              4
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 2,
+            "mainBottom": 124,
+            "mainCentroidX": 114.797,
+            "mainBBox": [
+              49,
+              0,
+              185,
+              125
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_fall_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 3 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 123; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 94.164"
+          ],
+          "metrics": {
+            "opaquePixels": 12291,
+            "componentCount": 3,
+            "componentSizes": [
+              9825,
+              2203,
+              263
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 2,
+            "mainBottom": 123,
+            "mainCentroidX": 94.164,
+            "mainBBox": [
+              31,
+              0,
+              161,
+              124
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_hurt_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 4 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 101; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 152.52"
+          ],
+          "metrics": {
+            "opaquePixels": 11885,
+            "componentCount": 6,
+            "componentSizes": [
+              7500,
+              4016,
+              162,
+              161,
+              23,
+              23
+            ],
+            "significantComponentCount": 4,
+            "largeComponentCount": 2,
+            "mainBottom": 101,
+            "mainCentroidX": 152.52,
+            "mainBBox": [
+              93,
+              0,
+              213,
+              102
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_hurt_01": {
+          "valid": false,
+          "errors": [
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 4 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 100; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 148.054"
+          ],
+          "metrics": {
+            "opaquePixels": 11234,
+            "componentCount": 6,
+            "componentSizes": [
+              7064,
+              3754,
+              210,
+              160,
+              23,
+              23
+            ],
+            "significantComponentCount": 4,
+            "largeComponentCount": 2,
+            "mainBottom": 100,
+            "mainCentroidX": 148.054,
+            "mainBBox": [
+              91,
+              0,
+              210,
+              101
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_hurt_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 3 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 101; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 127.066"
+          ],
+          "metrics": {
+            "opaquePixels": 12379,
+            "componentCount": 5,
+            "componentSizes": [
+              7201,
+              4966,
+              164,
+              24,
+              24
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 2,
+            "mainBottom": 101,
+            "mainCentroidX": 127.066,
+            "mainBBox": [
+              72,
+              0,
+              185,
+              102
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_hurt_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 100; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 116.983"
+          ],
+          "metrics": {
+            "opaquePixels": 12185,
+            "componentCount": 4,
+            "componentSizes": [
+              7131,
+              5010,
+              24,
+              20
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 2,
+            "mainBottom": 100,
+            "mainCentroidX": 116.983,
+            "mainBBox": [
+              63,
+              0,
+              171,
+              101
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_hurt_04": {
+          "valid": false,
+          "errors": [
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 4 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 98; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 109.99"
+          ],
+          "metrics": {
+            "opaquePixels": 11542,
+            "componentCount": 6,
+            "componentSizes": [
+              6949,
+              4206,
+              182,
+              158,
+              24,
+              23
+            ],
+            "significantComponentCount": 4,
+            "largeComponentCount": 2,
+            "mainBottom": 98,
+            "mainCentroidX": 109.99,
+            "mainBBox": [
+              54,
+              0,
+              170,
+              99
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_hurt_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 4 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 98; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 94.332"
+          ],
+          "metrics": {
+            "opaquePixels": 11108,
+            "componentCount": 6,
+            "componentSizes": [
+              6911,
+              3819,
+              180,
+              155,
+              23,
+              20
+            ],
+            "significantComponentCount": 4,
+            "largeComponentCount": 2,
+            "mainBottom": 98,
+            "mainCentroidX": 94.332,
+            "mainBBox": [
+              41,
+              0,
+              147,
+              99
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_celebrate_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 116; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 150.653"
+          ],
+          "metrics": {
+            "opaquePixels": 7826,
+            "componentCount": 2,
+            "componentSizes": [
+              7681,
+              145
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 116,
+            "mainCentroidX": 150.653,
+            "mainBBox": [
+              89,
+              0,
+              211,
+              117
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_celebrate_01": {
+          "valid": false,
+          "errors": [
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 121; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 141.611"
+          ],
+          "metrics": {
+            "opaquePixels": 7987,
+            "componentCount": 2,
+            "componentSizes": [
+              7837,
+              150
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 121,
+            "mainCentroidX": 141.611,
+            "mainBBox": [
+              81,
+              0,
+              205,
+              122
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_celebrate_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 119; expected 175"
+          ],
+          "warnings": [],
+          "metrics": {
+            "opaquePixels": 7294,
+            "componentCount": 2,
+            "componentSizes": [
+              7133,
+              161
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 119,
+            "mainCentroidX": 123.012,
+            "mainBBox": [
+              64,
+              0,
+              179,
+              120
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_celebrate_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 116; expected 175"
+          ],
+          "warnings": [],
+          "metrics": {
+            "opaquePixels": 7530,
+            "componentCount": 2,
+            "componentSizes": [
+              7371,
+              159
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 116,
+            "mainCentroidX": 121.662,
+            "mainBBox": [
+              63,
+              0,
+              180,
+              117
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_celebrate_04": {
+          "valid": false,
+          "errors": [
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 117; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 102.448"
+          ],
+          "metrics": {
+            "opaquePixels": 7053,
+            "componentCount": 2,
+            "componentSizes": [
+              6898,
+              155
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 117,
+            "mainCentroidX": 102.448,
+            "mainBBox": [
+              44,
+              0,
+              158,
+              118
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "orel_celebrate_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 117; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 96.0"
+          ],
+          "metrics": {
+            "opaquePixels": 7840,
+            "componentCount": 2,
+            "componentSizes": [
+              7666,
+              174
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 117,
+            "mainCentroidX": 96.0,
+            "mainBBox": [
+              35,
+              0,
+              164,
+              118
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        }
+      }
+    },
+    {
+      "atlas": "israel",
+      "valid": false,
+      "image": "israel_atlas.png",
+      "json": "israel_atlas.json",
+      "imageSize": {
+        "w": 1944,
+        "h": 504
+      },
+      "hasAlpha": true,
+      "sourceSizes": [
+        [
+          241,
+          181
+        ],
+        [
+          242,
+          181
+        ]
+      ],
+      "expectedFrameCount": 36,
+      "actualFrameCount": 36,
+      "errors": [
+        "israel_idle_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_idle_00: Foot baseline 169; expected 175",
+        "israel_idle_01: Foot baseline 169; expected 175",
+        "israel_idle_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_idle_02: Foot baseline 169; expected 175",
+        "israel_idle_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_idle_03: Foot baseline 169; expected 175",
+        "israel_idle_04: Foot baseline 169; expected 175",
+        "israel_idle_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_idle_05: Foot baseline 169; expected 175",
+        "israel_run_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_run_00: Foot baseline 150; expected 175",
+        "israel_run_01: Unexpected disconnected components: 2 > 1",
+        "israel_run_01: Character/effect pixels touch logical canvas boundary",
+        "israel_run_01: Foot baseline 153; expected 175",
+        "israel_run_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_run_02: Unexpected disconnected components: 2 > 1",
+        "israel_run_02: Character/effect pixels touch logical canvas boundary",
+        "israel_run_02: Foot baseline 157; expected 175",
+        "israel_run_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_run_03: Unexpected disconnected components: 3 > 1",
+        "israel_run_03: Character/effect pixels touch logical canvas boundary",
+        "israel_run_03: Foot baseline 152; expected 175",
+        "israel_run_04: Unexpected disconnected components: 2 > 1",
+        "israel_run_04: Character/effect pixels touch logical canvas boundary",
+        "israel_run_04: Foot baseline 152; expected 175",
+        "israel_run_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_run_05: Foot baseline 153; expected 175",
+        "israel_jump_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_jump_00: Character/effect pixels touch logical canvas boundary",
+        "israel_jump_00: Foot baseline 145; expected 175",
+        "israel_jump_01: Character/effect pixels touch logical canvas boundary",
+        "israel_jump_01: Foot baseline 145; expected 175",
+        "israel_jump_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_jump_02: Character/effect pixels touch logical canvas boundary",
+        "israel_jump_02: Foot baseline 130; expected 175",
+        "israel_jump_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_jump_03: Character/effect pixels touch logical canvas boundary",
+        "israel_jump_03: Foot baseline 129; expected 175",
+        "israel_jump_04: Character/effect pixels touch logical canvas boundary",
+        "israel_jump_04: Foot baseline 128; expected 175",
+        "israel_jump_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_jump_05: Foot baseline 145; expected 175",
+        "israel_fall_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_fall_00: Unexpected disconnected components: 2 > 1",
+        "israel_fall_00: Character/effect pixels touch logical canvas boundary",
+        "israel_fall_00: Foot baseline 138; expected 175",
+        "israel_fall_01: Unexpected disconnected components: 2 > 1",
+        "israel_fall_01: Character/effect pixels touch logical canvas boundary",
+        "israel_fall_01: Foot baseline 133; expected 175",
+        "israel_fall_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_fall_02: Unexpected disconnected components: 3 > 1",
+        "israel_fall_02: Character/effect pixels touch logical canvas boundary",
+        "israel_fall_02: Foot baseline 127; expected 175",
+        "israel_fall_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_fall_03: Unexpected disconnected components: 2 > 1",
+        "israel_fall_03: Character/effect pixels touch logical canvas boundary",
+        "israel_fall_03: Foot baseline 140; expected 175",
+        "israel_fall_04: Unexpected disconnected components: 2 > 1",
+        "israel_fall_04: Character/effect pixels touch logical canvas boundary",
+        "israel_fall_04: Foot baseline 137; expected 175",
+        "israel_fall_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_fall_05: Unexpected disconnected components: 2 > 1",
+        "israel_fall_05: Character/effect pixels touch logical canvas boundary",
+        "israel_fall_05: Foot baseline 141; expected 175",
+        "israel_hurt_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_hurt_00: Multiple large components; likely split character",
+        "israel_hurt_00: Internal fully transparent horizontal band divides character",
+        "israel_hurt_00: Unexpected disconnected components: 4 > 2",
+        "israel_hurt_00: Character/effect pixels touch logical canvas boundary",
+        "israel_hurt_00: Foot baseline 117; expected 175",
+        "israel_hurt_01: Multiple large components; likely split character",
+        "israel_hurt_01: Internal fully transparent horizontal band divides character",
+        "israel_hurt_01: Unexpected disconnected components: 5 > 2",
+        "israel_hurt_01: Character/effect pixels touch logical canvas boundary",
+        "israel_hurt_01: Foot baseline 117; expected 175",
+        "israel_hurt_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_hurt_02: Multiple large components; likely split character",
+        "israel_hurt_02: Internal fully transparent horizontal band divides character",
+        "israel_hurt_02: Unexpected disconnected components: 5 > 2",
+        "israel_hurt_02: Character/effect pixels touch logical canvas boundary",
+        "israel_hurt_02: Foot baseline 119; expected 175",
+        "israel_hurt_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_hurt_03: Multiple large components; likely split character",
+        "israel_hurt_03: Internal fully transparent horizontal band divides character",
+        "israel_hurt_03: Unexpected disconnected components: 5 > 2",
+        "israel_hurt_03: Character/effect pixels touch logical canvas boundary",
+        "israel_hurt_03: Foot baseline 117; expected 175",
+        "israel_hurt_04: Multiple large components; likely split character",
+        "israel_hurt_04: Internal fully transparent horizontal band divides character",
+        "israel_hurt_04: Unexpected disconnected components: 5 > 2",
+        "israel_hurt_04: Character/effect pixels touch logical canvas boundary",
+        "israel_hurt_04: Foot baseline 118; expected 175",
+        "israel_hurt_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_hurt_05: Multiple large components; likely split character",
+        "israel_hurt_05: Internal fully transparent horizontal band divides character",
+        "israel_hurt_05: Unexpected disconnected components: 5 > 2",
+        "israel_hurt_05: Character/effect pixels touch logical canvas boundary",
+        "israel_hurt_05: Foot baseline 118; expected 175",
+        "israel_celebrate_00: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_celebrate_00: Character/effect pixels touch logical canvas boundary",
+        "israel_celebrate_00: Foot baseline 128; expected 175",
+        "israel_celebrate_01: Character/effect pixels touch logical canvas boundary",
+        "israel_celebrate_01: Foot baseline 128; expected 175",
+        "israel_celebrate_02: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_celebrate_02: Character/effect pixels touch logical canvas boundary",
+        "israel_celebrate_02: Foot baseline 122; expected 175",
+        "israel_celebrate_03: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_celebrate_03: Character/effect pixels touch logical canvas boundary",
+        "israel_celebrate_03: Foot baseline 126; expected 175",
+        "israel_celebrate_04: Character/effect pixels touch logical canvas boundary",
+        "israel_celebrate_04: Foot baseline 128; expected 175",
+        "israel_celebrate_05: Invalid sourceSize (241, 181); expected (242, 181)",
+        "israel_celebrate_05: Character/effect pixels touch logical canvas boundary",
+        "israel_celebrate_05: Foot baseline 126; expected 175",
+        "israel_idle: excessive horizontal center movement 13.748px",
+        "israel_run: excessive horizontal center movement 15.669px",
+        "israel_jump: excessive horizontal center movement 19.171px",
+        "israel_fall: excessive horizontal center movement 16.431px",
+        "israel_hurt: excessive horizontal center movement 24.484px",
+        "israel_celebrate: excessive horizontal center movement 16.749px"
+      ],
+      "warnings": [
+        "israel_idle_00: Main horizontal center is 163.356",
+        "israel_idle_01: Main horizontal center is 155.503",
+        "israel_idle_02: Main horizontal center is 154.688",
+        "israel_idle_03: Main horizontal center is 142.232",
+        "israel_idle_04: Main horizontal center is 128.842",
+        "israel_idle_05: Main horizontal center is 115.094",
+        "israel_run_00: Main horizontal center is 158.785",
+        "israel_run_01: Main horizontal center is 154.318",
+        "israel_run_02: Main horizontal center is 150.989",
+        "israel_run_03: Main horizontal center is 139.138",
+        "israel_run_05: Main horizontal center is 109.624",
+        "israel_jump_00: Main horizontal center is 151.077",
+        "israel_jump_01: Main horizontal center is 143.92",
+        "israel_jump_02: Main horizontal center is 146.534",
+        "israel_jump_03: Main horizontal center is 134.424",
+        "israel_jump_04: Main horizontal center is 125.017",
+        "israel_jump_05: Main horizontal center is 105.846",
+        "israel_fall_00: Main horizontal center is 158.003",
+        "israel_fall_01: Main horizontal center is 147.567",
+        "israel_fall_02: Main horizontal center is 145.186",
+        "israel_fall_03: Main horizontal center is 138.108",
+        "israel_fall_04: Main horizontal center is 126.695",
+        "israel_fall_05: Main horizontal center is 110.264",
+        "israel_hurt_00: Main horizontal center is 153.751",
+        "israel_hurt_01: Main horizontal center is 141.945",
+        "israel_hurt_02: Main horizontal center is 142.533",
+        "israel_hurt_03: Main horizontal center is 132.788",
+        "israel_hurt_05: Main horizontal center is 99.32",
+        "israel_celebrate_00: Main horizontal center is 158.492",
+        "israel_celebrate_01: Main horizontal center is 146.337",
+        "israel_celebrate_02: Main horizontal center is 141.54",
+        "israel_celebrate_03: Main horizontal center is 137.984",
+        "israel_celebrate_05: Main horizontal center is 113.226"
+      ],
+      "frames": {
+        "israel_idle_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 169; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 163.356"
+          ],
+          "metrics": {
+            "opaquePixels": 8306,
+            "componentCount": 1,
+            "componentSizes": [
+              8306
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 169,
+            "mainCentroidX": 163.356,
+            "mainBBox": [
+              115,
+              22,
+              206,
+              170
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_idle_01": {
+          "valid": false,
+          "errors": [
+            "Foot baseline 169; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 155.503"
+          ],
+          "metrics": {
+            "opaquePixels": 8512,
+            "componentCount": 1,
+            "componentSizes": [
+              8512
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 169,
+            "mainCentroidX": 155.503,
+            "mainBBox": [
+              110,
+              22,
+              198,
+              170
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_idle_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 169; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 154.688"
+          ],
+          "metrics": {
+            "opaquePixels": 8573,
+            "componentCount": 1,
+            "componentSizes": [
+              8573
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 169,
+            "mainCentroidX": 154.688,
+            "mainBBox": [
+              108,
+              22,
+              197,
+              170
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_idle_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 169; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 142.232"
+          ],
+          "metrics": {
+            "opaquePixels": 8520,
+            "componentCount": 1,
+            "componentSizes": [
+              8520
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 169,
+            "mainCentroidX": 142.232,
+            "mainBBox": [
+              97,
+              22,
+              184,
+              170
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_idle_04": {
+          "valid": false,
+          "errors": [
+            "Foot baseline 169; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 128.842"
+          ],
+          "metrics": {
+            "opaquePixels": 8530,
+            "componentCount": 1,
+            "componentSizes": [
+              8530
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 169,
+            "mainCentroidX": 128.842,
+            "mainBBox": [
+              83,
+              22,
+              172,
+              170
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_idle_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 169; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 115.094"
+          ],
+          "metrics": {
+            "opaquePixels": 8490,
+            "componentCount": 1,
+            "componentSizes": [
+              8490
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 169,
+            "mainCentroidX": 115.094,
+            "mainBBox": [
+              70,
+              22,
+              157,
+              170
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_run_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 150; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 158.785"
+          ],
+          "metrics": {
+            "opaquePixels": 9227,
+            "componentCount": 1,
+            "componentSizes": [
+              9227
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 150,
+            "mainCentroidX": 158.785,
+            "mainBBox": [
+              92,
+              12,
+              210,
+              151
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_run_01": {
+          "valid": false,
+          "errors": [
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 153; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 154.318"
+          ],
+          "metrics": {
+            "opaquePixels": 9159,
+            "componentCount": 4,
+            "componentSizes": [
+              9053,
+              60,
+              39,
+              7
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 153,
+            "mainCentroidX": 154.318,
+            "mainBBox": [
+              88,
+              14,
+              205,
+              154
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_run_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 157; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 150.989"
+          ],
+          "metrics": {
+            "opaquePixels": 9302,
+            "componentCount": 4,
+            "componentSizes": [
+              9202,
+              52,
+              43,
+              5
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 157,
+            "mainCentroidX": 150.989,
+            "mainBBox": [
+              85,
+              13,
+              202,
+              158
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_run_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 3 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 152; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 139.138"
+          ],
+          "metrics": {
+            "opaquePixels": 9519,
+            "componentCount": 4,
+            "componentSizes": [
+              9385,
+              67,
+              61,
+              6
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 1,
+            "mainBottom": 152,
+            "mainCentroidX": 139.138,
+            "mainBBox": [
+              71,
+              12,
+              191,
+              153
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_run_04": {
+          "valid": false,
+          "errors": [
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 152; expected 175"
+          ],
+          "warnings": [],
+          "metrics": {
+            "opaquePixels": 9385,
+            "componentCount": 4,
+            "componentSizes": [
+              9282,
+              51,
+              48,
+              4
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 152,
+            "mainCentroidX": 123.469,
+            "mainBBox": [
+              55,
+              12,
+              175,
+              153
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_run_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 153; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 109.624"
+          ],
+          "metrics": {
+            "opaquePixels": 9325,
+            "componentCount": 1,
+            "componentSizes": [
+              9325
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 153,
+            "mainCentroidX": 109.624,
+            "mainBBox": [
+              42,
+              12,
+              161,
+              154
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_jump_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 145; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 151.077"
+          ],
+          "metrics": {
+            "opaquePixels": 8758,
+            "componentCount": 1,
+            "componentSizes": [
+              8758
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 145,
+            "mainCentroidX": 151.077,
+            "mainBBox": [
+              103,
+              0,
+              196,
+              146
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_jump_01": {
+          "valid": false,
+          "errors": [
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 145; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 143.92"
+          ],
+          "metrics": {
+            "opaquePixels": 9706,
+            "componentCount": 2,
+            "componentSizes": [
+              9700,
+              6
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 145,
+            "mainCentroidX": 143.92,
+            "mainBBox": [
+              78,
+              0,
+              209,
+              146
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_jump_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 130; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 146.534"
+          ],
+          "metrics": {
+            "opaquePixels": 8665,
+            "componentCount": 2,
+            "componentSizes": [
+              8658,
+              7
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 130,
+            "mainCentroidX": 146.534,
+            "mainBBox": [
+              96,
+              0,
+              207,
+              131
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_jump_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 129; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 134.424"
+          ],
+          "metrics": {
+            "opaquePixels": 8429,
+            "componentCount": 1,
+            "componentSizes": [
+              8429
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 129,
+            "mainCentroidX": 134.424,
+            "mainBBox": [
+              83,
+              0,
+              196,
+              130
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_jump_04": {
+          "valid": false,
+          "errors": [
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 128; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 125.017"
+          ],
+          "metrics": {
+            "opaquePixels": 8745,
+            "componentCount": 1,
+            "componentSizes": [
+              8745
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 128,
+            "mainCentroidX": 125.017,
+            "mainBBox": [
+              73,
+              0,
+              182,
+              129
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_jump_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Foot baseline 145; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 105.846"
+          ],
+          "metrics": {
+            "opaquePixels": 9043,
+            "componentCount": 1,
+            "componentSizes": [
+              9043
+            ],
+            "significantComponentCount": 1,
+            "largeComponentCount": 1,
+            "mainBottom": 145,
+            "mainCentroidX": 105.846,
+            "mainBBox": [
+              55,
+              4,
+              153,
+              146
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": false,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_fall_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 138; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 158.003"
+          ],
+          "metrics": {
+            "opaquePixels": 10970,
+            "componentCount": 2,
+            "componentSizes": [
+              9914,
+              1056
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 138,
+            "mainCentroidX": 158.003,
+            "mainBBox": [
+              97,
+              3,
+              226,
+              139
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_fall_01": {
+          "valid": false,
+          "errors": [
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 133; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 147.567"
+          ],
+          "metrics": {
+            "opaquePixels": 10533,
+            "componentCount": 3,
+            "componentSizes": [
+              9610,
+              912,
+              11
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 133,
+            "mainCentroidX": 147.567,
+            "mainBBox": [
+              86,
+              0,
+              212,
+              134
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_fall_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 3 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 127; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 145.186"
+          ],
+          "metrics": {
+            "opaquePixels": 10112,
+            "componentCount": 3,
+            "componentSizes": [
+              8879,
+              1002,
+              231
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 1,
+            "mainBottom": 127,
+            "mainCentroidX": 145.186,
+            "mainBBox": [
+              85,
+              0,
+              205,
+              128
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_fall_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 140; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 138.108"
+          ],
+          "metrics": {
+            "opaquePixels": 10732,
+            "componentCount": 3,
+            "componentSizes": [
+              9755,
+              970,
+              7
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 140,
+            "mainCentroidX": 138.108,
+            "mainBBox": [
+              77,
+              1,
+              204,
+              141
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_fall_04": {
+          "valid": false,
+          "errors": [
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 137; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 126.695"
+          ],
+          "metrics": {
+            "opaquePixels": 10299,
+            "componentCount": 2,
+            "componentSizes": [
+              9773,
+              526
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 137,
+            "mainCentroidX": 126.695,
+            "mainBBox": [
+              69,
+              0,
+              191,
+              138
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_fall_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Unexpected disconnected components: 2 > 1",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 141; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 110.264"
+          ],
+          "metrics": {
+            "opaquePixels": 8911,
+            "componentCount": 3,
+            "componentSizes": [
+              8321,
+              582,
+              8
+            ],
+            "significantComponentCount": 2,
+            "largeComponentCount": 1,
+            "mainBottom": 141,
+            "mainCentroidX": 110.264,
+            "mainBBox": [
+              57,
+              12,
+              158,
+              142
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_hurt_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 4 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 117; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 153.751"
+          ],
+          "metrics": {
+            "opaquePixels": 9878,
+            "componentCount": 5,
+            "componentSizes": [
+              7788,
+              1559,
+              367,
+              144,
+              20
+            ],
+            "significantComponentCount": 4,
+            "largeComponentCount": 2,
+            "mainBottom": 117,
+            "mainCentroidX": 153.751,
+            "mainBBox": [
+              101,
+              0,
+              210,
+              118
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_hurt_01": {
+          "valid": false,
+          "errors": [
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 5 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 117; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 141.945"
+          ],
+          "metrics": {
+            "opaquePixels": 9730,
+            "componentCount": 5,
+            "componentSizes": [
+              7176,
+              1919,
+              336,
+              161,
+              138
+            ],
+            "significantComponentCount": 5,
+            "largeComponentCount": 2,
+            "mainBottom": 117,
+            "mainCentroidX": 141.945,
+            "mainBBox": [
+              89,
+              0,
+              197,
+              118
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_hurt_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 5 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 119; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 142.533"
+          ],
+          "metrics": {
+            "opaquePixels": 10242,
+            "componentCount": 6,
+            "componentSizes": [
+              7415,
+              2432,
+              171,
+              154,
+              51,
+              19
+            ],
+            "significantComponentCount": 5,
+            "largeComponentCount": 2,
+            "mainBottom": 119,
+            "mainCentroidX": 142.533,
+            "mainBBox": [
+              91,
+              0,
+              189,
+              120
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_hurt_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 5 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 117; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 132.788"
+          ],
+          "metrics": {
+            "opaquePixels": 10337,
+            "componentCount": 5,
+            "componentSizes": [
+              7433,
+              2158,
+              387,
+              287,
+              72
+            ],
+            "significantComponentCount": 5,
+            "largeComponentCount": 2,
+            "mainBottom": 117,
+            "mainCentroidX": 132.788,
+            "mainBBox": [
+              82,
+              0,
+              182,
+              118
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_hurt_04": {
+          "valid": false,
+          "errors": [
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 5 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 118; expected 175"
+          ],
+          "warnings": [],
+          "metrics": {
+            "opaquePixels": 9986,
+            "componentCount": 5,
+            "componentSizes": [
+              7637,
+              1738,
+              320,
+              176,
+              115
+            ],
+            "significantComponentCount": 5,
+            "largeComponentCount": 2,
+            "mainBottom": 118,
+            "mainCentroidX": 123.804,
+            "mainBBox": [
+              74,
+              0,
+              164,
+              119
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_hurt_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Multiple large components; likely split character",
+            "Internal fully transparent horizontal band divides character",
+            "Unexpected disconnected components: 5 > 2",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 118; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 99.32"
+          ],
+          "metrics": {
+            "opaquePixels": 9647,
+            "componentCount": 5,
+            "componentSizes": [
+              7621,
+              1479,
+              303,
+              138,
+              106
+            ],
+            "significantComponentCount": 5,
+            "largeComponentCount": 2,
+            "mainBottom": 118,
+            "mainCentroidX": 99.32,
+            "mainBBox": [
+              53,
+              0,
+              143,
+              119
+            ],
+            "internalTransparentBand": true,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_celebrate_00": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 128; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 158.492"
+          ],
+          "metrics": {
+            "opaquePixels": 9127,
+            "componentCount": 4,
+            "componentSizes": [
+              8801,
+              167,
+              151,
+              8
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 1,
+            "mainBottom": 128,
+            "mainCentroidX": 158.492,
+            "mainBBox": [
+              102,
+              0,
+              220,
+              129
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_celebrate_01": {
+          "valid": false,
+          "errors": [
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 128; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 146.337"
+          ],
+          "metrics": {
+            "opaquePixels": 8344,
+            "componentCount": 5,
+            "componentSizes": [
+              8055,
+              172,
+              86,
+              22,
+              9
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 1,
+            "mainBottom": 128,
+            "mainCentroidX": 146.337,
+            "mainBBox": [
+              93,
+              0,
+              203,
+              129
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_celebrate_02": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 122; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 141.54"
+          ],
+          "metrics": {
+            "opaquePixels": 7569,
+            "componentCount": 4,
+            "componentSizes": [
+              7283,
+              170,
+              93,
+              23
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 1,
+            "mainBottom": 122,
+            "mainCentroidX": 141.54,
+            "mainBBox": [
+              87,
+              0,
+              199,
+              123
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_celebrate_03": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 126; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 137.984"
+          ],
+          "metrics": {
+            "opaquePixels": 7483,
+            "componentCount": 4,
+            "componentSizes": [
+              7142,
+              152,
+              111,
+              78
+            ],
+            "significantComponentCount": 4,
+            "largeComponentCount": 1,
+            "mainBottom": 126,
+            "mainCentroidX": 137.984,
+            "mainBBox": [
+              87,
+              0,
+              198,
+              127
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_celebrate_04": {
+          "valid": false,
+          "errors": [
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 128; expected 175"
+          ],
+          "warnings": [],
+          "metrics": {
+            "opaquePixels": 8406,
+            "componentCount": 5,
+            "componentSizes": [
+              8116,
+              148,
+              85,
+              37,
+              20
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 1,
+            "mainBottom": 128,
+            "mainCentroidX": 121.235,
+            "mainBBox": [
+              71,
+              0,
+              179,
+              129
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        },
+        "israel_celebrate_05": {
+          "valid": false,
+          "errors": [
+            "Invalid sourceSize (241, 181); expected (242, 181)",
+            "Character/effect pixels touch logical canvas boundary",
+            "Foot baseline 126; expected 175"
+          ],
+          "warnings": [
+            "Main horizontal center is 113.226"
+          ],
+          "metrics": {
+            "opaquePixels": 8822,
+            "componentCount": 4,
+            "componentSizes": [
+              8524,
+              175,
+              81,
+              42
+            ],
+            "significantComponentCount": 3,
+            "largeComponentCount": 1,
+            "mainBottom": 126,
+            "mainCentroidX": 113.226,
+            "mainBBox": [
+              56,
+              0,
+              178,
+              127
+            ],
+            "internalTransparentBand": false,
+            "touchesBoundary": true,
+            "unexpectedBlackRectangle": false
+          }
+        }
+      }
+    }
+  ]
+}
