@@ -1,0 +1,899 @@
+{
+  "emma": {
+    "character": "emma",
+    "damagedFrames": [
+      "emma_idle_01",
+      "emma_idle_03",
+      "emma_idle_04",
+      "emma_idle_05",
+      "emma_run_01",
+      "emma_run_03",
+      "emma_run_04",
+      "emma_run_05",
+      "emma_jump_00",
+      "emma_jump_01",
+      "emma_jump_02",
+      "emma_jump_03",
+      "emma_fall_00",
+      "emma_fall_01",
+      "emma_fall_02",
+      "emma_fall_03",
+      "emma_fall_04",
+      "emma_fall_05",
+      "emma_hurt_00",
+      "emma_hurt_01",
+      "emma_hurt_02",
+      "emma_hurt_03",
+      "emma_hurt_04",
+      "emma_hurt_05",
+      "emma_celebrate_00",
+      "emma_celebrate_01",
+      "emma_celebrate_02",
+      "emma_celebrate_03",
+      "emma_celebrate_04",
+      "emma_celebrate_05"
+    ],
+    "issues": {
+      "emma_idle_00": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "emma_idle_01": {
+        "clippedPixels": 3,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "minor"
+      },
+      "emma_idle_02": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "emma_idle_03": {
+        "clippedPixels": 2,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "minor"
+      },
+      "emma_idle_04": {
+        "clippedPixels": 12,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "minor"
+      },
+      "emma_idle_05": {
+        "clippedPixels": 15,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "minor"
+      },
+      "emma_run_00": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "emma_run_01": {
+        "clippedPixels": 0,
+        "foreignPixels": 3,
+        "foreignSources": {
+          "emma_idle_01": 3
+        },
+        "severity": "minor"
+      },
+      "emma_run_02": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "emma_run_03": {
+        "clippedPixels": 0,
+        "foreignPixels": 2,
+        "foreignSources": {
+          "emma_idle_03": 2
+        },
+        "severity": "minor"
+      },
+      "emma_run_04": {
+        "clippedPixels": 0,
+        "foreignPixels": 12,
+        "foreignSources": {
+          "emma_idle_04": 12
+        },
+        "severity": "minor"
+      },
+      "emma_run_05": {
+        "clippedPixels": 0,
+        "foreignPixels": 15,
+        "foreignSources": {
+          "emma_idle_05": 15
+        },
+        "severity": "minor"
+      },
+      "emma_jump_00": {
+        "clippedPixels": 0,
+        "foreignPixels": 51,
+        "foreignSources": {
+          "emma_fall_00": 51
+        },
+        "severity": "moderate"
+      },
+      "emma_jump_01": {
+        "clippedPixels": 0,
+        "foreignPixels": 69,
+        "foreignSources": {
+          "emma_fall_01": 69
+        },
+        "severity": "moderate"
+      },
+      "emma_jump_02": {
+        "clippedPixels": 0,
+        "foreignPixels": 75,
+        "foreignSources": {
+          "emma_fall_02": 75
+        },
+        "severity": "moderate"
+      },
+      "emma_jump_03": {
+        "clippedPixels": 0,
+        "foreignPixels": 69,
+        "foreignSources": {
+          "emma_fall_03": 69
+        },
+        "severity": "moderate"
+      },
+      "emma_jump_04": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "emma_jump_05": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "emma_fall_00": {
+        "clippedPixels": 51,
+        "foreignPixels": 1482,
+        "foreignSources": {
+          "emma_hurt_00": 1482
+        },
+        "severity": "severe"
+      },
+      "emma_fall_01": {
+        "clippedPixels": 69,
+        "foreignPixels": 1795,
+        "foreignSources": {
+          "emma_hurt_01": 1795
+        },
+        "severity": "severe"
+      },
+      "emma_fall_02": {
+        "clippedPixels": 75,
+        "foreignPixels": 1332,
+        "foreignSources": {
+          "emma_hurt_02": 1332
+        },
+        "severity": "severe"
+      },
+      "emma_fall_03": {
+        "clippedPixels": 69,
+        "foreignPixels": 1106,
+        "foreignSources": {
+          "emma_hurt_03": 1106
+        },
+        "severity": "severe"
+      },
+      "emma_fall_04": {
+        "clippedPixels": 0,
+        "foreignPixels": 653,
+        "foreignSources": {
+          "emma_hurt_04": 653
+        },
+        "severity": "severe"
+      },
+      "emma_fall_05": {
+        "clippedPixels": 0,
+        "foreignPixels": 877,
+        "foreignSources": {
+          "emma_hurt_05": 877
+        },
+        "severity": "severe"
+      },
+      "emma_hurt_00": {
+        "clippedPixels": 1482,
+        "foreignPixels": 3925,
+        "foreignSources": {
+          "emma_celebrate_00": 3925
+        },
+        "severity": "severe"
+      },
+      "emma_hurt_01": {
+        "clippedPixels": 1795,
+        "foreignPixels": 3720,
+        "foreignSources": {
+          "emma_celebrate_01": 3720
+        },
+        "severity": "severe"
+      },
+      "emma_hurt_02": {
+        "clippedPixels": 1332,
+        "foreignPixels": 4568,
+        "foreignSources": {
+          "emma_celebrate_02": 4568
+        },
+        "severity": "severe"
+      },
+      "emma_hurt_03": {
+        "clippedPixels": 1106,
+        "foreignPixels": 3445,
+        "foreignSources": {
+          "emma_celebrate_03": 3445
+        },
+        "severity": "severe"
+      },
+      "emma_hurt_04": {
+        "clippedPixels": 653,
+        "foreignPixels": 2977,
+        "foreignSources": {
+          "emma_celebrate_04": 2977
+        },
+        "severity": "severe"
+      },
+      "emma_hurt_05": {
+        "clippedPixels": 877,
+        "foreignPixels": 3535,
+        "foreignSources": {
+          "emma_celebrate_05": 3535
+        },
+        "severity": "severe"
+      },
+      "emma_celebrate_00": {
+        "clippedPixels": 3925,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "emma_celebrate_01": {
+        "clippedPixels": 3720,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "emma_celebrate_02": {
+        "clippedPixels": 4568,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "emma_celebrate_03": {
+        "clippedPixels": 3445,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "emma_celebrate_04": {
+        "clippedPixels": 2977,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "emma_celebrate_05": {
+        "clippedPixels": 3535,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      }
+    },
+    "summary": {
+      "damagedCount": 30,
+      "severe": 18,
+      "moderate": 4,
+      "minor": 8
+    }
+  },
+  "orel": {
+    "character": "orel",
+    "damagedFrames": [
+      "orel_run_00",
+      "orel_run_01",
+      "orel_run_02",
+      "orel_run_03",
+      "orel_run_04",
+      "orel_run_05",
+      "orel_jump_00",
+      "orel_jump_01",
+      "orel_jump_02",
+      "orel_jump_03",
+      "orel_jump_04",
+      "orel_jump_05",
+      "orel_fall_00",
+      "orel_fall_01",
+      "orel_fall_02",
+      "orel_fall_03",
+      "orel_fall_04",
+      "orel_fall_05",
+      "orel_hurt_00",
+      "orel_hurt_01",
+      "orel_hurt_02",
+      "orel_hurt_03",
+      "orel_hurt_04",
+      "orel_hurt_05",
+      "orel_celebrate_00",
+      "orel_celebrate_01",
+      "orel_celebrate_02",
+      "orel_celebrate_03",
+      "orel_celebrate_04",
+      "orel_celebrate_05"
+    ],
+    "issues": {
+      "orel_idle_00": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "orel_idle_01": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "orel_idle_02": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "orel_idle_03": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "orel_idle_04": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "orel_idle_05": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "orel_run_00": {
+        "clippedPixels": 0,
+        "foreignPixels": 130,
+        "foreignSources": {
+          "orel_jump_00": 130
+        },
+        "severity": "moderate"
+      },
+      "orel_run_01": {
+        "clippedPixels": 0,
+        "foreignPixels": 163,
+        "foreignSources": {
+          "orel_jump_01": 163
+        },
+        "severity": "moderate"
+      },
+      "orel_run_02": {
+        "clippedPixels": 0,
+        "foreignPixels": 211,
+        "foreignSources": {
+          "orel_jump_02": 211
+        },
+        "severity": "moderate"
+      },
+      "orel_run_03": {
+        "clippedPixels": 0,
+        "foreignPixels": 114,
+        "foreignSources": {
+          "orel_jump_03": 114
+        },
+        "severity": "moderate"
+      },
+      "orel_run_04": {
+        "clippedPixels": 0,
+        "foreignPixels": 176,
+        "foreignSources": {
+          "orel_jump_04": 176
+        },
+        "severity": "moderate"
+      },
+      "orel_run_05": {
+        "clippedPixels": 0,
+        "foreignPixels": 74,
+        "foreignSources": {
+          "orel_jump_05": 74
+        },
+        "severity": "moderate"
+      },
+      "orel_jump_00": {
+        "clippedPixels": 130,
+        "foreignPixels": 511,
+        "foreignSources": {
+          "orel_fall_00": 511
+        },
+        "severity": "severe"
+      },
+      "orel_jump_01": {
+        "clippedPixels": 163,
+        "foreignPixels": 469,
+        "foreignSources": {
+          "orel_fall_01": 469
+        },
+        "severity": "moderate"
+      },
+      "orel_jump_02": {
+        "clippedPixels": 211,
+        "foreignPixels": 625,
+        "foreignSources": {
+          "orel_fall_02": 625
+        },
+        "severity": "severe"
+      },
+      "orel_jump_03": {
+        "clippedPixels": 114,
+        "foreignPixels": 478,
+        "foreignSources": {
+          "orel_fall_03": 478
+        },
+        "severity": "moderate"
+      },
+      "orel_jump_04": {
+        "clippedPixels": 176,
+        "foreignPixels": 331,
+        "foreignSources": {
+          "orel_fall_04": 331
+        },
+        "severity": "moderate"
+      },
+      "orel_jump_05": {
+        "clippedPixels": 74,
+        "foreignPixels": 294,
+        "foreignSources": {
+          "orel_fall_05": 294
+        },
+        "severity": "moderate"
+      },
+      "orel_fall_00": {
+        "clippedPixels": 511,
+        "foreignPixels": 2586,
+        "foreignSources": {
+          "orel_hurt_00": 2586
+        },
+        "severity": "severe"
+      },
+      "orel_fall_01": {
+        "clippedPixels": 469,
+        "foreignPixels": 2531,
+        "foreignSources": {
+          "orel_hurt_01": 2531
+        },
+        "severity": "severe"
+      },
+      "orel_fall_02": {
+        "clippedPixels": 625,
+        "foreignPixels": 2599,
+        "foreignSources": {
+          "orel_hurt_02": 2599
+        },
+        "severity": "severe"
+      },
+      "orel_fall_03": {
+        "clippedPixels": 478,
+        "foreignPixels": 2680,
+        "foreignSources": {
+          "orel_hurt_03": 2680
+        },
+        "severity": "severe"
+      },
+      "orel_fall_04": {
+        "clippedPixels": 331,
+        "foreignPixels": 2697,
+        "foreignSources": {
+          "orel_hurt_04": 2697
+        },
+        "severity": "severe"
+      },
+      "orel_fall_05": {
+        "clippedPixels": 294,
+        "foreignPixels": 2514,
+        "foreignSources": {
+          "orel_hurt_05": 2514
+        },
+        "severity": "severe"
+      },
+      "orel_hurt_00": {
+        "clippedPixels": 2586,
+        "foreignPixels": 4402,
+        "foreignSources": {
+          "orel_celebrate_00": 4402
+        },
+        "severity": "severe"
+      },
+      "orel_hurt_01": {
+        "clippedPixels": 2531,
+        "foreignPixels": 4181,
+        "foreignSources": {
+          "orel_celebrate_01": 4181
+        },
+        "severity": "severe"
+      },
+      "orel_hurt_02": {
+        "clippedPixels": 2599,
+        "foreignPixels": 5196,
+        "foreignSources": {
+          "orel_celebrate_02": 5196
+        },
+        "severity": "severe"
+      },
+      "orel_hurt_03": {
+        "clippedPixels": 2680,
+        "foreignPixels": 5082,
+        "foreignSources": {
+          "orel_celebrate_03": 5082
+        },
+        "severity": "severe"
+      },
+      "orel_hurt_04": {
+        "clippedPixels": 2697,
+        "foreignPixels": 4631,
+        "foreignSources": {
+          "orel_celebrate_04": 4631
+        },
+        "severity": "severe"
+      },
+      "orel_hurt_05": {
+        "clippedPixels": 2514,
+        "foreignPixels": 4222,
+        "foreignSources": {
+          "orel_celebrate_05": 4222
+        },
+        "severity": "severe"
+      },
+      "orel_celebrate_00": {
+        "clippedPixels": 4402,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "orel_celebrate_01": {
+        "clippedPixels": 4181,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "orel_celebrate_02": {
+        "clippedPixels": 5196,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "orel_celebrate_03": {
+        "clippedPixels": 5082,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "orel_celebrate_04": {
+        "clippedPixels": 4631,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "orel_celebrate_05": {
+        "clippedPixels": 4222,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      }
+    },
+    "summary": {
+      "damagedCount": 30,
+      "severe": 20,
+      "moderate": 10,
+      "minor": 0
+    }
+  },
+  "israel": {
+    "character": "israel",
+    "damagedFrames": [
+      "israel_run_01",
+      "israel_run_02",
+      "israel_run_03",
+      "israel_run_04",
+      "israel_jump_01",
+      "israel_jump_02",
+      "israel_jump_03",
+      "israel_jump_04",
+      "israel_fall_00",
+      "israel_fall_01",
+      "israel_fall_02",
+      "israel_fall_03",
+      "israel_fall_04",
+      "israel_fall_05",
+      "israel_hurt_00",
+      "israel_hurt_01",
+      "israel_hurt_02",
+      "israel_hurt_03",
+      "israel_hurt_04",
+      "israel_hurt_05",
+      "israel_celebrate_00",
+      "israel_celebrate_01",
+      "israel_celebrate_02",
+      "israel_celebrate_03",
+      "israel_celebrate_04",
+      "israel_celebrate_05"
+    ],
+    "issues": {
+      "israel_idle_00": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "israel_idle_01": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "israel_idle_02": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "israel_idle_03": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "israel_idle_04": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "israel_idle_05": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "israel_run_00": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "israel_run_01": {
+        "clippedPixels": 0,
+        "foreignPixels": 123,
+        "foreignSources": {
+          "israel_jump_01": 123
+        },
+        "severity": "moderate"
+      },
+      "israel_run_02": {
+        "clippedPixels": 0,
+        "foreignPixels": 123,
+        "foreignSources": {
+          "israel_jump_02": 123
+        },
+        "severity": "moderate"
+      },
+      "israel_run_03": {
+        "clippedPixels": 0,
+        "foreignPixels": 157,
+        "foreignSources": {
+          "israel_jump_03": 157
+        },
+        "severity": "moderate"
+      },
+      "israel_run_04": {
+        "clippedPixels": 0,
+        "foreignPixels": 121,
+        "foreignSources": {
+          "israel_jump_04": 121
+        },
+        "severity": "moderate"
+      },
+      "israel_run_05": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "israel_jump_00": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "israel_jump_01": {
+        "clippedPixels": 123,
+        "foreignPixels": 8,
+        "foreignSources": {
+          "israel_fall_01": 8
+        },
+        "severity": "moderate"
+      },
+      "israel_jump_02": {
+        "clippedPixels": 123,
+        "foreignPixels": 9,
+        "foreignSources": {
+          "israel_fall_02": 9
+        },
+        "severity": "moderate"
+      },
+      "israel_jump_03": {
+        "clippedPixels": 157,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "moderate"
+      },
+      "israel_jump_04": {
+        "clippedPixels": 121,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "moderate"
+      },
+      "israel_jump_05": {
+        "clippedPixels": 0,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "none"
+      },
+      "israel_fall_00": {
+        "clippedPixels": 0,
+        "foreignPixels": 1079,
+        "foreignSources": {
+          "israel_hurt_00": 1079
+        },
+        "severity": "severe"
+      },
+      "israel_fall_01": {
+        "clippedPixels": 8,
+        "foreignPixels": 939,
+        "foreignSources": {
+          "israel_hurt_01": 939
+        },
+        "severity": "severe"
+      },
+      "israel_fall_02": {
+        "clippedPixels": 9,
+        "foreignPixels": 1279,
+        "foreignSources": {
+          "israel_hurt_02": 1279
+        },
+        "severity": "severe"
+      },
+      "israel_fall_03": {
+        "clippedPixels": 0,
+        "foreignPixels": 994,
+        "foreignSources": {
+          "israel_hurt_03": 994
+        },
+        "severity": "severe"
+      },
+      "israel_fall_04": {
+        "clippedPixels": 0,
+        "foreignPixels": 535,
+        "foreignSources": {
+          "israel_hurt_04": 535
+        },
+        "severity": "severe"
+      },
+      "israel_fall_05": {
+        "clippedPixels": 0,
+        "foreignPixels": 601,
+        "foreignSources": {
+          "israel_hurt_05": 601
+        },
+        "severity": "severe"
+      },
+      "israel_hurt_00": {
+        "clippedPixels": 1079,
+        "foreignPixels": 1760,
+        "foreignSources": {
+          "israel_celebrate_00": 1760
+        },
+        "severity": "severe"
+      },
+      "israel_hurt_01": {
+        "clippedPixels": 939,
+        "foreignPixels": 2270,
+        "foreignSources": {
+          "israel_celebrate_01": 2270
+        },
+        "severity": "severe"
+      },
+      "israel_hurt_02": {
+        "clippedPixels": 1279,
+        "foreignPixels": 2713,
+        "foreignSources": {
+          "israel_celebrate_02": 2713
+        },
+        "severity": "severe"
+      },
+      "israel_hurt_03": {
+        "clippedPixels": 994,
+        "foreignPixels": 2665,
+        "foreignSources": {
+          "israel_celebrate_03": 2665
+        },
+        "severity": "severe"
+      },
+      "israel_hurt_04": {
+        "clippedPixels": 535,
+        "foreignPixels": 2089,
+        "foreignSources": {
+          "israel_celebrate_04": 2089
+        },
+        "severity": "severe"
+      },
+      "israel_hurt_05": {
+        "clippedPixels": 601,
+        "foreignPixels": 1762,
+        "foreignSources": {
+          "israel_celebrate_05": 1762
+        },
+        "severity": "severe"
+      },
+      "israel_celebrate_00": {
+        "clippedPixels": 1760,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "israel_celebrate_01": {
+        "clippedPixels": 2270,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "israel_celebrate_02": {
+        "clippedPixels": 2713,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "israel_celebrate_03": {
+        "clippedPixels": 2665,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "israel_celebrate_04": {
+        "clippedPixels": 2089,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      },
+      "israel_celebrate_05": {
+        "clippedPixels": 1762,
+        "foreignPixels": 0,
+        "foreignSources": {},
+        "severity": "severe"
+      }
+    },
+    "summary": {
+      "damagedCount": 26,
+      "severe": 18,
+      "moderate": 8,
+      "minor": 0
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "testType": "Phaser JSON Hash schema and texture compatibility",
+  "actualPhaserRuntimeBootExecuted": false,
+  "reason": "Phaser runtime package unavailable in offline environment",
+  "atlases": [
+    {
+      "key": "emma",
+      "image": "emma_atlas.png",
+      "data": "emma_atlas.json",
+      "frames": 36,
+      "dimensions": {
+        "w": 2000,
+        "h": 420
+      }
+    },
+    {
+      "key": "orel",
+      "image": "orel_atlas.png",
+      "data": "orel_atlas.json",
+      "frames": 36,
+      "dimensions": {
+        "w": 2044,
+        "h": 492
+      }
+    },
+    {
+      "key": "israel",
+      "image": "israel_atlas.png",
+      "data": "israel_atlas.json",
+      "frames": 36,
+      "dimensions": {
+        "w": 2024,
+        "h": 468
+      }
+    }
+  ]
+}

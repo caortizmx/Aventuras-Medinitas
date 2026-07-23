@@ -1,0 +1,880 @@
+{
+  "frames": {
+    "israel_celebrate_03": {
+      "frame": {
+        "x": 6,
+        "y": 6,
+        "w": 133,
+        "h": 167
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 50,
+        "y": 9,
+        "w": 133,
+        "h": 167
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_celebrate_04": {
+      "frame": {
+        "x": 145,
+        "y": 6,
+        "w": 152,
+        "h": 165
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 41,
+        "y": 11,
+        "w": 152,
+        "h": 165
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_celebrate_01": {
+      "frame": {
+        "x": 303,
+        "y": 6,
+        "w": 149,
+        "h": 164
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 43,
+        "y": 12,
+        "w": 149,
+        "h": 164
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_celebrate_02": {
+      "frame": {
+        "x": 458,
+        "y": 6,
+        "w": 153,
+        "h": 163
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 46,
+        "y": 13,
+        "w": 153,
+        "h": 163
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_celebrate_00": {
+      "frame": {
+        "x": 617,
+        "y": 6,
+        "w": 149,
+        "h": 161
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 41,
+        "y": 15,
+        "w": 149,
+        "h": 161
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_celebrate_05": {
+      "frame": {
+        "x": 772,
+        "y": 6,
+        "w": 138,
+        "h": 157
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 48,
+        "y": 19,
+        "w": 138,
+        "h": 157
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_jump_01": {
+      "frame": {
+        "x": 916,
+        "y": 6,
+        "w": 133,
+        "h": 154
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 54,
+        "y": 22,
+        "w": 133,
+        "h": 154
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_idle_00": {
+      "frame": {
+        "x": 1055,
+        "y": 6,
+        "w": 91,
+        "h": 148
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 73,
+        "y": 28,
+        "w": 91,
+        "h": 148
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_idle_04": {
+      "frame": {
+        "x": 1152,
+        "y": 6,
+        "w": 89,
+        "h": 148
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 75,
+        "y": 28,
+        "w": 89,
+        "h": 148
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_idle_02": {
+      "frame": {
+        "x": 1247,
+        "y": 6,
+        "w": 89,
+        "h": 148
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 74,
+        "y": 28,
+        "w": 89,
+        "h": 148
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_idle_01": {
+      "frame": {
+        "x": 1342,
+        "y": 6,
+        "w": 88,
+        "h": 148
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 75,
+        "y": 28,
+        "w": 88,
+        "h": 148
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_idle_05": {
+      "frame": {
+        "x": 1436,
+        "y": 6,
+        "w": 87,
+        "h": 148
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 76,
+        "y": 28,
+        "w": 87,
+        "h": 148
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_idle_03": {
+      "frame": {
+        "x": 1529,
+        "y": 6,
+        "w": 87,
+        "h": 148
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 76,
+        "y": 28,
+        "w": 87,
+        "h": 148
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_jump_00": {
+      "frame": {
+        "x": 1622,
+        "y": 6,
+        "w": 93,
+        "h": 146
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 73,
+        "y": 30,
+        "w": 93,
+        "h": 146
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_run_02": {
+      "frame": {
+        "x": 1721,
+        "y": 6,
+        "w": 118,
+        "h": 145
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 54,
+        "y": 31,
+        "w": 118,
+        "h": 145
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_jump_05": {
+      "frame": {
+        "x": 1845,
+        "y": 6,
+        "w": 98,
+        "h": 143
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 70,
+        "y": 33,
+        "w": 98,
+        "h": 143
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_run_05": {
+      "frame": {
+        "x": 6,
+        "y": 179,
+        "w": 119,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 53,
+        "y": 34,
+        "w": 119,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_run_04": {
+      "frame": {
+        "x": 131,
+        "y": 179,
+        "w": 120,
+        "h": 141
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 53,
+        "y": 35,
+        "w": 120,
+        "h": 141
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_run_03": {
+      "frame": {
+        "x": 257,
+        "y": 179,
+        "w": 120,
+        "h": 141
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 53,
+        "y": 35,
+        "w": 120,
+        "h": 141
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_run_01": {
+      "frame": {
+        "x": 383,
+        "y": 179,
+        "w": 117,
+        "h": 141
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 55,
+        "y": 35,
+        "w": 117,
+        "h": 141
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_fall_03": {
+      "frame": {
+        "x": 506,
+        "y": 179,
+        "w": 127,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 60,
+        "y": 36,
+        "w": 127,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_hurt_02": {
+      "frame": {
+        "x": 639,
+        "y": 179,
+        "w": 121,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 70,
+        "y": 36,
+        "w": 121,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_run_00": {
+      "frame": {
+        "x": 766,
+        "y": 179,
+        "w": 119,
+        "h": 139
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 54,
+        "y": 37,
+        "w": 119,
+        "h": 139
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_fall_04": {
+      "frame": {
+        "x": 891,
+        "y": 179,
+        "w": 122,
+        "h": 138
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 63,
+        "y": 38,
+        "w": 122,
+        "h": 138
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_hurt_00": {
+      "frame": {
+        "x": 1019,
+        "y": 179,
+        "w": 121,
+        "h": 138
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 69,
+        "y": 38,
+        "w": 121,
+        "h": 138
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_jump_03": {
+      "frame": {
+        "x": 1146,
+        "y": 179,
+        "w": 114,
+        "h": 138
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 69,
+        "y": 38,
+        "w": 114,
+        "h": 138
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_jump_02": {
+      "frame": {
+        "x": 1266,
+        "y": 179,
+        "w": 111,
+        "h": 138
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 71,
+        "y": 38,
+        "w": 111,
+        "h": 138
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_fall_00": {
+      "frame": {
+        "x": 1383,
+        "y": 179,
+        "w": 129,
+        "h": 137
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 60,
+        "y": 39,
+        "w": 129,
+        "h": 137
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_hurt_03": {
+      "frame": {
+        "x": 1518,
+        "y": 179,
+        "w": 126,
+        "h": 137
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 70,
+        "y": 39,
+        "w": 126,
+        "h": 137
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_hurt_01": {
+      "frame": {
+        "x": 1650,
+        "y": 179,
+        "w": 118,
+        "h": 137
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 68,
+        "y": 39,
+        "w": 118,
+        "h": 137
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_jump_04": {
+      "frame": {
+        "x": 1774,
+        "y": 179,
+        "w": 110,
+        "h": 137
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 68,
+        "y": 39,
+        "w": 110,
+        "h": 137
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_fall_01": {
+      "frame": {
+        "x": 1890,
+        "y": 179,
+        "w": 126,
+        "h": 136
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 59,
+        "y": 40,
+        "w": 126,
+        "h": 136
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_hurt_05": {
+      "frame": {
+        "x": 6,
+        "y": 327,
+        "w": 117,
+        "h": 134
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 75,
+        "y": 42,
+        "w": 117,
+        "h": 134
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_hurt_04": {
+      "frame": {
+        "x": 129,
+        "y": 327,
+        "w": 120,
+        "h": 133
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 72,
+        "y": 43,
+        "w": 120,
+        "h": 133
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_fall_02": {
+      "frame": {
+        "x": 255,
+        "y": 327,
+        "w": 120,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 61,
+        "y": 46,
+        "w": 120,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    },
+    "israel_fall_05": {
+      "frame": {
+        "x": 381,
+        "y": 327,
+        "w": 101,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 68,
+        "y": 46,
+        "w": 101,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9668508287292817
+      }
+    }
+  },
+  "meta": {
+    "app": "OpenAI ChatGPT corrected atlas pipeline",
+    "version": "2.0",
+    "image": "israel_atlas.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 2024,
+      "h": 468
+    },
+    "scale": "1",
+    "smartupdate": "Explicit regions, normalized 242x181, bottom-center anchor"
+  }
+}

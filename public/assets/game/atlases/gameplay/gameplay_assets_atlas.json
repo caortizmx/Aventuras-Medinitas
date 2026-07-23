@@ -1,0 +1,1000 @@
+{
+  "frames": {
+    "prop_banner": {
+      "frame": {
+        "x": 6,
+        "y": 6,
+        "w": 96,
+        "h": 145
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 25,
+        "y": 22,
+        "w": 96,
+        "h": 145
+      },
+      "sourceSize": {
+        "w": 187,
+        "h": 231
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "prop_palm": {
+      "frame": {
+        "x": 108,
+        "y": 6,
+        "w": 122,
+        "h": 144
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 32,
+        "y": 27,
+        "w": 122,
+        "h": 144
+      },
+      "sourceSize": {
+        "w": 185,
+        "h": 231
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "checkpoint_05": {
+      "frame": {
+        "x": 236,
+        "y": 6,
+        "w": 113,
+        "h": 137
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 38,
+        "y": 21,
+        "w": 113,
+        "h": 137
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 175
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "prop_lantern_post": {
+      "frame": {
+        "x": 355,
+        "y": 6,
+        "w": 100,
+        "h": 137
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 27,
+        "y": 28,
+        "w": 100,
+        "h": 137
+      },
+      "sourceSize": {
+        "w": 169,
+        "h": 231
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "checkpoint_00": {
+      "frame": {
+        "x": 461,
+        "y": 6,
+        "w": 116,
+        "h": 133
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 113,
+        "y": 25,
+        "w": 116,
+        "h": 133
+      },
+      "sourceSize": {
+        "w": 272,
+        "h": 175
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "checkpoint_02": {
+      "frame": {
+        "x": 583,
+        "y": 6,
+        "w": 130,
+        "h": 129
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 56,
+        "y": 29,
+        "w": 130,
+        "h": 129
+      },
+      "sourceSize": {
+        "w": 228,
+        "h": 175
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "checkpoint_03": {
+      "frame": {
+        "x": 719,
+        "y": 6,
+        "w": 116,
+        "h": 129
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 53,
+        "y": 29,
+        "w": 116,
+        "h": 129
+      },
+      "sourceSize": {
+        "w": 230,
+        "h": 175
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "checkpoint_01": {
+      "frame": {
+        "x": 841,
+        "y": 6,
+        "w": 112,
+        "h": 129
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 45,
+        "y": 29,
+        "w": 112,
+        "h": 129
+      },
+      "sourceSize": {
+        "w": 216,
+        "h": 175
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "enemy_large_walk_01": {
+      "frame": {
+        "x": 959,
+        "y": 6,
+        "w": 179,
+        "h": 127
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 24,
+        "y": 24,
+        "w": 179,
+        "h": 127
+      },
+      "sourceSize": {
+        "w": 238,
+        "h": 180
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "enemy_large_walk_04": {
+      "frame": {
+        "x": 1144,
+        "y": 6,
+        "w": 193,
+        "h": 125
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 25,
+        "y": 27,
+        "w": 193,
+        "h": 125
+      },
+      "sourceSize": {
+        "w": 244,
+        "h": 180
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "goal_portal_05": {
+      "frame": {
+        "x": 1343,
+        "y": 6,
+        "w": 162,
+        "h": 123
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 29,
+        "y": 32,
+        "w": 162,
+        "h": 123
+      },
+      "sourceSize": {
+        "w": 296,
+        "h": 175
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "goal_portal_02": {
+      "frame": {
+        "x": 1511,
+        "y": 6,
+        "w": 138,
+        "h": 123
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 45,
+        "y": 32,
+        "w": 138,
+        "h": 123
+      },
+      "sourceSize": {
+        "w": 229,
+        "h": 175
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "goal_portal_00": {
+      "frame": {
+        "x": 1655,
+        "y": 6,
+        "w": 135,
+        "h": 123
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 88,
+        "y": 32,
+        "w": 135,
+        "h": 123
+      },
+      "sourceSize": {
+        "w": 260,
+        "h": 175
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "goal_portal_01": {
+      "frame": {
+        "x": 1796,
+        "y": 6,
+        "w": 135,
+        "h": 123
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 37,
+        "y": 32,
+        "w": 135,
+        "h": 123
+      },
+      "sourceSize": {
+        "w": 218,
+        "h": 175
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "enemy_large_walk_02": {
+      "frame": {
+        "x": 6,
+        "y": 157,
+        "w": 177,
+        "h": 122
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 35,
+        "y": 30,
+        "w": 177,
+        "h": 122
+      },
+      "sourceSize": {
+        "w": 232,
+        "h": 180
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "enemy_large_walk_03": {
+      "frame": {
+        "x": 189,
+        "y": 157,
+        "w": 169,
+        "h": 122
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 24,
+        "y": 30,
+        "w": 169,
+        "h": 122
+      },
+      "sourceSize": {
+        "w": 232,
+        "h": 180
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "goal_portal_04": {
+      "frame": {
+        "x": 364,
+        "y": 157,
+        "w": 156,
+        "h": 122
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 35,
+        "y": 33,
+        "w": 156,
+        "h": 122
+      },
+      "sourceSize": {
+        "w": 216,
+        "h": 175
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "goal_portal_03": {
+      "frame": {
+        "x": 526,
+        "y": 157,
+        "w": 143,
+        "h": 122
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 46,
+        "y": 33,
+        "w": 143,
+        "h": 122
+      },
+      "sourceSize": {
+        "w": 229,
+        "h": 175
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "prop_signpost": {
+      "frame": {
+        "x": 675,
+        "y": 157,
+        "w": 98,
+        "h": 121
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 76,
+        "y": 44,
+        "w": 98,
+        "h": 121
+      },
+      "sourceSize": {
+        "w": 214,
+        "h": 231
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "checkpoint_04": {
+      "frame": {
+        "x": 779,
+        "y": 157,
+        "w": 116,
+        "h": 120
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 60,
+        "y": 38,
+        "w": 116,
+        "h": 120
+      },
+      "sourceSize": {
+        "w": 214,
+        "h": 175
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "enemy_large_walk_05": {
+      "frame": {
+        "x": 901,
+        "y": 157,
+        "w": 174,
+        "h": 118
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 36,
+        "y": 35,
+        "w": 174,
+        "h": 118
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 180
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "enemy_large_walk_00": {
+      "frame": {
+        "x": 1081,
+        "y": 157,
+        "w": 167,
+        "h": 116
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 47,
+        "y": 35,
+        "w": 167,
+        "h": 116
+      },
+      "sourceSize": {
+        "w": 246,
+        "h": 180
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "prop_bush": {
+      "frame": {
+        "x": 1254,
+        "y": 157,
+        "w": 153,
+        "h": 104
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 13,
+        "y": 61,
+        "w": 153,
+        "h": 104
+      },
+      "sourceSize": {
+        "w": 182,
+        "h": 231
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "prop_crate": {
+      "frame": {
+        "x": 1413,
+        "y": 157,
+        "w": 103,
+        "h": 103
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 40,
+        "y": 70,
+        "w": 103,
+        "h": 103
+      },
+      "sourceSize": {
+        "w": 169,
+        "h": 231
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "prop_flowers": {
+      "frame": {
+        "x": 1522,
+        "y": 157,
+        "w": 135,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 24,
+        "y": 72,
+        "w": 135,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 181,
+        "h": 231
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "collectible_gem_04": {
+      "frame": {
+        "x": 1663,
+        "y": 157,
+        "w": 87,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 30,
+        "y": 28,
+        "w": 87,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 156,
+        "h": 160
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "enemy_small_walk_03": {
+      "frame": {
+        "x": 1756,
+        "y": 157,
+        "w": 86,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 62,
+        "y": 30,
+        "w": 86,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 206,
+        "h": 150
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "enemy_small_walk_01": {
+      "frame": {
+        "x": 1848,
+        "y": 157,
+        "w": 80,
+        "h": 91
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 65,
+        "y": 36,
+        "w": 80,
+        "h": 91
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 150
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "enemy_small_walk_06": {
+      "frame": {
+        "x": 1934,
+        "y": 157,
+        "w": 87,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 50,
+        "y": 40,
+        "w": 87,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 246,
+        "h": 150
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "enemy_small_walk_04": {
+      "frame": {
+        "x": 6,
+        "y": 285,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 60,
+        "y": 38,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 150
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "enemy_small_walk_02": {
+      "frame": {
+        "x": 92,
+        "y": 285,
+        "w": 79,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 55,
+        "y": 37,
+        "w": 79,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 150
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "enemy_small_walk_05": {
+      "frame": {
+        "x": 177,
+        "y": 285,
+        "w": 92,
+        "h": 87
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 45,
+        "y": 40,
+        "w": 92,
+        "h": 87
+      },
+      "sourceSize": {
+        "w": 186,
+        "h": 150
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "enemy_small_walk_00": {
+      "frame": {
+        "x": 275,
+        "y": 285,
+        "w": 76,
+        "h": 84
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 76,
+        "y": 44,
+        "w": 76,
+        "h": 84
+      },
+      "sourceSize": {
+        "w": 218,
+        "h": 150
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "collectible_gem_06": {
+      "frame": {
+        "x": 357,
+        "y": 285,
+        "w": 103,
+        "h": 83
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 31,
+        "y": 41,
+        "w": 103,
+        "h": 83
+      },
+      "sourceSize": {
+        "w": 153,
+        "h": 160
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "collectible_gem_03": {
+      "frame": {
+        "x": 466,
+        "y": 285,
+        "w": 94,
+        "h": 83
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 35,
+        "y": 42,
+        "w": 94,
+        "h": 83
+      },
+      "sourceSize": {
+        "w": 162,
+        "h": 160
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "collectible_gem_00": {
+      "frame": {
+        "x": 566,
+        "y": 285,
+        "w": 61,
+        "h": 82
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 127,
+        "y": 43,
+        "w": 61,
+        "h": 82
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 160
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "collectible_gem_01": {
+      "frame": {
+        "x": 633,
+        "y": 285,
+        "w": 59,
+        "h": 82
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 52,
+        "y": 42,
+        "w": 59,
+        "h": 82
+      },
+      "sourceSize": {
+        "w": 160,
+        "h": 160
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "collectible_gem_05": {
+      "frame": {
+        "x": 698,
+        "y": 285,
+        "w": 55,
+        "h": 82
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 50,
+        "y": 43,
+        "w": 55,
+        "h": 82
+      },
+      "sourceSize": {
+        "w": 158,
+        "h": 160
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "collectible_gem_02": {
+      "frame": {
+        "x": 759,
+        "y": 285,
+        "w": 92,
+        "h": 81
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 31,
+        "y": 43,
+        "w": 92,
+        "h": 81
+      },
+      "sourceSize": {
+        "w": 162,
+        "h": 160
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "collectible_gem_07": {
+      "frame": {
+        "x": 857,
+        "y": 285,
+        "w": 26,
+        "h": 81
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 61,
+        "y": 43,
+        "w": 26,
+        "h": 81
+      },
+      "sourceSize": {
+        "w": 257,
+        "h": 160
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "prop_boulder": {
+      "frame": {
+        "x": 889,
+        "y": 285,
+        "w": 121,
+        "h": 77
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 27,
+        "y": 88,
+        "w": 121,
+        "h": 77
+      },
+      "sourceSize": {
+        "w": 161,
+        "h": 231
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "OpenAI ChatGPT",
+    "version": "1.0",
+    "image": "gameplay_assets_atlas.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 2028,
+      "h": 380
+    },
+    "scale": "1",
+    "smartupdate": "Trimmed Phaser JSON Hash atlas"
+  }
+}
