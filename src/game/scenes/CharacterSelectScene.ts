@@ -12,14 +12,15 @@ const BTN_Y       = GAME_HEIGHT - 52;
 const BTN_W       = 200;
 const BTN_H       = 44;
 
-const CLR_BG         = 0x1a1a2e;
-const CLR_CARD_IDLE  = 0x2c2c4e;
-const CLR_CARD_SEL   = 0x4a4a8e;
-const CLR_BORDER_SEL = 0xf1c40f;
-const CLR_BTN        = 0x27ae60;
-const CLR_BTN_HOVER  = 0x2ecc71;
-const CLR_TEXT       = '#ffffff';
-const CLR_LABEL      = '#f1c40f';
+const CLR_BG          = 0x1a1a2e;
+const CLR_CARD_IDLE   = 0x2c2c4e;
+const CLR_CARD_SEL    = 0x4a4a8e;
+const CLR_CARD_HOVER  = 0x3a3a7e;  // between IDLE and SEL, for non-selected hover
+const CLR_BORDER_SEL  = 0xf1c40f;
+const CLR_BTN         = 0x27ae60;
+const CLR_BTN_HOVER   = 0x2ecc71;
+const CLR_TEXT        = '#ffffff';
+const CLR_LABEL       = '#f1c40f';
 
 // Horizontal card centers: evenly split across width
 const CARD_CENTERS_X = [
@@ -124,7 +125,7 @@ export class CharacterSelect extends Scene {
                 this._refresh();
             });
             bg.on('pointerover', () => {
-                if (this._selectedIndex !== i) bg.setFillStyle(CLR_CARD_SEL - 0x111100);
+                if (this._selectedIndex !== i) bg.setFillStyle(CLR_CARD_HOVER);
             });
             bg.on('pointerout', () => {
                 if (this._selectedIndex !== i) bg.setFillStyle(CLR_CARD_IDLE);
@@ -204,11 +205,5 @@ export class CharacterSelect extends Scene {
         const character = CHARACTERS[this._selectedIndex] ?? getDefaultCharacter();
         saveSelectedCharacter(character.id);
         this.scene.start(SCENE_LEVEL_ONE, { characterId: character.id });
-    }
-
-    // ── Ensure keyboard listener is cleaned up even on forced shutdown ────────
-
-    shutdown(): void {
-        window.removeEventListener('keydown', this._onKeyDown);
     }
 }

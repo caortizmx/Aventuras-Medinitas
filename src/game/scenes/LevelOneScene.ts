@@ -40,8 +40,8 @@ export class LevelOne extends Scene {
     // ── Receive scene data ────────────────────────────────────────────────────
 
     init(data: { characterId?: string }): void {
-        const id = typeof data?.characterId === 'string' ? data.characterId : '';
-        this._character = findCharacterById(id) ?? getDefaultCharacter();
+        this._character = (data?.characterId ? findCharacterById(data.characterId) : undefined)
+            ?? getDefaultCharacter();
         // Compute spawn Y so every character lands flush on the ground
         this._spawnY = WORLD_HEIGHT - GROUND_HEIGHT - this._character.collisionHeight / 2;
     }

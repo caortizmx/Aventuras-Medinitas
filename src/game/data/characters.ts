@@ -1,7 +1,7 @@
 // ── Character configuration ───────────────────────────────────────────────────
-// All gameplay values are identical across characters at Stage 4.
-// Appearance is controlled entirely through this data; no per-character class
-// is needed — the single Player sprite reads from its assigned config.
+// At Stage 4 all three characters have identical gameplay abilities (speed and
+// jump velocity). Physical dimensions differ slightly to define each character's
+// visual placeholder; these are intentional per-character values.
 
 export interface CharacterConfig {
     /** Unique identifier used in scene data and localStorage. */
