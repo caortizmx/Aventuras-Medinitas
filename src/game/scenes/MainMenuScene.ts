@@ -1,4 +1,5 @@
 import { Scene, GameObjects } from 'phaser';
+import { ASSET_KEYS } from '../constants/assetKeys';
 import { SCENE_CHARACTER_SELECT } from '../constants/sceneKeys';
 
 export class MainMenu extends Scene
@@ -14,9 +15,9 @@ export class MainMenu extends Scene
 
     create ()
     {
-        this.background = this.add.image(512, 384, 'background');
+        this.background = this.add.image(512, 384, ASSET_KEYS.background);
 
-        this.logo = this.add.image(512, 300, 'logo');
+        this.logo = this.add.image(512, 300, ASSET_KEYS.logo);
 
         this.title = this.add.text(512, 460, 'Tap or click to play', {
             fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
@@ -29,4 +30,3 @@ export class MainMenu extends Scene
         });
     }
 }
-
