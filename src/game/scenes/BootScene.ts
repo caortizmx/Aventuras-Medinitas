@@ -12,6 +12,7 @@ export class Boot extends Scene
     preload ()
     {
         this.load.image(ASSET_KEYS.background, 'assets/bg.png');
+        this.load.image(ASSET_KEYS.logo, 'assets/logo.png');
     }
 
     create ()

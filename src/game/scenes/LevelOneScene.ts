@@ -54,8 +54,15 @@ import { applyCollectiblePickup } from '../system/stage8Gameplay';
 import { recordLevelResult } from '../system/SaveSystem';
 import { PRESENTATION_ANIMATION_KEYS } from '../constants/presentationAnimationKeys';
 import { CHARACTER_SOURCE_SIZE, CHARACTER_VISUALS } from '../assets/characterVisualConfig';
-import { ENVIRONMENT_VISUALS } from '../assets/environmentVisualConfig';
+import {
+    BACKGROUND_LAYERS,
+    ENVIRONMENT_VISUALS,
+    resolveTerrainVisual,
+    shouldShowDebugUi,
+    TerrainVisualType,
+} from '../assets/environmentVisualConfig';
 import { GAMEPLAY_VISUALS, PROP_VISUALS } from '../assets/gameplayVisualConfig';
+import { RENDER_DEPTHS } from '../constants/renderDepths';
 
 type SpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 type StaticSpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithStaticBody;
@@ -104,16 +111,6 @@ const MIN_CAMERA_DEADZONE_SIZE = 1;
 const HURT_FLASH_DURATION_MS = 120;
 
 // ─── Parallax backdrop (art-free depth cue, see art bible §7 first-pass polish) ──
-interface ParallaxLayerConfig {
-    depth: number;
-    scrollFactor: number;
-}
-
-const HILL_FAR_CONFIG: ParallaxLayerConfig = { depth: -60, scrollFactor: 0.25 };
-const HILL_NEAR_CONFIG: ParallaxLayerConfig = { depth: -40, scrollFactor: 0.5 };
-const SKY_DEPTH = -90;
-const SKY_SCROLL_FACTOR = 0.02;
-
 function isCollidableTilemapLayer(
     layer: Phaser.Tilemaps.TilemapLayer | Phaser.Tilemaps.TilemapGPULayer,
 ): layer is Phaser.Tilemaps.TilemapLayer {
@@ -352,12 +349,15 @@ export class LevelOne extends Scene {
             const decorationFront = this._createRequiredTileLayer(map, LEVEL_ONE_LAYER_NAMES.decorationFront, tileset);
             const collision = this._createRequiredTileLayer(map, LEVEL_ONE_LAYER_NAMES.collision, tileset);
 
-            background.setDepth(-30);
-            decorationBehind.setDepth(-10);
-            ground.setDepth(0);
-            platforms.setDepth(1);
+            background.setVisible(false);
+            decorationBehind.setVisible(false);
+            ground.setVisible(false);
+            platforms.setVisible(false);
             collision.setVisible(false);
-            decorationFront.setDepth(15);
+            decorationFront.setVisible(false);
+
+            this._createTerrainVisuals(map, LEVEL_ONE_LAYER_NAMES.ground, 'ground');
+            this._createTerrainVisuals(map, LEVEL_ONE_LAYER_NAMES.platforms, 'platform');
 
             if (!isCollidableTilemapLayer(collision)) {
                 throw new LevelMapValidationError('collision layer does not support arcade collision setup');
@@ -420,7 +420,7 @@ export class LevelOne extends Scene {
                 if (!this._levelDone) this._applyPlayerDamage(this._player.x);
             });
 
-            if (import.meta.env.DEV) {
+            if (this._isDebugUiEnabled()) {
                 this._drawDevMarkers(mapData);
             }
 
@@ -547,7 +547,14 @@ export class LevelOne extends Scene {
             this._player.body.moves = false;
             this._playCharacterAnimation('hurt');
             this.time.delayedCall(300, () => {
-                this.scene.start(SCENE_GAME_OVER, { reason: 'All lives lost', lives: this._lives });
+                this.scene.start(SCENE_GAME_OVER, {
+                    reason: 'All lives lost',
+                    lives: this._lives,
+                    score: this._score,
+                    collectibleCount: this._collectiblesCollected,
+                    totalCollectibles: this._collectiblesTotal,
+                    characterId: this._character.id,
+                });
             });
             return;
         }
@@ -734,22 +741,143 @@ export class LevelOne extends Scene {
         return layer;
     }
 
+    private _createTerrainVisuals(
+        map: Phaser.Tilemaps.Tilemap,
+        layerName: TileLayerName,
+        type: TerrainVisualType,
+    ): void {
+        const layer = map.getLayer(layerName);
+        if (!layer) {
+            return;
+        }
+
+        const isOccupied = (x: number, y: number): boolean => {
+            const tile = layer.data[y]?.[x];
+            return tile !== undefined && tile.index >= 0;
+        };
+
+        for (let y = 0; y < layer.height; y += 1) {
+            let x = 0;
+            while (x < layer.width) {
+                const isTopSurface = isOccupied(x, y) && !isOccupied(x, y - 1);
+                if (!isTopSurface) {
+                    x += 1;
+                    continue;
+                }
+
+                const startX = x;
+                while (
+                    x < layer.width
+                    && isOccupied(x, y)
+                    && !isOccupied(x, y - 1)
+                ) {
+                    x += 1;
+                }
+
+                const width = (x - startX) * map.tileWidth;
+                const worldX = startX * map.tileWidth;
+                const worldY = y * map.tileHeight;
+
+                if (type === 'ground') {
+                    let rows = 1;
+                    while (isOccupied(startX, y + rows)) {
+                        rows += 1;
+                    }
+                    this._createGroundVisual(worldX, worldY, width, rows * map.tileHeight);
+                } else {
+                    this._createPlatformVisual(worldX, worldY, width);
+                }
+            }
+        }
+    }
+
+    private _createGroundVisual(x: number, y: number, width: number, height: number): void {
+        const mapping = this._getAvailableTerrainVisual('ground');
+        if (!mapping) {
+            return;
+        }
+
+        const frame = this.textures.getFrame(ENVIRONMENT_VISUALS.atlasKey, mapping.frame);
+        const displayHeight = Math.max(1, height);
+        const tileScale = displayHeight / frame.height;
+        this.add.tileSprite(
+            x + mapping.visualOffsetX,
+            y + mapping.visualOffsetY,
+            Math.max(mapping.minimumWidth, width),
+            displayHeight,
+            ENVIRONMENT_VISUALS.atlasKey,
+            mapping.frame,
+        )
+            .setOrigin(mapping.originX, mapping.originY)
+            .setTileScale(tileScale, tileScale)
+            .setDepth(mapping.depth);
+    }
+
+    private _createPlatformVisual(x: number, y: number, width: number): void {
+        const mapping = this._getAvailableTerrainVisual('platform');
+        if (!mapping) {
+            return;
+        }
+
+        const frame = this.textures.getFrame(ENVIRONMENT_VISUALS.atlasKey, mapping.frame);
+        const segmentCount = Math.max(1, Math.ceil(width / (frame.width * 1.15)));
+        const segmentWidth = width / segmentCount;
+
+        for (let segment = 0; segment < segmentCount; segment += 1) {
+            this.add.image(
+                x + segmentWidth * (segment + 0.5) + mapping.visualOffsetX,
+                y + mapping.visualOffsetY,
+                ENVIRONMENT_VISUALS.atlasKey,
+                mapping.frame,
+            )
+                .setOrigin(mapping.originX, mapping.originY)
+                .setDisplaySize(segmentWidth, frame.height)
+                .setDepth(mapping.depth);
+        }
+    }
+
+    private _getAvailableTerrainVisual(type: TerrainVisualType) {
+        const mapping = resolveTerrainVisual(type);
+        if (
+            mapping
+            && this.textures.exists(ENVIRONMENT_VISUALS.atlasKey)
+            && this.textures.get(ENVIRONMENT_VISUALS.atlasKey).has(mapping.frame)
+        ) {
+            return mapping;
+        }
+
+        if (import.meta.env.DEV) {
+            console.warn(`[environment] Missing terrain visual mapping for "${type}"`);
+        }
+        return undefined;
+    }
+
+    private _isDebugUiEnabled(): boolean {
+        const enabledByEnvironment = import.meta.env.VITE_DEBUG_UI === 'true';
+        const enabledByRegistry = this.registry.get('debugUi') === true;
+        return shouldShowDebugUi(import.meta.env.DEV, enabledByEnvironment || enabledByRegistry);
+    }
+
     private _showDevelopmentMapError(error: unknown): void {
         const msg = error instanceof Error ? error.message : 'Unknown map validation error';
-        console.error(msg, error);
+        if (import.meta.env.DEV) {
+            console.error(msg, error);
+        }
 
-        this.add.text(16, 48, `Level map fallback active\n${msg}`, {
-            fontFamily: 'monospace',
-            fontSize: '12px',
-            color: '#ff6b6b',
-            backgroundColor: '#2b0f0f',
-            padding: { x: 6, y: 4 },
-        }).setScrollFactor(0).setDepth(999);
+        if (this._isDebugUiEnabled()) {
+            this.add.text(16, 48, `Level map fallback active\n${msg}`, {
+                fontFamily: 'monospace',
+                fontSize: '12px',
+                color: '#ff6b6b',
+                backgroundColor: '#2b0f0f',
+                padding: { x: 6, y: 4 },
+            }).setScrollFactor(0).setDepth(RENDER_DEPTHS.orientationWarning);
+        }
     }
 
     private _drawDevMarkers(mapData: ValidatedLevelMapData): void {
         for (const point of mapData.enemySpawns) {
-            this.add.circle(point.x, point.y, 10, 0xe74c3c, 0.5).setDepth(20);
+            this.add.circle(point.x, point.y, 10, 0xe74c3c, 0.5).setDepth(RENDER_DEPTHS.collisionDebug);
             this.add.line(
                 point.x,
                 point.y - 28,
@@ -759,11 +887,12 @@ export class LevelOne extends Scene {
                 0,
                 0x8e44ad,
                 0.8,
-            ).setDepth(20);
+            ).setDepth(RENDER_DEPTHS.collisionDebug);
         }
 
         for (const point of mapData.checkpoints) {
-            this.add.rectangle(point.x, point.y - 24, 16, 32, 0x3498db, 0.5).setDepth(20);
+            this.add.rectangle(point.x, point.y - 24, 16, 32, 0x3498db, 0.5)
+                .setDepth(RENDER_DEPTHS.collisionDebug);
         }
     }
 
@@ -839,11 +968,12 @@ export class LevelOne extends Scene {
         const ground = this.physics.add.staticImage(
             GROUND_WIDTH / 2,
             GROUND_Y,
-            ENVIRONMENT_VISUALS.atlasKey,
-            ENVIRONMENT_VISUALS.fallbackGround,
+            ASSET_KEYS.pixel,
         );
         ground.setDisplaySize(GROUND_WIDTH, GROUND_HEIGHT)
+            .setVisible(false)
             .refreshBody();
+        this._createGroundVisual(0, GROUND_Y - GROUND_HEIGHT / 2, GROUND_WIDTH, GROUND_HEIGHT);
 
         const platforms = this.physics.add.staticGroup();
         platforms.add(ground, true);
@@ -852,11 +982,11 @@ export class LevelOne extends Scene {
             const p = this.physics.add.staticImage(
                 cx,
                 cy,
-                ENVIRONMENT_VISUALS.atlasKey,
-                ENVIRONMENT_VISUALS.fallbackPlatform,
+                ASSET_KEYS.pixel,
             );
-            p.setDisplaySize(w, PLATFORM_HEIGHT).refreshBody();
+            p.setDisplaySize(w, PLATFORM_HEIGHT).setVisible(false).refreshBody();
             platforms.add(p, true);
+            this._createPlatformVisual(cx - w / 2, cy - PLATFORM_HEIGHT / 2, w);
         }
 
         const goal = this.physics.add.staticSprite(
@@ -914,7 +1044,7 @@ export class LevelOne extends Scene {
             .setOrigin(visual.originX, visual.originY)
             .setDisplaySize(displayWidth, visual.displayHeight)
             .setCollideWorldBounds(true)
-            .setDepth(6);
+            .setDepth(RENDER_DEPTHS.player);
 
         const body = this._player.body as DynamicBody;
         const scaleX = Math.abs(this._player.scaleX) || 1;
@@ -994,34 +1124,35 @@ export class LevelOne extends Scene {
     }
 
     private _buildParallaxBackdrop(): void {
-        this.add.tileSprite(
-            0,
-            0,
-            this._worldWidth,
-            this._worldHeight,
-            ENVIRONMENT_VISUALS.atlasKey,
-            ENVIRONMENT_VISUALS.sky,
-        ).setOrigin(0).setDepth(SKY_DEPTH).setScrollFactor(SKY_SCROLL_FACTOR, 0);
-        this.add.tileSprite(
-            0,
-            this._worldHeight * 0.28,
-            this._worldWidth,
-            this._worldHeight * 0.72,
-            ENVIRONMENT_VISUALS.atlasKey,
-            ENVIRONMENT_VISUALS.farMountains,
-        ).setOrigin(0).setDepth(HILL_FAR_CONFIG.depth).setScrollFactor(HILL_FAR_CONFIG.scrollFactor, 0);
-        this.add.tileSprite(
-            0,
-            this._worldHeight * 0.45,
-            this._worldWidth,
-            this._worldHeight * 0.55,
-            ENVIRONMENT_VISUALS.atlasKey,
-            ENVIRONMENT_VISUALS.hills,
-        ).setOrigin(0).setDepth(HILL_NEAR_CONFIG.depth).setScrollFactor(HILL_NEAR_CONFIG.scrollFactor, 0);
+        for (const layer of BACKGROUND_LAYERS) {
+            const frame = this.textures.getFrame(ENVIRONMENT_VISUALS.atlasKey, layer.frame);
+            if (!frame) {
+                if (import.meta.env.DEV) {
+                    console.warn(`[environment] Missing background frame "${layer.frame}"`);
+                }
+                continue;
+            }
+
+            const displayHeight = Math.ceil(GAME_HEIGHT * layer.heightRatio);
+            const tileScale = displayHeight / frame.height;
+            const y = Math.round(GAME_HEIGHT * layer.bottomRatio - displayHeight);
+            this.add.tileSprite(
+                -GAME_WIDTH,
+                y,
+                this._worldWidth + GAME_WIDTH * 2,
+                displayHeight,
+                ENVIRONMENT_VISUALS.atlasKey,
+                layer.frame,
+            )
+                .setOrigin(0)
+                .setTileScale(tileScale, tileScale)
+                .setDepth(layer.depth)
+                .setScrollFactor(layer.scrollFactor, 0);
+        }
     }
 
     private _buildUI(): void {
-        const depth = 100;
+        const depth = RENDER_DEPTHS.hud;
         const cx    = GAME_WIDTH / 2;
         const cy    = GAME_HEIGHT / 2;
 
@@ -1061,30 +1192,13 @@ export class LevelOne extends Scene {
             })
             .setOrigin(0.5).setScrollFactor(0).setDepth(depth + 1).setVisible(false);
 
-        this.add
-            .image(96, 46, ASSET_KEYS.uiHudPanel)
-            .setDisplaySize(176, 76)
-            .setOrigin(0.5)
-            .setScrollFactor(0).setDepth(depth - 1);
-
-        this.add
-            .text(12, 10, `gravity ${GRAVITY} px/s²`, {
-                fontFamily: 'monospace',
-                fontSize:   '12px',
-                color:      '#ffffff88',
-            })
-            .setScrollFactor(0).setDepth(depth);
-
-        this.add
-            .text(12, 26, `Playing as: ${this._character.displayName}`, {
-                fontFamily: 'monospace',
-                fontSize:   '12px',
-                color:      '#ffffff88',
-            })
-            .setScrollFactor(0).setDepth(depth);
+        this.add.rectangle(104, 38, 192, 60, 0x111a2b, 0.76)
+            .setStrokeStyle(1, 0xffffff, 0.18)
+            .setScrollFactor(0)
+            .setDepth(depth - 1);
 
         this._livesLabel = this.add
-            .text(12, 42, `Lives: ${this._lives}`, {
+            .text(12, 12, `Lives: ${this._lives}`, {
                 fontFamily: 'monospace',
                 fontSize: '12px',
                 color: '#ffdf8a',
@@ -1092,7 +1206,7 @@ export class LevelOne extends Scene {
             .setScrollFactor(0).setDepth(depth);
 
         this._scoreLabel = this.add
-            .text(12, 58, `Score: ${this._score}`, {
+            .text(12, 30, `Score: ${this._score}`, {
                 fontFamily: 'monospace',
                 fontSize: '12px',
                 color: '#9ee6ff',
@@ -1100,12 +1214,24 @@ export class LevelOne extends Scene {
             .setScrollFactor(0).setDepth(depth);
 
         this._collectiblesLabel = this.add
-            .text(12, 74, `Collectibles: ${this._collectiblesCollected}/${this._collectiblesTotal}`, {
+            .text(12, 48, `Collectibles: ${this._collectiblesCollected}/${this._collectiblesTotal}`, {
                 fontFamily: 'monospace',
                 fontSize: '12px',
                 color: '#f6de8f',
             })
             .setScrollFactor(0).setDepth(depth);
+
+        if (this._isDebugUiEnabled()) {
+            this.add.rectangle(112, 96, 208, 34, 0x0f2918, 0.88)
+                .setStrokeStyle(2, 0x2cff65)
+                .setScrollFactor(0)
+                .setDepth(depth - 1);
+            this.add.text(12, 84, `gravity ${GRAVITY} px/s² · ${this._character.displayName}`, {
+                fontFamily: 'monospace',
+                fontSize: '11px',
+                color: '#8dffad',
+            }).setScrollFactor(0).setDepth(depth);
+        }
 
         this.add
             .text(GAME_WIDTH - 12, 10, 'Esc / P = pause', {
