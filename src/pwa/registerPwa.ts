@@ -24,7 +24,7 @@ export const registerPwa = async (
     if (!('serviceWorker' in navigator)) return;
 
     let shouldReloadAfterControllerChange = false;
-    const applyControllerUpdate = () => {
+    const markForReloadOnControllerChange = () => {
         shouldReloadAfterControllerChange = true;
     };
 
@@ -36,7 +36,7 @@ export const registerPwa = async (
     const registration = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
     const emitUpdate = (worker: ServiceWorker): void => {
         options.onUpdateAvailable?.(() => {
-            applyControllerUpdate();
+            markForReloadOnControllerChange();
             worker.postMessage({ type: 'SKIP_WAITING' });
         });
     };

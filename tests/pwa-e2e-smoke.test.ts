@@ -11,6 +11,11 @@ const setViewport = (width: number, height: number): void => {
 };
 
 describe('PWA smoke checks', () => {
+    const originalViewport = {
+        width: window.innerWidth,
+        height: window.innerHeight,
+    };
+
     let controls: MobileControls | undefined;
     let input: InputController | undefined;
 
@@ -20,6 +25,7 @@ describe('PWA smoke checks', () => {
         controls = undefined;
         input = undefined;
         document.body.innerHTML = '';
+        setViewport(originalViewport.width, originalViewport.height);
     });
 
     it('keeps offline fallback and safe runtime cache rules in service worker', () => {

@@ -45,7 +45,10 @@ self.addEventListener('message', (event) => {
     }
 });
 
-// Keep cache writes same-origin and successful to avoid storing opaque/cross-origin failures.
+/**
+ * Cache only same-origin successful ("basic") responses.
+ * Opaque/cross-origin responses can hide errors and make stale third-party failures hard to recover from.
+ */
 const isCacheableResponse = (response) => response.ok && response.type === 'basic';
 
 const fetchAndCache = async (request, cacheName) => {
