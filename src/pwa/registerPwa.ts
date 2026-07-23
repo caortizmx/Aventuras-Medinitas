@@ -14,9 +14,11 @@ const unregisterForDevelopment = async (): Promise<void> => {
 
 export const registerPwa = async (
     options: RegisterPwaOptions = {},
-    isProduction: boolean = import.meta.env.PROD,
+    isProduction?: boolean,
 ): Promise<void> => {
-    if (!isProduction) {
+    const productionMode = isProduction ?? import.meta.env.PROD;
+
+    if (!productionMode) {
         await unregisterForDevelopment();
         return;
     }

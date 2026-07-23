@@ -3,7 +3,7 @@ import { InputController } from './InputController';
 interface BtnCfg {
     label:      string;
     positionCss: string;
-    testId: string;
+    dataTestId: string;
     onDown:     () => void;
     onUp:       () => void;
 }
@@ -39,28 +39,28 @@ export class MobileControls {
             {
                 label: '◀',
                 positionCss: 'left:max(16px, env(safe-area-inset-left));bottom:max(24px, env(safe-area-inset-bottom))',
-                testId: 'mobile-left',
+                dataTestId: 'mobile-left',
                 onDown: () => input.setLeft(true),
                 onUp:   () => input.setLeft(false),
             },
             {
                 label: '▶',
                 positionCss: 'left:calc(max(16px, env(safe-area-inset-left)) + 72px);bottom:max(24px, env(safe-area-inset-bottom))',
-                testId: 'mobile-right',
+                dataTestId: 'mobile-right',
                 onDown: () => input.setRight(true),
                 onUp:   () => input.setRight(false),
             },
             {
                 label: '▲',
                 positionCss: 'right:max(16px, env(safe-area-inset-right));bottom:max(24px, env(safe-area-inset-bottom))',
-                testId: 'mobile-jump',
+                dataTestId: 'mobile-jump',
                 onDown: () => input.setJump(true),
                 onUp:   () => input.setJump(false),
             },
             {
                 label: '⏸',
                 positionCss: 'right:calc(max(16px, env(safe-area-inset-right)) + 84px);bottom:calc(max(24px, env(safe-area-inset-bottom)) + 56px)',
-                testId: 'mobile-pause',
+                dataTestId: 'mobile-pause',
                 onDown: () => input.setPause(true),
                 onUp:   () => input.setPause(false),
             },
@@ -102,7 +102,7 @@ export class MobileControls {
     private _makeBtn(cfg: BtnCfg): HTMLButtonElement {
         const btn = document.createElement('button');
         btn.textContent = cfg.label;
-        btn.dataset.testid = cfg.testId;
+        btn.dataset.testid = cfg.dataTestId;
         btn.style.cssText = [
             'position:fixed',
             'width:64px', 'height:64px',

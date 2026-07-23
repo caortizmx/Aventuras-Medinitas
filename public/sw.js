@@ -47,7 +47,7 @@ self.addEventListener('message', (event) => {
 
 /**
  * Cache only same-origin successful ("basic") responses.
- * Opaque/cross-origin responses can hide errors and make stale third-party failures hard to recover from.
+ * Ignore opaque/cors responses so third-party resources never get pinned in runtime cache.
  */
 const isCacheableResponse = (response) => response.ok && response.type === 'basic';
 
@@ -67,6 +67,7 @@ self.addEventListener('fetch', (event) => {
     if (request.method !== 'GET') return;
 
     const requestUrl = new URL(request.url);
+    // Do not cache cross-origin traffic to avoid stale third-party content and opaque response pitfalls.
     if (requestUrl.origin !== self.location.origin) return;
 
     if (request.mode === 'navigate') {

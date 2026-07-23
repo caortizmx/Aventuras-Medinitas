@@ -2,6 +2,9 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { registerPwa } from '../src/pwa/registerPwa';
 
 describe('PWA registration', () => {
+    const productionMode = true;
+    const developmentMode = false;
+
     beforeEach(() => {
         vi.restoreAllMocks();
     });
@@ -28,7 +31,7 @@ describe('PWA registration', () => {
             onUpdateAvailable: (apply) => {
                 applyUpdate = apply;
             },
-        }, true);
+        }, productionMode);
 
         expect(register).toHaveBeenCalledWith('/sw.js', { scope: '/' });
         expect(applyUpdate).toBeTypeOf('function');
@@ -46,7 +49,7 @@ describe('PWA registration', () => {
             value: { register, getRegistrations },
         });
 
-        await expect(registerPwa({}, false)).resolves.toBeUndefined();
+        await expect(registerPwa({}, developmentMode)).resolves.toBeUndefined();
 
         expect(getRegistrations).toHaveBeenCalledTimes(1);
         expect(unregister).toHaveBeenCalledTimes(1);
