@@ -9,6 +9,10 @@ import {
 import { ensureCharacterFallbackTextures } from '../assets/characterFallback';
 import { registerCharacterAnimations } from '../animations/characterAnimations';
 import { SCENE_MAIN_MENU } from '../constants/sceneKeys';
+import {
+    LEVEL_ONE_MAP_PATH,
+    LEVEL_ONE_TILESET_IMAGE_PATH,
+} from '../constants/tiledLevel';
 
 export class Preloader extends Scene
 {
@@ -45,6 +49,8 @@ export class Preloader extends Scene
         this._failedCharacterAssetKeys.clear();
 
         this.load.image(ASSET_KEYS.logo, 'logo.png');
+        this.load.tilemapTiledJSON(ASSET_KEYS.levelOneMap, LEVEL_ONE_MAP_PATH);
+        this.load.image(ASSET_KEYS.levelOneTiles, LEVEL_ONE_TILESET_IMAGE_PATH);
 
         this.load.on('loaderror', (file: Phaser.Loader.File) => {
             if (CHARACTER_IDS.some((id) => getCharacterAssetKey(id) === file.key)) {
