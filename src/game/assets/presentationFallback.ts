@@ -64,7 +64,6 @@ function registerFallbackSpritesheet(
         throw new Error(`Unsupported fallback spritesheet source for "${key}".`);
     }
 
-    scene.textures.remove(sourceTexture.key);
 }
 
 function buildEnemySheet(scene: Phaser.Scene): void {
