@@ -20,7 +20,8 @@
     "build-nolog": "vite build --config vite/config.prod.mjs",
     "prepush:check": "bash ./scripts/prepush-check.sh",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:e2e": "vitest run tests/pwa-e2e-smoke.test.ts"
   },
   "devDependencies": {
     "jsdom": "^29.1.1",
