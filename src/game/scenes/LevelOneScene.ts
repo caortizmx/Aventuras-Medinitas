@@ -630,7 +630,7 @@ export class LevelOne extends Scene {
         }
 
         const tile = this._collisionLayer.getTileAtWorldXY(x, y, true);
-        return tile.index !== -1;
+        return tile !== null && tile.index !== -1;
     }
 
     private _refreshLivesUI(): void {
