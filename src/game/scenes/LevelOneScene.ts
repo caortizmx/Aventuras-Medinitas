@@ -5,7 +5,12 @@ import { getCharacterAnimationKey, CharacterAnimationState } from '../constants/
 import { InputController } from '../input/InputController';
 import { MobileControls } from '../input/MobileControls';
 import {
-    PLAYER_HEIGHT, PLAYER_WIDTH,
+    CELEBRATION_EXIT_DELAY_MS,
+    HURT_RECOVERY_DELAY_MS,
+    PLAYER_HEIGHT,
+    PLAYER_RUN_ANIMATION_THRESHOLD,
+    PLAYER_SPRITE_SCALE,
+    PLAYER_WIDTH,
     CAMERA_LERP_X, CAMERA_LERP_Y,
     GAME_HEIGHT, GAME_WIDTH,
     GOAL_COLOR, GOAL_HEIGHT, GOAL_WIDTH, GOAL_X, GOAL_Y,
@@ -22,8 +27,6 @@ import { getCharacterAssetKey } from '../constants/characterSpriteConfig';
 import { ASSET_KEYS } from '../constants/assetKeys';
 
 type SpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
-const HURT_RECOVERY_DELAY_MS = 350;
-const CELEBRATION_EXIT_DELAY_MS = 2500;
 
 export class LevelOne extends Scene {
     private _input!:     InputController;
@@ -119,7 +122,7 @@ export class LevelOne extends Scene {
             : getCharacterAssetKey(DEFAULT_CHARACTER_ID);
         this._player = this.physics.add.sprite(SPAWN_X, this._spawnY, spriteKey, 0);
         this._player
-            .setDisplaySize(PLAYER_WIDTH * 2, PLAYER_HEIGHT * 2)
+            .setDisplaySize(PLAYER_WIDTH * PLAYER_SPRITE_SCALE, PLAYER_HEIGHT * PLAYER_SPRITE_SCALE)
             .setCollideWorldBounds(true);
 
         const body = this._player.body;
@@ -314,7 +317,7 @@ export class LevelOne extends Scene {
             return;
         }
 
-        if (Math.abs(vx) > 1) {
+        if (Math.abs(vx) > PLAYER_RUN_ANIMATION_THRESHOLD) {
             this._playCharacterAnimation('run');
             return;
         }

@@ -54,7 +54,9 @@ function createFallbackSheet(scene: Phaser.Scene, textureKey: string, characterI
     const ctx = canvasTexture.getContext();
 
     const cfg = findCharacterById(characterId);
-    const fallbackColor = cfg ? `#${cfg.temporaryColor.toString(16).padStart(6, '0')}` : '#888888';
+    const fallbackColor = cfg
+        ? `#${cfg.temporaryColor.toString(16).padStart(6, '0')}`
+        : CHARACTER_FALLBACK_CONFIG.defaultBodyColor;
 
     for (let frame = 0; frame < totalFrames; frame += 1) {
         drawFallbackFrame(ctx, frame * frameWidth, fallbackColor);

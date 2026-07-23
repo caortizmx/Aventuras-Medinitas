@@ -1,3 +1,5 @@
+// Canonical Stage 5 playable character ids. Add new playable characters here,
+// then provide entries in all maps below to keep asset and animation wiring in sync.
 export const CHARACTER_IDS = ['emma', 'orel', 'israel'] as const;
 
 export type CharacterId = typeof CHARACTER_IDS[number];
@@ -45,6 +47,7 @@ export const CHARACTER_FALLBACK_CONFIG = {
     outlineColor:  '#10131d',
     eyeColor:      '#ffffff',
     shadowColor:   '#00000033',
+    defaultBodyColor: '#888888',
 } as const;
 
 export function getCharacterAssetKey(characterId: CharacterId): string {
