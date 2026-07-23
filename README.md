@@ -49,6 +49,12 @@ Optional remote override (default is `origin`):
 npm run prepush:check -- --remote upstream
 ```
 
+Optional target branch override (default is `main`):
+
+```bash
+npm run prepush:check -- --target develop
+```
+
 Optional skip for unshallow step:
 
 ```bash

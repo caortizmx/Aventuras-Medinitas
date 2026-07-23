@@ -66,7 +66,10 @@ if [[ -z "$CURRENT_BRANCH" ]]; then
 fi
 
 echo "Current branch: $CURRENT_BRANCH"
-PROTECTED_BRANCHES=("$TARGET_BRANCH" "main" "master")
+PROTECTED_BRANCHES=("main" "master")
+if [[ "$TARGET_BRANCH" != "main" && "$TARGET_BRANCH" != "master" ]]; then
+  PROTECTED_BRANCHES+=("$TARGET_BRANCH")
+fi
 for protected_branch in "${PROTECTED_BRANCHES[@]}"; do
   if [[ "$CURRENT_BRANCH" == "$protected_branch" ]]; then
     echo "Do not push directly to protected branch '$CURRENT_BRANCH'. Use a feature branch and PR."
