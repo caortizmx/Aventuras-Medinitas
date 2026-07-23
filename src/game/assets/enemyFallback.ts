@@ -4,21 +4,11 @@
 // outline, and a friendly/mischievous rather than scary expression. This is
 // a stopgap until real enemy sprite sheets are produced.
 
+import { shadeColor, toHexColorString } from './colorShading';
+
 const ENEMY_FALLBACK_TEXTURE_KEY = 'enemy-fallback';
 const CANVAS_WIDTH = 48;
 const CANVAS_HEIGHT = 32;
-
-function clampByte(value: number): number {
-    return Math.max(0, Math.min(255, Math.round(value)));
-}
-
-function shadeColor(hexColor: number, amount: number): string {
-    const r = (hexColor >> 16) & 0xff;
-    const g = (hexColor >> 8) & 0xff;
-    const b = hexColor & 0xff;
-    const shaded = [r, g, b].map((channel) => clampByte(channel + amount));
-    return `#${shaded.map((channel) => channel.toString(16).padStart(2, '0')).join('')}`;
-}
 
 /**
  * Ensures a rounded, outlined placeholder enemy texture exists in the given
@@ -37,7 +27,7 @@ export function ensureEnemyFallbackTexture(scene: Phaser.Scene, colorHex: number
     }
     const ctx = canvasTexture.getContext();
 
-    const baseColor = `#${colorHex.toString(16).padStart(6, '0')}`;
+    const baseColor = toHexColorString(colorHex);
     const lightColor = shadeColor(colorHex, 40);
     const darkColor = shadeColor(colorHex, -35);
     const outlineColor = shadeColor(colorHex, -65);

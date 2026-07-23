@@ -7,24 +7,10 @@ import {
     getCharacterAssetKey,
 } from '../constants/characterSpriteConfig';
 import { findCharacterById } from '../data/characters';
+import { shadeColor } from './colorShading';
 
 function findCharacterIdByAssetKey(assetKey: string): CharacterId | undefined {
     return CHARACTER_IDS.find((characterId) => CHARACTER_ASSET_KEYS[characterId] === assetKey);
-}
-
-/** Clamp a channel value to the valid 0-255 byte range. */
-function clampByte(value: number): number {
-    return Math.max(0, Math.min(255, Math.round(value)));
-}
-
-/** Lighten (positive amount) or darken (negative amount) a `#rrggbb` color. */
-function shadeColor(hexColor: string, amount: number): string {
-    const hex = hexColor.replace('#', '');
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-    const shaded = [r, g, b].map((channel) => clampByte(channel + amount));
-    return `#${shaded.map((channel) => channel.toString(16).padStart(2, '0')).join('')}`;
 }
 
 /** Draw a filled + stroked rounded rectangle path used for the chunky-cute silhouette. */
@@ -67,7 +53,9 @@ function drawFallbackFrame(
     ctx.fillStyle = CHARACTER_FALLBACK_CONFIG.backgroundColor;
     ctx.fillRect(frameX, 0, frameWidth, frameHeight);
 
-    // Gentle per-frame bob so idle/run/celebrate placeholders read as "alive".
+    // Gentle per-frame bob so idle/run/celebrate placeholders read as "alive":
+    // treat every 6 frames as one full sine bob cycle (2*pi / (pi/3) = 6
+    // steps per cycle) with a small +/-2px vertical amplitude.
     const bob = Math.sin((frameIndex % 6) * (Math.PI / 3)) * 2;
 
     const bodyX = frameX + 8;

@@ -88,6 +88,17 @@ const COLLECTIBLE_POINTS = 100;
 const ENEMY_STOMP_POINTS = 50;
 const LEVEL_CLEAR_LIFE_BONUS = 25;
 
+// ─── Parallax backdrop (art-free depth cue, see art bible §7 first-pass polish) ──
+const SKY_TOP_COLOR = 0xbfe3f7;
+const SKY_HORIZON_COLOR = 0xeaf6ff;
+const HORIZON_Y_RATIO = 0.62;
+const HILL_FAR_COLOR = 0x9fd6c6;
+const HILL_NEAR_COLOR = 0x7dc9a0;
+const HILL_FAR_CONFIG = { yOffset: 10, bumpWidth: 220, bumpHeight: 60, alpha: 0.45, depth: -60, scrollFactor: 0.25 };
+const HILL_NEAR_CONFIG = { yOffset: 30, bumpWidth: 260, bumpHeight: 80, alpha: 0.65, depth: -40, scrollFactor: 0.5 };
+const SKY_DEPTH = -90;
+const SKY_SCROLL_FACTOR = 0.02;
+
 function isCollidableTilemapLayer(
     layer: Phaser.Tilemaps.TilemapLayer | Phaser.Tilemaps.TilemapGPULayer,
 ): layer is Phaser.Tilemaps.TilemapLayer {
@@ -856,14 +867,14 @@ export class LevelOne extends Scene {
      */
     private _buildParallaxBackdrop(): void {
         const width = this._worldWidth;
-        const horizonY = this._worldHeight * 0.62;
+        const horizonY = this._worldHeight * HORIZON_Y_RATIO;
 
-        const sky = this.add.graphics().setDepth(-90).setScrollFactor(0.02, 0);
-        sky.fillGradientStyle(0xbfe3f7, 0xbfe3f7, 0xeaf6ff, 0xeaf6ff, 1);
+        const sky = this.add.graphics().setDepth(SKY_DEPTH).setScrollFactor(SKY_SCROLL_FACTOR, 0);
+        sky.fillGradientStyle(SKY_TOP_COLOR, SKY_TOP_COLOR, SKY_HORIZON_COLOR, SKY_HORIZON_COLOR, 1);
         sky.fillRect(0, 0, width, this._worldHeight);
 
-        this._drawHillRow(width, horizonY + 10, 220, 60, 0x9fd6c6, 0.45, -60, 0.25);
-        this._drawHillRow(width, horizonY + 30, 260, 80, 0x7dc9a0, 0.65, -40, 0.5);
+        this._drawHillRow(width, horizonY + HILL_FAR_CONFIG.yOffset, HILL_FAR_CONFIG.bumpWidth, HILL_FAR_CONFIG.bumpHeight, HILL_FAR_COLOR, HILL_FAR_CONFIG.alpha, HILL_FAR_CONFIG.depth, HILL_FAR_CONFIG.scrollFactor);
+        this._drawHillRow(width, horizonY + HILL_NEAR_CONFIG.yOffset, HILL_NEAR_CONFIG.bumpWidth, HILL_NEAR_CONFIG.bumpHeight, HILL_NEAR_COLOR, HILL_NEAR_CONFIG.alpha, HILL_NEAR_CONFIG.depth, HILL_NEAR_CONFIG.scrollFactor);
     }
 
     /** Draws a single repeating row of soft rounded hill bumps used for parallax depth. */
@@ -1010,7 +1021,12 @@ export class LevelOne extends Scene {
 
         const body = this._player.body as DynamicBody;
         const feetY = body.bottom;
-        const groundY = this._findGroundYBelow(this._player.x, feetY);
+        const grounded = body.blocked.down || body.touching.down;
+        // Fast path: while grounded the shadow sits directly under the feet,
+        // so there is no need to scan for the nearest surface below. The
+        // (bounded) downward scan only runs while the player is airborne,
+        // which is a small fraction of total frames.
+        const groundY = grounded ? feetY : this._findGroundYBelow(this._player.x, feetY);
         const clearance = Math.max(0, groundY - feetY);
         const maxClearance = 220;
         const proximity = 1 - Math.min(clearance, maxClearance) / maxClearance;
@@ -1038,7 +1054,10 @@ export class LevelOne extends Scene {
     /**
      * Detects grounded/airborne transitions to trigger a landing squash and
      * a small dust puff — cheap "juice" that reads as polish independent of
-     * final art.
+     * final art. Guarded by the `!this._wasGrounded` edge check so it only
+     * fires once per landing rather than every frame the player stays
+     * grounded, even if `blocked.down`/`touching.down` flicker briefly on
+     * uneven terrain.
      */
     private _updateLandingFeedback(): void {
         const body = this._player.body as DynamicBody;
@@ -1072,6 +1091,9 @@ export class LevelOne extends Scene {
     private _spawnDustPuff(x: number, y: number): void {
         const puffCount = 4;
         for (let i = 0; i < puffCount; i += 1) {
+            // Spread the puffs across a 144° arc (0.8 * pi) centered on
+            // straight-down (pi radians), so they fan out low and to the
+            // sides of the player's feet rather than in a single column.
             const angle = Math.PI + (i / (puffCount - 1) - 0.5) * Math.PI * 0.8;
             const puff = this.add
                 .circle(x, y, 4, 0xf3ead2, 0.55)
