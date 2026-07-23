@@ -43,6 +43,8 @@ import {
     validateAndExtractLevelMapData,
 } from '../level/tiledLevelValidation';
 import { Enemy, EnemySpawnConfig } from '../entities/Enemy';
+import { ensurePresentationFallbackAssets } from '../assets/presentationFallback';
+import { registerPresentationAnimations } from '../animations/presentationAnimations';
 import {
     PlayerGameplayState,
     applyLifeLoss,
@@ -240,7 +242,9 @@ export class LevelOne extends Scene {
         }
 
         ensureCharacterFallbackTextures(this, new Set<string>());
+        ensurePresentationFallbackAssets(this, new Set<string>());
         registerCharacterAnimations(this.anims);
+        registerPresentationAnimations(this.anims);
 
         if (!this._buildLevelFromTiledMap()) {
             this._buildPrototypeFallbackLevel();
