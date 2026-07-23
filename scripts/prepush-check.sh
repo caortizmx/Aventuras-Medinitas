@@ -42,7 +42,7 @@ echo "Syncing refs from '$REMOTE'..."
 git fetch --prune "$REMOTE"
 
 if [[ "$(git rev-parse --is-shallow-repository)" == "true" ]]; then
-  echo "Repository is shallow. Unshallowing..."
+  echo "Repository is shallow. Unshallowing may take time on large repositories..."
   git fetch --unshallow "$REMOTE"
 fi
 
