@@ -45,6 +45,18 @@ type TileLayerName =
     | (typeof LEVEL_ONE_LAYER_NAMES)['decorationFront']
     | (typeof LEVEL_ONE_LAYER_NAMES)['collision'];
 
+// Allow falling through Tiled gap kill-zones that extend below the map canvas.
+const TILED_WORLD_BOTTOM_PADDING = 1200;
+// Legacy prototype bounds preserved while fallback mode remains available.
+const FALLBACK_WORLD_BOUNDS_Y = -200;
+const FALLBACK_WORLD_BOUNDS_EXTRA_HEIGHT = 2200;
+
+function isCollidableTilemapLayer(
+    layer: Phaser.Tilemaps.TilemapLayer | Phaser.Tilemaps.TilemapGPULayer,
+): layer is Phaser.Tilemaps.TilemapLayer {
+    return 'setCollisionByExclusion' in layer;
+}
+
 export class LevelOne extends Scene {
     private _input!:     InputController;
     private _mobile!:    MobileControls;
@@ -54,6 +66,7 @@ export class LevelOne extends Scene {
     private _spawnY = WORLD_HEIGHT - GROUND_HEIGHT - (PLAYER_HEIGHT * PLAYER_SPRITE_SCALE) / 2;
     private _worldWidth = WORLD_WIDTH;
     private _worldHeight = WORLD_HEIGHT;
+    private _usingPrototypeFallback = false;
 
     private _pauseBg!:    Phaser.GameObjects.Rectangle;
     private _pauseTitle!: Phaser.GameObjects.Text;
@@ -84,6 +97,7 @@ export class LevelOne extends Scene {
         this._prevJump  = false;
         this._prevPause = false;
         this._activeAnimState = undefined;
+        this._usingPrototypeFallback = false;
 
         // ── Input ────────────────────────────────────────────────────────────
         this._input  = new InputController();
@@ -155,7 +169,9 @@ export class LevelOne extends Scene {
         this._updateMovementAnimation();
 
         // ── Kill zone (prototype fallback only) ───────────────────────────────
-        if (this._player.y > KILL_ZONE_Y && !this._isHurt) this._enterHurtState();
+        if (this._usingPrototypeFallback && this._player.y > KILL_ZONE_Y && !this._isHurt) {
+            this._enterHurtState();
+        }
     }
 
     // ── Private helpers ───────────────────────────────────────────────────────
@@ -186,7 +202,7 @@ export class LevelOne extends Scene {
             collision.setVisible(false);
             decorationFront.setDepth(15);
 
-            if (!('setCollisionByExclusion' in collision)) {
+            if (!isCollidableTilemapLayer(collision)) {
                 throw new LevelMapValidationError('collision layer does not support arcade collision setup');
             }
             collision.setCollisionByExclusion([-1]);
@@ -196,7 +212,8 @@ export class LevelOne extends Scene {
             this._spawnX = mapData.playerSpawn.x;
             this._spawnY = mapData.playerSpawn.y;
 
-            this.physics.world.setBounds(0, 0, this._worldWidth, this._worldHeight + 1200);
+            // Keep extra vertical space so Tiled kill-zones can extend below map height.
+            this.physics.world.setBounds(0, 0, this._worldWidth, this._worldHeight + TILED_WORLD_BOTTOM_PADDING);
 
             const goal = this.physics.add.staticImage(
                 mapData.levelGoal.x + mapData.levelGoal.width / 2,
@@ -221,7 +238,7 @@ export class LevelOne extends Scene {
                 this._player.height - this._character.collisionHeight,
             );
 
-            this.physics.add.collider(this._player, collision as Phaser.Tilemaps.TilemapLayer);
+            this.physics.add.collider(this._player, collision);
             this.physics.add.overlap(this._player, goal, () => {
                 if (!this._levelDone) this._completeLevel();
             });
@@ -305,8 +322,10 @@ export class LevelOne extends Scene {
         this._spawnY = WORLD_HEIGHT - GROUND_HEIGHT - (PLAYER_HEIGHT * PLAYER_SPRITE_SCALE) / 2;
         this._worldWidth = WORLD_WIDTH;
         this._worldHeight = WORLD_HEIGHT;
+        this._usingPrototypeFallback = true;
 
-        this.physics.world.setBounds(0, -200, WORLD_WIDTH, WORLD_HEIGHT + 2200);
+        // Keep large fallback bounds so legacy kill-zone behavior mirrors the prototype level.
+        this.physics.world.setBounds(0, FALLBACK_WORLD_BOUNDS_Y, WORLD_WIDTH, WORLD_HEIGHT + FALLBACK_WORLD_BOUNDS_EXTRA_HEIGHT);
 
         const ground = this.physics.add.staticImage(
             GROUND_WIDTH / 2, GROUND_Y, ASSET_KEYS.pixel,
