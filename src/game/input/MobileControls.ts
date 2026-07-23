@@ -3,6 +3,7 @@ import { InputController } from './InputController';
 interface BtnCfg {
     label:      string;
     positionCss: string;
+    dataTestId: string;
     onDown:     () => void;
     onUp:       () => void;
 }
@@ -27,31 +28,39 @@ export class MobileControls {
             userSelect:     'none',
             webkitUserSelect: 'none',
         } satisfies Partial<CSSStyleDeclaration>);
+        this._root.dataset.testid = 'mobile-controls-root';
+        if (document.body.classList.contains('standalone-mode')) {
+            this._root.dataset.standalone = 'true';
+        }
         parent.appendChild(this._root);
 
         // ── Buttons ──────────────────────────────────────────────────────────
         const btns: BtnCfg[] = [
             {
                 label: '◀',
-                positionCss: 'left:16px;bottom:24px',
+                positionCss: 'left:max(16px, env(safe-area-inset-left));bottom:max(24px, env(safe-area-inset-bottom))',
+                dataTestId: 'mobile-left',
                 onDown: () => input.setLeft(true),
                 onUp:   () => input.setLeft(false),
             },
             {
                 label: '▶',
-                positionCss: 'left:88px;bottom:24px',
+                positionCss: 'left:calc(max(16px, env(safe-area-inset-left)) + 72px);bottom:max(24px, env(safe-area-inset-bottom))',
+                dataTestId: 'mobile-right',
                 onDown: () => input.setRight(true),
                 onUp:   () => input.setRight(false),
             },
             {
                 label: '▲',
-                positionCss: 'right:16px;bottom:24px',
+                positionCss: 'right:max(16px, env(safe-area-inset-right));bottom:max(24px, env(safe-area-inset-bottom))',
+                dataTestId: 'mobile-jump',
                 onDown: () => input.setJump(true),
                 onUp:   () => input.setJump(false),
             },
             {
                 label: '⏸',
-                positionCss: 'right:100px;bottom:80px',
+                positionCss: 'right:calc(max(16px, env(safe-area-inset-right)) + 84px);bottom:calc(max(24px, env(safe-area-inset-bottom)) + 56px)',
+                dataTestId: 'mobile-pause',
                 onDown: () => input.setPause(true),
                 onUp:   () => input.setPause(false),
             },
@@ -78,6 +87,7 @@ export class MobileControls {
             'pointer-events:auto',
             'padding:24px',
         ].join(';');
+        this._warning.dataset.testid = 'portrait-warning';
         this._warning.innerHTML =
             '<div style="font-size:48px;margin-bottom:16px">📱</div>' +
             '<p style="margin:0">Please rotate your device<br>to <strong>landscape</strong> to play.</p>';
@@ -92,6 +102,7 @@ export class MobileControls {
     private _makeBtn(cfg: BtnCfg): HTMLButtonElement {
         const btn = document.createElement('button');
         btn.textContent = cfg.label;
+        btn.dataset.testid = cfg.dataTestId;
         btn.style.cssText = [
             'position:fixed',
             'width:64px', 'height:64px',
