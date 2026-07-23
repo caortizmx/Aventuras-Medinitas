@@ -43,6 +43,8 @@ export class Enemy extends Physics.Arcade.Sprite {
         body.setImmovable(false);
         body.setBounce(0, 0);
         body.setMaxVelocity(220, 900);
+        // Keep collision shape fixed to gameplay dimensions even if sprite display
+        // size or frame art changes, so patrol collisions stay stable.
         body.setSize(DEFAULT_ENEMY_SIZE.width, DEFAULT_ENEMY_SIZE.height);
         body.setOffset(
             (this.width - DEFAULT_ENEMY_SIZE.width) / 2,

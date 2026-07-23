@@ -58,6 +58,7 @@ import { recordLevelResult } from '../system/SaveSystem';
 import { PRESENTATION_ANIMATION_KEYS } from '../constants/presentationAnimationKeys';
 
 type SpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+type StaticSpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithStaticBody;
 type DynamicBody = Phaser.Physics.Arcade.Body;
 
 type TileLayerName =
@@ -72,7 +73,7 @@ interface CheckpointMarker {
     id: string;
     x: number;
     y: number;
-    sprite: SpriteWithBody;
+    sprite: StaticSpriteWithBody;
     activated: boolean;
 }
 
@@ -97,6 +98,12 @@ const CHECKPOINT_DISPLAY_HEIGHT = 44;
 const COLLECTIBLE_BODY_SIZE = 20;
 const COLLECTIBLE_DISPLAY_SIZE = 24;
 const RUN_DUST_INTERVAL_MS = 130;
+const CAMERA_DEADZONE_WIDTH_RATIO = 0.18;
+const CAMERA_DEADZONE_HEIGHT_RATIO = 0.1;
+const CAMERA_INTRO_ZOOM = 1.02;
+const GOAL_CELEBRATION_ZOOM = 1.05;
+const MIN_CAMERA_DEADZONE_SIZE = 1;
+const HURT_FLASH_DURATION_MS = 120;
 
 // ─── Parallax backdrop (art-free depth cue, see art bible §7 first-pass polish) ──
 const SKY_TOP_COLOR = 0xbfe3f7;
@@ -156,7 +163,7 @@ export class LevelOne extends Scene {
     private _enemies: Enemy[] = [];
     private _checkpoints: CheckpointMarker[] = [];
     private _activeCheckpoint?: RespawnCandidate;
-    private _goalSprite?: SpriteWithBody;
+    private _goalSprite?: StaticSpriteWithBody;
 
     private _isPaused  = false;
     private _levelDone = false;
@@ -241,9 +248,11 @@ export class LevelOne extends Scene {
 
         this._buildParallaxBackdrop();
 
+        const deadzoneWidth = this._calculateDeadzoneDimension(GAME_WIDTH, CAMERA_DEADZONE_WIDTH_RATIO);
+        const deadzoneHeight = this._calculateDeadzoneDimension(GAME_HEIGHT, CAMERA_DEADZONE_HEIGHT_RATIO);
         this.cameras.main.setBounds(0, 0, this._worldWidth, this._worldHeight);
-        this.cameras.main.setDeadzone(GAME_WIDTH * 0.18, GAME_HEIGHT * 0.1);
-        this.cameras.main.setZoom(1.02);
+        this.cameras.main.setDeadzone(deadzoneWidth, deadzoneHeight);
+        this.cameras.main.setZoom(CAMERA_INTRO_ZOOM);
         this.cameras.main.startFollow(
             this._player, false, CAMERA_LERP_X, CAMERA_LERP_Y,
         );
@@ -376,23 +385,16 @@ export class LevelOne extends Scene {
 
             this.physics.world.setBounds(0, 0, this._worldWidth, this._worldHeight + TILED_WORLD_BOTTOM_PADDING);
 
-            const goal = this.physics.add.sprite(
+            const goal = this.physics.add.staticSprite(
                 mapData.levelGoal.x + mapData.levelGoal.width / 2,
                 mapData.levelGoal.y + mapData.levelGoal.height / 2,
                 ASSET_KEYS.goal,
             );
             goal
                 .setDisplaySize(mapData.levelGoal.width, mapData.levelGoal.height)
-                .setImmovable(true)
+                .setBodySize(mapData.levelGoal.width, mapData.levelGoal.height, true)
+                .refreshBody()
                 .play(PRESENTATION_ANIMATION_KEYS.goalIdle, true);
-            const goalBody = goal.body as DynamicBody;
-            goalBody.setAllowGravity(false);
-            goalBody.moves = false;
-            goalBody.setSize(mapData.levelGoal.width, mapData.levelGoal.height);
-            goalBody.setOffset(
-                (goal.width - mapData.levelGoal.width) / 2,
-                (goal.height - mapData.levelGoal.height) / 2,
-            );
             this._goalSprite = goal;
 
             this._player = this.physics.add.sprite(this._spawnX, this._spawnY, this._character.assetKey, 0);
@@ -460,7 +462,7 @@ export class LevelOne extends Scene {
 
     private _spawnCheckpoints(checkpoints: Array<{ id: string; x: number; y: number }>): void {
         for (const checkpointData of checkpoints) {
-            const marker = this.physics.add.sprite(
+            const marker = this.physics.add.staticSprite(
                 checkpointData.x,
                 checkpointData.y - 30,
                 ASSET_KEYS.checkpoint,
@@ -469,16 +471,9 @@ export class LevelOne extends Scene {
             marker
                 .setDisplaySize(CHECKPOINT_DISPLAY_WIDTH, CHECKPOINT_DISPLAY_HEIGHT)
                 .setDepth(20)
-                .setImmovable(true)
+                .setBodySize(CHECKPOINT_BODY_WIDTH, CHECKPOINT_BODY_HEIGHT, true)
+                .refreshBody()
                 .play(PRESENTATION_ANIMATION_KEYS.checkpointIdle, true);
-            const markerBody = marker.body as DynamicBody;
-            markerBody.setAllowGravity(false);
-            markerBody.moves = false;
-            markerBody.setSize(CHECKPOINT_BODY_WIDTH, CHECKPOINT_BODY_HEIGHT);
-            markerBody.setOffset(
-                (marker.width - CHECKPOINT_BODY_WIDTH) / 2,
-                marker.height - CHECKPOINT_BODY_HEIGHT,
-            );
             const checkpoint: CheckpointMarker = {
                 id: checkpointData.id,
                 x: checkpointData.x,
@@ -784,30 +779,21 @@ export class LevelOne extends Scene {
         this._collectiblesTotal = spawns.length;
         this._refreshCollectiblesUI();
 
-        const collectibles = this.physics.add.group({
-            immovable: true,
-            allowGravity: false,
-        });
+        const collectibles = this.physics.add.staticGroup();
 
         for (const spawn of spawns) {
-            const collectible = this.physics.add.sprite(spawn.x, spawn.y, ASSET_KEYS.collectible, 0);
+            const collectible = this.physics.add.staticSprite(spawn.x, spawn.y, ASSET_KEYS.collectible, 0);
             collectible
                 .setDisplaySize(COLLECTIBLE_DISPLAY_SIZE, COLLECTIBLE_DISPLAY_SIZE)
                 .setData('collectibleId', spawn.id)
+                .setBodySize(COLLECTIBLE_BODY_SIZE, COLLECTIBLE_BODY_SIZE, true)
+                .refreshBody()
                 .play(PRESENTATION_ANIMATION_KEYS.collectiblePulse, true);
-            const collectibleBody = collectible.body as DynamicBody;
-            collectibleBody.setAllowGravity(false);
-            collectibleBody.moves = false;
-            collectibleBody.setSize(COLLECTIBLE_BODY_SIZE, COLLECTIBLE_BODY_SIZE);
-            collectibleBody.setOffset(
-                (collectible.width - COLLECTIBLE_BODY_SIZE) / 2,
-                (collectible.height - COLLECTIBLE_BODY_SIZE) / 2,
-            );
             collectibles.add(collectible, true);
         }
 
         this.physics.add.overlap(this._player, collectibles, (_playerSprite, collectibleBody) => {
-            const collectible = collectibleBody as SpriteWithBody;
+            const collectible = collectibleBody as StaticSpriteWithBody;
             const collectibleId = collectible.getData('collectibleId');
             if (typeof collectibleId !== 'string') {
                 return;
@@ -868,18 +854,11 @@ export class LevelOne extends Scene {
             platforms.add(p, true);
         }
 
-        const goal = this.physics.add.sprite(GOAL_X, GOAL_Y, ASSET_KEYS.goal, 0);
+        const goal = this.physics.add.staticSprite(GOAL_X, GOAL_Y, ASSET_KEYS.goal, 0);
         goal.setDisplaySize(GOAL_WIDTH, GOAL_HEIGHT)
-            .setImmovable(true)
+            .setBodySize(GOAL_WIDTH, GOAL_HEIGHT, true)
+            .refreshBody()
             .play(PRESENTATION_ANIMATION_KEYS.goalIdle, true);
-        const goalBody = goal.body as DynamicBody;
-        goalBody.setAllowGravity(false);
-        goalBody.moves = false;
-        goalBody.setSize(GOAL_WIDTH, GOAL_HEIGHT);
-        goalBody.setOffset(
-            (goal.width - GOAL_WIDTH) / 2,
-            (goal.height - GOAL_HEIGHT) / 2,
-        );
         this._goalSprite = goal;
 
         this._player = this.physics.add.sprite(this._spawnX, this._spawnY, this._character.assetKey, 0);
@@ -1221,7 +1200,7 @@ export class LevelOne extends Scene {
         const body = this._player.body as DynamicBody;
         const speedX = Math.abs(body.velocity.x);
         const grounded = body.blocked.down || body.touching.down;
-        if (!grounded || speedX <= PLAYER_RUN_ANIMATION_THRESHOLD || this.time.now < this._runDustAllowedAtMs) {
+        if (!this._shouldSpawnRunDust(grounded, speedX)) {
             return;
         }
 
@@ -1230,16 +1209,26 @@ export class LevelOne extends Scene {
         this._spawnDustPuff(this._player.x + directionOffset, body.bottom - 1);
     }
 
+    private _shouldSpawnRunDust(grounded: boolean, speedX: number): boolean {
+        if (!grounded) {
+            return false;
+        }
+        if (speedX <= PLAYER_RUN_ANIMATION_THRESHOLD) {
+            return false;
+        }
+        return this.time.now >= this._runDustAllowedAtMs;
+    }
+
     private _playHurtFeedback(): void {
         this.cameras.main.shake(90, 0.004);
         this.cameras.main.flash(90, 255, 100, 100, false);
         this._player.setTint(0xffd4d4);
-        this.time.delayedCall(120, () => {
+        this.time.delayedCall(HURT_FLASH_DURATION_MS, () => {
             this._player.clearTint();
         });
     }
 
-    private _playCollectiblePickupFeedback(collectible: SpriteWithBody): void {
+    private _playCollectiblePickupFeedback(collectible: StaticSpriteWithBody): void {
         const glow = this.add.sprite(collectible.x, collectible.y, ASSET_KEYS.collectible, 0)
             .setDisplaySize(COLLECTIBLE_DISPLAY_SIZE, COLLECTIBLE_DISPLAY_SIZE)
             .setDepth((this._player.depth ?? 0) + 1);
@@ -1259,7 +1248,7 @@ export class LevelOne extends Scene {
         this.cameras.main.shake(180, 0.005);
         this.tweens.add({
             targets: this.cameras.main,
-            zoom: 1.05,
+            zoom: GOAL_CELEBRATION_ZOOM,
             yoyo: true,
             duration: 420,
             ease: 'Sine.easeInOut',
@@ -1275,6 +1264,14 @@ export class LevelOne extends Scene {
             });
         }
         this._spawnDustPuff(this._player.x, (this._player.body as DynamicBody).bottom);
+    }
+
+    private _calculateDeadzoneDimension(dimension: number, ratio: number): number {
+        return Phaser.Math.Clamp(
+            dimension * ratio,
+            MIN_CAMERA_DEADZONE_SIZE,
+            dimension,
+        );
     }
 
     private _updateMovementAnimation(): void {

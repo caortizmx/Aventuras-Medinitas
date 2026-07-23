@@ -7,6 +7,11 @@ export interface PresentationSpritesheetSpec {
     frameHeight: number;
 }
 
+export interface PresentationTextureSpec {
+    key: string;
+    filePath: string;
+}
+
 export const PRESENTATION_SPRITESHEETS = {
     enemy: {
         key: ASSET_KEYS.enemy,
@@ -57,7 +62,7 @@ export const PRESENTATION_TEXTURES = {
         key: ASSET_KEYS.uiHudPanel,
         filePath: 'ui/hud-panel.png',
     },
-} as const;
+} as const satisfies Record<string, PresentationTextureSpec>;
 
 export const REQUIRED_PRESENTATION_ASSET_FILES = [
     ...Object.values(PRESENTATION_SPRITESHEETS).map(({ filePath }) => filePath),

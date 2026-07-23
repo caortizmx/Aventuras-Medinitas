@@ -51,11 +51,11 @@ function buildCollectibleSheet(scene: Phaser.Scene): void {
     const frameCount = 6;
     const sheet = createCanvasTexture(scene, spec.key, spec.frameWidth * frameCount, spec.frameHeight);
     const ctx = sheet.getContext();
-    const scales = [0.78, 0.9, 1, 1, 0.9, 0.78] as const;
+    const COLLECTIBLE_PULSE_SCALES = [0.78, 0.9, 1, 1, 0.9, 0.78] as const;
 
     for (let i = 0; i < frameCount; i += 1) {
         const x = i * spec.frameWidth;
-        const r = 8 * scales[i];
+        const r = 8 * COLLECTIBLE_PULSE_SCALES[i];
         ctx.fillStyle = '#f1c40f';
         ctx.beginPath();
         ctx.arc(x + 12, 12, r, 0, Math.PI * 2);
@@ -175,41 +175,32 @@ function buildUiTextures(scene: Phaser.Scene): void {
     hud.refresh();
 }
 
-function ensureSpritesheet(scene: Phaser.Scene, key: string): void {
-    const spec = Object.values(PRESENTATION_SPRITESHEETS).find((item) => item.key === key);
-    if (!spec) {
-        return;
-    }
+const SPRITESHEET_BUILDERS: Readonly<Record<string, (scene: Phaser.Scene) => void>> = {
+    [PRESENTATION_SPRITESHEETS.enemy.key]: buildEnemySheet,
+    [PRESENTATION_SPRITESHEETS.collectible.key]: buildCollectibleSheet,
+    [PRESENTATION_SPRITESHEETS.checkpoint.key]: buildCheckpointSheet,
+    [PRESENTATION_SPRITESHEETS.goal.key]: buildGoalSheet,
+};
 
-    switch (key) {
-        case PRESENTATION_SPRITESHEETS.enemy.key:
-            buildEnemySheet(scene);
-            return;
-        case PRESENTATION_SPRITESHEETS.collectible.key:
-            buildCollectibleSheet(scene);
-            return;
-        case PRESENTATION_SPRITESHEETS.checkpoint.key:
-            buildCheckpointSheet(scene);
-            return;
-        case PRESENTATION_SPRITESHEETS.goal.key:
-            buildGoalSheet(scene);
-            return;
+const TEXTURE_BUILDERS: Readonly<Record<string, (scene: Phaser.Scene) => void>> = {
+    [PRESENTATION_TEXTURES.terrainGround.key]: buildGroundTexture,
+    [PRESENTATION_TEXTURES.terrainPlatform.key]: buildPlatformTexture,
+    [PRESENTATION_TEXTURES.uiOverlay.key]: buildUiTextures,
+    [PRESENTATION_TEXTURES.uiPanel.key]: buildUiTextures,
+    [PRESENTATION_TEXTURES.uiHudPanel.key]: buildUiTextures,
+};
+
+function ensureSpritesheet(scene: Phaser.Scene, key: string): void {
+    const builder = SPRITESHEET_BUILDERS[key];
+    if (builder) {
+        builder(scene);
     }
 }
 
 function ensureTexture(scene: Phaser.Scene, key: string): void {
-    switch (key) {
-        case PRESENTATION_TEXTURES.terrainGround.key:
-            buildGroundTexture(scene);
-            return;
-        case PRESENTATION_TEXTURES.terrainPlatform.key:
-            buildPlatformTexture(scene);
-            return;
-        case PRESENTATION_TEXTURES.uiOverlay.key:
-        case PRESENTATION_TEXTURES.uiPanel.key:
-        case PRESENTATION_TEXTURES.uiHudPanel.key:
-            buildUiTextures(scene);
-            return;
+    const builder = TEXTURE_BUILDERS[key];
+    if (builder) {
+        builder(scene);
     }
 }
 

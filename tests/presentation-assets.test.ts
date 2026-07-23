@@ -7,6 +7,7 @@ import {
 import { PRESENTATION_ANIMATION_KEYS } from '../src/game/constants/presentationAnimationKeys';
 import {
     getPresentationAnimationDefinitions,
+    PresentationAnimationRegistrar,
     registerPresentationAnimations,
 } from '../src/game/animations/presentationAnimations';
 
@@ -48,20 +49,24 @@ describe('presentation animations', () => {
         const existing = new Set<string>();
         let createCalls = 0;
 
-        const registrar = {
+        const registrar: PresentationAnimationRegistrar = {
             exists: (key: string) => existing.has(key),
-            create: ({ key }: { key: string }) => {
+            create: ({ key }) => {
                 createCalls += 1;
-                existing.add(key);
+                if (key) {
+                    existing.add(key);
+                }
             },
-            generateFrameNumbers: (textureKey: string, cfg: { start: number; end: number }) => {
-                void textureKey;
-                return Array.from({ length: cfg.end - cfg.start + 1 }, (_, i) => cfg.start + i);
+            generateFrameNumbers: (_textureKey: string, cfg: { start: number; end: number }) => {
+                return Array.from({ length: cfg.end - cfg.start + 1 }, (_, i) => ({
+                    key: `frame-${cfg.start + i}`,
+                    frame: cfg.start + i,
+                }));
             },
         };
 
-        const firstPass = registerPresentationAnimations(registrar as never);
-        const secondPass = registerPresentationAnimations(registrar as never);
+        const firstPass = registerPresentationAnimations(registrar);
+        const secondPass = registerPresentationAnimations(registrar);
 
         expect(firstPass.length).toBeGreaterThan(0);
         expect(secondPass).toHaveLength(0);
