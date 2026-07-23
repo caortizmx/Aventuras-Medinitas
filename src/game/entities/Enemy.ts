@@ -1,4 +1,4 @@
-import { Scene } from 'phaser';
+import { Physics, Scene } from 'phaser';
 import { ASSET_KEYS } from '../constants/assetKeys';
 
 export interface EnemySpawnConfig {
@@ -16,7 +16,7 @@ export interface EnemyGroundProbe {
 
 const DEFAULT_ENEMY_SIZE = { width: 42, height: 28 };
 
-export class Enemy extends Phaser.Physics.Arcade.Sprite {
+export class Enemy extends Physics.Arcade.Sprite {
     private _direction: 1 | -1 = -1;
     private _alive = true;
     private readonly _groundProbe: EnemyGroundProbe;
@@ -37,7 +37,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
             .setCollideWorldBounds(true)
             .setDepth(6);
 
-        const body = this.body as Phaser.Physics.Arcade.Body;
+        const body = this.body as Physics.Arcade.Body;
         body.setAllowGravity(true);
         body.setImmovable(false);
         body.setBounce(0, 0);
@@ -50,7 +50,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
             return;
         }
 
-        const body = this.body as Phaser.Physics.Arcade.Body;
+        const body = this.body as Physics.Arcade.Body;
         body.setVelocityX(this._spawn.patrolSpeed * this._direction);
 
         if (this.x <= this._spawn.patrolLeft) {
