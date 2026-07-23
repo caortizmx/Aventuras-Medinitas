@@ -185,7 +185,6 @@ function ensureFallbackTexture(
     } else {
         throw new Error(`Unsupported fallback texture source for "${key}".`);
     }
-    scene.textures.remove(sheetTexture.key);
 }
 
 export function ensureCharacterFallbackTextures(

@@ -1,7 +1,16 @@
 export const ASSET_KEYS = {
     background: 'background',
-    logo:       'logo',
-    pixel:      'px',
+    logo: 'logo',
+    pixel: 'px',
     levelOneMap: 'level-one-map',
     levelOneTiles: 'level-one-tiles',
+    enemy: 'enemy-sheet',
+    collectible: 'collectible-sheet',
+    checkpoint: 'checkpoint-sheet',
+    goal: 'goal-sheet',
+    terrainGround: 'terrain-ground',
+    terrainPlatform: 'terrain-platform',
+    uiOverlay: 'ui-overlay',
+    uiPanel: 'ui-panel',
+    uiHudPanel: 'ui-hud-panel',
 } as const;
