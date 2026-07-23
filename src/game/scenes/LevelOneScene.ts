@@ -153,8 +153,8 @@ export class LevelOne extends Scene {
     private _levelDone = false;
     private _prevJump  = false;
     private _prevPause = false;
-    private _lastGroundedAtMs = -Infinity;
-    private _jumpBufferedUntilMs = -Infinity;
+    private _lastGroundedTimeMs = -Infinity;
+    private _jumpBufferExpiresAtMs = -Infinity;
     private _activeAnimState?: CharacterAnimationState;
 
     private _playerShadow!: Phaser.GameObjects.Ellipse;
@@ -183,8 +183,8 @@ export class LevelOne extends Scene {
         this._levelDone = false;
         this._prevJump  = false;
         this._prevPause = false;
-        this._lastGroundedAtMs = -Infinity;
-        this._jumpBufferedUntilMs = -Infinity;
+        this._lastGroundedTimeMs = -Infinity;
+        this._jumpBufferExpiresAtMs = -Infinity;
         this._activeAnimState = undefined;
         this._usingPrototypeFallback = false;
         this._playerState = 'normal';
@@ -286,7 +286,7 @@ export class LevelOne extends Scene {
         const now = this.time.now;
 
         if (grounded) {
-            this._lastGroundedAtMs = now;
+            this._lastGroundedTimeMs = now;
         }
 
         // Jump buffering: a press just before landing is remembered for a
@@ -295,17 +295,17 @@ export class LevelOne extends Scene {
         // prevent the strict single-frame "grounded" check from swallowing
         // jump presses, which is what made jumping feel unresponsive/stuck.
         if (state.jump && !this._prevJump) {
-            this._jumpBufferedUntilMs = now + JUMP_BUFFER_MS;
+            this._jumpBufferExpiresAtMs = now + JUMP_BUFFER_MS;
         }
 
-        const jumpBuffered = now <= this._jumpBufferedUntilMs;
-        const withinCoyoteTime = now - this._lastGroundedAtMs <= JUMP_COYOTE_TIME_MS;
+        const jumpBuffered = now <= this._jumpBufferExpiresAtMs;
+        const coyoteTimeActive = now - this._lastGroundedTimeMs <= JUMP_COYOTE_TIME_MS;
 
-        if (jumpBuffered && withinCoyoteTime) {
+        if (jumpBuffered && coyoteTimeActive) {
             this._player.setVelocityY(this._character.jumpVelocity);
             this._playSquashStretch(1.25, 0.78, 90);
-            this._jumpBufferedUntilMs = -Infinity;
-            this._lastGroundedAtMs = -Infinity;
+            this._jumpBufferExpiresAtMs = -Infinity;
+            this._lastGroundedTimeMs = -Infinity;
         }
         this._prevJump = state.jump;
         this._updateMovementAnimation();
@@ -515,7 +515,7 @@ export class LevelOne extends Scene {
 
         this._input.resetAll();
         this._prevJump = false;
-        this._jumpBufferedUntilMs = -Infinity;
+        this._jumpBufferExpiresAtMs = -Infinity;
         this._playerState = 'hurt';
         this._playCharacterAnimation('hurt');
 
@@ -570,7 +570,7 @@ export class LevelOne extends Scene {
         this._player.setAlpha(1);
         this._input.resetAll();
         this._prevJump = false;
-        this._jumpBufferedUntilMs = -Infinity;
+        this._jumpBufferExpiresAtMs = -Infinity;
         this._player.body.moves = true;
         this._playCharacterAnimation('idle');
     }
@@ -851,7 +851,7 @@ export class LevelOne extends Scene {
         this._isPaused = !this._isPaused;
         this._input.resetAll();
         this._prevJump = false;
-        this._jumpBufferedUntilMs = -Infinity;
+        this._jumpBufferExpiresAtMs = -Infinity;
 
         if (this._isPaused) {
             this.physics.pause();
