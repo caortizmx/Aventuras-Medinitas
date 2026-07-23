@@ -22,8 +22,7 @@ import {
     WORLD_HEIGHT, WORLD_WIDTH,
 } from '../constants/gameValues';
 import { SCENE_MAIN_MENU } from '../constants/sceneKeys';
-import { CharacterConfig, findCharacterById, getDefaultCharacter, DEFAULT_CHARACTER_ID } from '../data/characters';
-import { getCharacterAssetKey } from '../constants/characterSpriteConfig';
+import { CharacterConfig, findCharacterById, getDefaultCharacter } from '../data/characters';
 import { ASSET_KEYS } from '../constants/assetKeys';
 
 type SpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
@@ -117,10 +116,7 @@ export class LevelOne extends Scene {
         goal.setDisplaySize(GOAL_WIDTH, GOAL_HEIGHT).setTint(GOAL_COLOR).refreshBody();
 
         // ── Player (appearance driven by character config) ────────────────────
-        const spriteKey = this.textures.exists(this._character.assetKey)
-            ? this._character.assetKey
-            : getCharacterAssetKey(DEFAULT_CHARACTER_ID);
-        this._player = this.physics.add.sprite(SPAWN_X, this._spawnY, spriteKey, 0);
+        this._player = this.physics.add.sprite(SPAWN_X, this._spawnY, this._character.assetKey, 0);
         this._player
             .setDisplaySize(PLAYER_WIDTH * PLAYER_SPRITE_SCALE, PLAYER_HEIGHT * PLAYER_SPRITE_SCALE)
             .setCollideWorldBounds(true);

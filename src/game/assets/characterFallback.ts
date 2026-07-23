@@ -19,7 +19,7 @@ function drawFallbackFrame(
 ): void {
     const { frameWidth, frameHeight } = CHARACTER_SPRITESHEET_SPEC;
 
-    ctx.fillStyle = '#dfe6f8';
+    ctx.fillStyle = CHARACTER_FALLBACK_CONFIG.backgroundColor;
     ctx.fillRect(frameX, 0, frameWidth, frameHeight);
 
     ctx.fillStyle = characterColorHex;
@@ -38,7 +38,8 @@ function drawFallbackFrame(
 }
 
 function createFallbackSheet(scene: Phaser.Scene, textureKey: string, characterId: CharacterId): Phaser.Textures.CanvasTexture {
-    const { frameWidth, frameHeight, totalFrames } = CHARACTER_SPRITESHEET_SPEC;
+    const { frameWidth, frameHeight, columns, rows } = CHARACTER_SPRITESHEET_SPEC;
+    const totalFrames = columns * rows;
     const sourceTextureKey = `${textureKey}__fallback-source`;
     if (scene.textures.exists(sourceTextureKey)) {
         scene.textures.remove(sourceTextureKey);

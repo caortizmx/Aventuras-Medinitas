@@ -29,7 +29,6 @@ export const CHARACTER_SPRITESHEET_SPEC = {
     frameHeight: 48,
     columns:     22,
     rows:        1,
-    totalFrames: 22,
     sharedLayoutForAllCharacters: true,
     animations: {
         idle:      { start: 0,  end: 3,  frames: 4, frameRate: 6,  repeat: -1 },
@@ -44,6 +43,7 @@ export const CHARACTER_SPRITESHEET_SPEC = {
 export const CHARACTER_FALLBACK_CONFIG = {
     textureWidth:  CHARACTER_SPRITESHEET_SPEC.frameWidth * CHARACTER_SPRITESHEET_SPEC.columns,
     textureHeight: CHARACTER_SPRITESHEET_SPEC.frameHeight * CHARACTER_SPRITESHEET_SPEC.rows,
+    backgroundColor: '#dfe6f8',
     outlineColor:  '#10131d',
     eyeColor:      '#ffffff',
     shadowColor:   '#00000033',
