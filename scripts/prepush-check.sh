@@ -5,6 +5,7 @@ set -euo pipefail
 REMOTE="origin"
 TARGET_BRANCH="main"
 RUN_BUILD=false
+USAGE="Usage: npm run prepush:check -- [--build] [--target <branch>] [--remote <remote>]"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -15,7 +16,7 @@ while [[ $# -gt 0 ]]; do
     --target)
       if [[ -z "${2:-}" || "${2:-}" == --* ]]; then
         echo "Error: --target requires a branch name"
-        echo "Usage: npm run prepush:check -- [--build] [--target <branch>] [--remote <remote>]"
+        echo "$USAGE"
         exit 1
       fi
       TARGET_BRANCH="$2"
@@ -24,7 +25,7 @@ while [[ $# -gt 0 ]]; do
     --remote)
       if [[ -z "${2:-}" || "${2:-}" == --* ]]; then
         echo "Error: --remote requires a remote name"
-        echo "Usage: npm run prepush:check -- [--build] [--target <branch>] [--remote <remote>]"
+        echo "$USAGE"
         exit 1
       fi
       REMOTE="$2"
@@ -32,7 +33,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     *)
       echo "Unknown argument: $1"
-      echo "Usage: npm run prepush:check -- [--build] [--target <branch>] [--remote <remote>]"
+      echo "$USAGE"
       exit 1
       ;;
   esac

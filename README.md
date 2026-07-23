@@ -49,7 +49,7 @@ Optional remote override (default is `origin`):
 npm run prepush:check -- --remote upstream
 ```
 
-This helper enforces the workflow to reduce GH013 branch protection/ruleset failures (default remote is `origin`, override with `--remote <remote>`):
+This helper enforces the workflow to reduce GH013 branch protection/ruleset failures:
 
 - Sync refs with `git fetch --prune origin`
 - Unshallow when needed with `git fetch --unshallow <remote>`
