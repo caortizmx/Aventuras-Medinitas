@@ -114,6 +114,7 @@ export class LevelOne extends Scene {
     private _usingPrototypeFallback = false;
 
     private _pauseBg!:    Phaser.GameObjects.Rectangle;
+    private _pausePanel!: Phaser.GameObjects.Rectangle;
     private _pauseTitle!: Phaser.GameObjects.Text;
     private _pauseHint!:  Phaser.GameObjects.Text;
     private _goalBanner!: Phaser.GameObjects.Text;
@@ -132,6 +133,12 @@ export class LevelOne extends Scene {
     private _prevJump  = false;
     private _prevPause = false;
     private _activeAnimState?: CharacterAnimationState;
+
+    private _playerShadow!: Phaser.GameObjects.Ellipse;
+    private _playerBaseScaleX = 1;
+    private _playerBaseScaleY = 1;
+    private _wasGrounded = true;
+    private _squashTween?: Phaser.Tweens.Tween;
 
     private _playerState: PlayerGameplayState = 'normal';
     private _lives = PLAYER_INITIAL_LIVES;
@@ -167,6 +174,8 @@ export class LevelOne extends Scene {
         this._enemies = [];
         this._checkpoints = [];
         this._activeCheckpoint = undefined;
+        this._wasGrounded = true;
+        this._squashTween = undefined;
 
         this._input  = new InputController();
         this._mobile = new MobileControls(
@@ -193,11 +202,14 @@ export class LevelOne extends Scene {
             this._buildPrototypeFallbackLevel();
         }
 
+        this._buildParallaxBackdrop();
+
         this.cameras.main.setBounds(0, 0, this._worldWidth, this._worldHeight);
         this.cameras.main.startFollow(
             this._player, false, CAMERA_LERP_X, CAMERA_LERP_Y,
         );
         this._playCharacterAnimation('idle');
+        this._createPlayerShadow();
 
         this._buildUI();
         this._refreshLivesUI();
@@ -224,6 +236,9 @@ export class LevelOne extends Scene {
             this._player.setAlpha(Math.floor(this.time.now / 80) % 2 === 0 ? 0.45 : 1);
         }
 
+        this._updatePlayerShadow();
+        this._updateLandingFeedback();
+
         const state = this._input.getState();
         if (state.pause && !this._prevPause) this._togglePause();
         this._prevPause = state.pause;
@@ -245,6 +260,7 @@ export class LevelOne extends Scene {
         const grounded = this._player.body.blocked.down;
         if (state.jump && !this._prevJump && grounded) {
             this._player.setVelocityY(this._character.jumpVelocity);
+            this._playSquashStretch(1.25, 0.78, 90);
         }
         this._prevJump = state.jump;
         this._updateMovementAnimation();
@@ -796,6 +812,7 @@ export class LevelOne extends Scene {
         }
 
         this._pauseBg.setVisible(this._isPaused);
+        this._pausePanel.setVisible(this._isPaused);
         this._pauseTitle.setVisible(this._isPaused);
         this._pauseHint.setVisible(this._isPaused);
     }
@@ -831,6 +848,50 @@ export class LevelOne extends Scene {
         });
     }
 
+    /**
+     * Draws a cheap, art-free parallax backdrop: a soft sky gradient plus two
+     * rows of desaturated, low-contrast hill silhouettes scrolling slower
+     * than the foreground. This gives the level a sense of depth without
+     * requiring any new art assets, per the first-pass polish plan.
+     */
+    private _buildParallaxBackdrop(): void {
+        const width = this._worldWidth;
+        const horizonY = this._worldHeight * 0.62;
+
+        const sky = this.add.graphics().setDepth(-90).setScrollFactor(0.02, 0);
+        sky.fillGradientStyle(0xbfe3f7, 0xbfe3f7, 0xeaf6ff, 0xeaf6ff, 1);
+        sky.fillRect(0, 0, width, this._worldHeight);
+
+        this._drawHillRow(width, horizonY + 10, 220, 60, 0x9fd6c6, 0.45, -60, 0.25);
+        this._drawHillRow(width, horizonY + 30, 260, 80, 0x7dc9a0, 0.65, -40, 0.5);
+    }
+
+    /** Draws a single repeating row of soft rounded hill bumps used for parallax depth. */
+    private _drawHillRow(
+        worldWidth: number,
+        baseY: number,
+        bumpWidth: number,
+        bumpHeight: number,
+        color: number,
+        alpha: number,
+        depth: number,
+        scrollFactor: number,
+    ): void {
+        const graphics = this.add.graphics().setDepth(depth).setScrollFactor(scrollFactor, 0);
+        graphics.fillStyle(color, alpha);
+
+        // Solid base fills the area below the hill crests down to the world
+        // bottom, then overlapping circles bulge upward to form a simple,
+        // unambiguous rounded hill skyline (avoids arc-direction guesswork).
+        graphics.fillRect(0, baseY, worldWidth, this._worldHeight - baseY);
+
+        const bumpCount = Math.ceil(worldWidth / bumpWidth) + 2;
+        for (let i = 0; i < bumpCount; i += 1) {
+            const cx = -bumpWidth / 2 + i * bumpWidth;
+            graphics.fillEllipse(cx, baseY, bumpWidth, bumpHeight * 2);
+        }
+    }
+
     private _buildUI(): void {
         const depth = 100;
         const cx    = GAME_WIDTH / 2;
@@ -838,6 +899,11 @@ export class LevelOne extends Scene {
 
         this._pauseBg = this.add
             .rectangle(cx, cy, GAME_WIDTH, GAME_HEIGHT, 0x000000, 0.65)
+            .setScrollFactor(0).setDepth(depth).setVisible(false);
+
+        this._pausePanel = this.add
+            .rectangle(cx, cy, 360, 160, 0x1c2333, 0.92)
+            .setStrokeStyle(3, 0xffffff, 0.35)
             .setScrollFactor(0).setDepth(depth).setVisible(false);
 
         this._pauseTitle = this.add
@@ -865,6 +931,12 @@ export class LevelOne extends Scene {
                 strokeThickness: 6,
             })
             .setOrigin(0.5).setScrollFactor(0).setDepth(depth + 1).setVisible(false);
+
+        this.add
+            .rectangle(96, 46, 176, 76, 0x14182a, 0.55)
+            .setStrokeStyle(1, 0xffffff, 0.18)
+            .setOrigin(0.5)
+            .setScrollFactor(0).setDepth(depth - 1);
 
         this.add
             .text(12, 10, `gravity ${GRAVITY} px/s²`, {
@@ -914,6 +986,108 @@ export class LevelOne extends Scene {
                 align:      'right',
             })
             .setOrigin(1, 0).setScrollFactor(0).setDepth(depth);
+    }
+
+    /** Creates the soft ground-contact shadow used to ground the player visually. */
+    private _createPlayerShadow(): void {
+        this._playerBaseScaleX = this._player.scaleX;
+        this._playerBaseScaleY = this._player.scaleY;
+        this._playerShadow = this.add
+            .ellipse(this._player.x, this._player.y, this._player.displayWidth * 0.55, 10, 0x000000, 0.28)
+            .setDepth((this._player.depth ?? 0) - 1);
+    }
+
+    /**
+     * Projects a soft shadow ellipse from the player down onto the nearest
+     * ground/platform surface, shrinking and fading it the higher the
+     * player is above that surface. This is the cheapest available fix for
+     * placeholder characters looking like "floating squares".
+     */
+    private _updatePlayerShadow(): void {
+        if (!this._playerShadow) {
+            return;
+        }
+
+        const body = this._player.body as DynamicBody;
+        const feetY = body.bottom;
+        const groundY = this._findGroundYBelow(this._player.x, feetY);
+        const clearance = Math.max(0, groundY - feetY);
+        const maxClearance = 220;
+        const proximity = 1 - Math.min(clearance, maxClearance) / maxClearance;
+
+        this._playerShadow.setPosition(this._player.x, groundY);
+        this._playerShadow.setScale(0.6 + proximity * 0.4);
+        this._playerShadow.setAlpha(0.12 + proximity * 0.2);
+    }
+
+    /** Scans downward in fixed steps to find the nearest ground/platform surface below (x, startY). */
+    private _findGroundYBelow(x: number, startY: number): number {
+        const step = 8;
+        const maxDistance = 240;
+
+        for (let distance = 0; distance <= maxDistance; distance += step) {
+            const probeY = startY + distance;
+            if (this._hasGroundTileAt(x, probeY)) {
+                return probeY;
+            }
+        }
+
+        return startY + maxDistance;
+    }
+
+    /**
+     * Detects grounded/airborne transitions to trigger a landing squash and
+     * a small dust puff — cheap "juice" that reads as polish independent of
+     * final art.
+     */
+    private _updateLandingFeedback(): void {
+        const body = this._player.body as DynamicBody;
+        const grounded = body.blocked.down || body.touching.down;
+
+        if (grounded && !this._wasGrounded) {
+            this._playSquashStretch(0.8, 1.2, 110);
+            this._spawnDustPuff(this._player.x, body.bottom);
+        }
+
+        this._wasGrounded = grounded;
+    }
+
+    /** Briefly scales the player away from its base scale, then eases back — classic squash & stretch. */
+    private _playSquashStretch(scaleXFactor: number, scaleYFactor: number, durationMs: number): void {
+        this._squashTween?.stop();
+        this._player.setScale(
+            this._playerBaseScaleX * scaleXFactor,
+            this._playerBaseScaleY * scaleYFactor,
+        );
+        this._squashTween = this.tweens.add({
+            targets: this._player,
+            scaleX: this._playerBaseScaleX,
+            scaleY: this._playerBaseScaleY,
+            duration: durationMs,
+            ease: 'Sine.easeOut',
+        });
+    }
+
+    /** Spawns a handful of small fading/expanding circles at the player's feet on landing. */
+    private _spawnDustPuff(x: number, y: number): void {
+        const puffCount = 4;
+        for (let i = 0; i < puffCount; i += 1) {
+            const angle = Math.PI + (i / (puffCount - 1) - 0.5) * Math.PI * 0.8;
+            const puff = this.add
+                .circle(x, y, 4, 0xf3ead2, 0.55)
+                .setDepth((this._player.depth ?? 0) - 1);
+
+            this.tweens.add({
+                targets: puff,
+                x: x + Math.cos(angle) * 18,
+                y: y + Math.sin(angle) * 8,
+                scale: 2.2,
+                alpha: 0,
+                duration: 280,
+                ease: 'Sine.easeOut',
+                onComplete: () => puff.destroy(),
+            });
+        }
     }
 
     private _updateMovementAnimation(): void {

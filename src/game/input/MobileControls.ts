@@ -109,6 +109,7 @@ export class MobileControls {
             'border-radius:50%',
             'border:3px solid rgba(255,255,255,0.55)',
             'background:rgba(0,0,0,0.45)',
+            'box-shadow:0 4px 10px rgba(0,0,0,0.35)',
             'color:#fff',
             'font-size:26px',
             'pointer-events:auto',

@@ -1,5 +1,6 @@
 import { Physics, Scene } from 'phaser';
 import { ASSET_KEYS } from '../constants/assetKeys';
+import { ensureEnemyFallbackTexture } from '../assets/enemyFallback';
 
 export interface EnemySpawnConfig {
     x: number;
@@ -15,6 +16,8 @@ export interface EnemyGroundProbe {
 }
 
 const DEFAULT_ENEMY_SIZE = { width: 42, height: 28 };
+/** "Warm color = ground patrol threat" per the art bible enemy color-coding. */
+const DEFAULT_ENEMY_COLOR = 0xd6663f;
 
 export class Enemy extends Physics.Arcade.Sprite {
     private _direction: 1 | -1 = -1;
@@ -29,11 +32,12 @@ export class Enemy extends Physics.Arcade.Sprite {
     }
 
     spawn(): this {
+        const textureKey = ensureEnemyFallbackTexture(this.scene, DEFAULT_ENEMY_COLOR);
+        this.setTexture(textureKey);
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this
             .setDisplaySize(DEFAULT_ENEMY_SIZE.width, DEFAULT_ENEMY_SIZE.height)
-            .setTint(0x8e44ad)
             .setCollideWorldBounds(true)
             .setDepth(6);
 
