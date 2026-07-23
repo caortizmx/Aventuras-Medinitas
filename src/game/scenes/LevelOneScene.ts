@@ -1,4 +1,4 @@
-import { Scene } from 'phaser';
+import { Math as PhaserMath, Scene } from 'phaser';
 import { registerCharacterAnimations } from '../animations/characterAnimations';
 import { ensureCharacterFallbackTextures } from '../assets/characterFallback';
 import { getCharacterAnimationKey, CharacterAnimationState } from '../constants/animationKeys';
@@ -1271,7 +1271,7 @@ export class LevelOne extends Scene {
     }
 
     private _calculateDeadzoneDimension(dimension: number, ratio: number): number {
-        return Phaser.Math.Clamp(
+        return PhaserMath.Clamp(
             dimension * ratio,
             MIN_CAMERA_DEADZONE_SIZE,
             dimension,
