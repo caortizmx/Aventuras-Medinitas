@@ -15,7 +15,7 @@ async function waitForScene(page: Page, key: string): Promise<void> {
     }, key);
 }
 
-test('Preloader uses the logo loaded by Boot and keeps loading UI visible', async ({ page }) => {
+test('Preloader displays the preloaded logo and keeps loading UI visible', async ({ page }) => {
     await page.route('**/assets/game/**', async (route) => {
         await new Promise((resolve) => setTimeout(resolve, 1500));
         await route.continue();

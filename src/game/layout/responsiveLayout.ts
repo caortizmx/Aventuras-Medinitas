@@ -151,7 +151,8 @@ export function calculateGameOverLayout(width: number, height: number): GameOver
     const panelHeight = Math.min(safeArea.height, 414);
     const panelTop = (height - panelHeight) / 2;
     const panelBottom = panelTop + panelHeight;
-    // 44 logical pixels is the minimum accessible touch-target height on short mobile viewports.
+    // The configured 450px camera is above this threshold; Math.max also preserves
+    // the 44px accessible touch target if an alternate shorter camera is supplied.
     const buttonHeight = Math.max(44, Math.min(height * 0.105, 48));
 
     return {

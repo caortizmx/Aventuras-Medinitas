@@ -754,15 +754,11 @@ export class LevelOne extends Scene {
             return;
         }
 
-        const isOccupied = (x: number, y: number): boolean => {
-            const tile = layer.data[y]?.[x];
-            return tile !== undefined && tile.index >= 0;
-        };
-
         for (let y = 0; y < layer.height; y += 1) {
             let x = 0;
             while (x < layer.width) {
-                const isTopSurface = isOccupied(x, y) && !isOccupied(x, y - 1);
+                const isTopSurface = this._isOccupiedTile(layer, x, y)
+                    && !this._isOccupiedTile(layer, x, y - 1);
                 if (!isTopSurface) {
                     x += 1;
                     continue;
@@ -771,8 +767,8 @@ export class LevelOne extends Scene {
                 const startX = x;
                 while (
                     x < layer.width
-                    && isOccupied(x, y)
-                    && !isOccupied(x, y - 1)
+                    && this._isOccupiedTile(layer, x, y)
+                    && !this._isOccupiedTile(layer, x, y - 1)
                 ) {
                     x += 1;
                 }
@@ -783,7 +779,10 @@ export class LevelOne extends Scene {
 
                 if (type === 'ground') {
                     let rows = 1;
-                    while (y + rows < layer.height && isOccupied(startX, y + rows)) {
+                    while (
+                        y + rows < layer.height
+                        && this._isOccupiedTile(layer, startX, y + rows)
+                    ) {
                         rows += 1;
                     }
                     this._createGroundVisual(worldX, worldY, width, rows * map.tileHeight);
@@ -792,6 +791,11 @@ export class LevelOne extends Scene {
                 }
             }
         }
+    }
+
+    private _isOccupiedTile(layer: Phaser.Tilemaps.LayerData, x: number, y: number): boolean {
+        const tile = layer.data[y]?.[x];
+        return tile !== undefined && tile.index >= 0;
     }
 
     private _createGroundVisual(x: number, y: number, width: number, height: number): void {
@@ -859,9 +863,9 @@ export class LevelOne extends Scene {
     }
 
     private _isDebugUiEnabled(): boolean {
-        const enabledByEnvironment = import.meta.env.VITE_DEBUG_UI === 'true';
-        const enabledByRegistry = this.registry.get('debugUi') === true;
-        return shouldShowDebugUi(import.meta.env.DEV, enabledByEnvironment || enabledByRegistry);
+        const explicitlyEnabled = import.meta.env.VITE_DEBUG_UI === 'true'
+            || this.registry.get('debugUi') === true;
+        return shouldShowDebugUi(import.meta.env.DEV, explicitlyEnabled);
     }
 
     private _showDevelopmentMapError(error: unknown): void {

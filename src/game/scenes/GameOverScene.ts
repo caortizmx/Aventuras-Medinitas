@@ -63,10 +63,10 @@ export class GameOver extends Scene {
             align: 'center',
             lineSpacing: 6,
         }).setOrigin(0.5).setDepth(depth + 3);
-        this._retryButton = this._createButton('Retry', () => {
+        this._retryButton = this._createButton('Retry', RETRY_ACTION, () => {
             this.scene.start(SCENE_LEVEL_ONE, { characterId: this._data.characterId });
         });
-        this._menuButton = this._createButton('Main Menu', () => {
+        this._menuButton = this._createButton('Main Menu', MENU_ACTION, () => {
             this.scene.start(SCENE_MAIN_MENU);
         });
 
@@ -92,7 +92,7 @@ export class GameOver extends Scene {
         return lines.filter((line): line is string => Boolean(line)).join('\n');
     }
 
-    private _createButton (label: string, action: () => void): ActionButton {
+    private _createButton (label: string, actionId: number, action: () => void): ActionButton {
         const depth = RENDER_DEPTHS.modal + 3;
         const background = this.add.rectangle(0, 0, 1, 1, BUTTON_COLOR)
             .setStrokeStyle(2, 0xffffff, 0.75)
@@ -105,9 +105,7 @@ export class GameOver extends Scene {
         }).setOrigin(0.5).setDepth(depth + 1);
 
         background.on('pointerover', () => {
-            this._selectedAction = background === this._retryButton?.background
-                ? RETRY_ACTION
-                : MENU_ACTION;
+            this._selectedAction = actionId;
             this._refreshSelection();
         });
         background.on('pointerdown', action);
