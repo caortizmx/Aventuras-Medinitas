@@ -1,4 +1,8 @@
-import { PRESENTATION_SPRITESHEETS, PRESENTATION_TEXTURES } from '../constants/presentationAssetConfig';
+import {
+    PRESENTATION_SPRITESHEETS,
+    PRESENTATION_TEXTURES,
+    PresentationSpritesheetSpec,
+} from '../constants/presentationAssetConfig';
 
 function shouldReplace(scene: Phaser.Scene, key: string, failedAssetKeys: ReadonlySet<string>): boolean {
     return failedAssetKeys.has(key) && scene.textures.exists(key);
@@ -15,10 +19,63 @@ function createCanvasTexture(scene: Phaser.Scene, key: string, width: number, he
     return canvasTexture;
 }
 
+function createSpritesheetCanvasTexture(
+    scene: Phaser.Scene,
+    key: string,
+    width: number,
+    height: number,
+): Phaser.Textures.CanvasTexture {
+    const sourceTextureKey = `${key}__fallback-source`;
+    if (scene.textures.exists(sourceTextureKey)) {
+        scene.textures.remove(sourceTextureKey);
+    }
+    const canvasTexture = scene.textures.createCanvas(sourceTextureKey, width, height);
+    if (!canvasTexture) {
+        throw new Error(`Unable to create fallback spritesheet canvas texture: ${key}`);
+    }
+    return canvasTexture;
+}
+
+function registerFallbackSpritesheet(
+    scene: Phaser.Scene,
+    key: string,
+    spec: Pick<PresentationSpritesheetSpec, 'frameWidth' | 'frameHeight'>,
+    sourceTexture: Phaser.Textures.CanvasTexture,
+): void {
+    if (scene.textures.exists(key)) {
+        scene.textures.remove(key);
+    }
+
+    const spriteSheetSource = sourceTexture.getSourceImage();
+    const spriteSheetConfig = {
+        frameWidth: spec.frameWidth,
+        frameHeight: spec.frameHeight,
+    };
+
+    if (spriteSheetSource instanceof HTMLImageElement) {
+        scene.textures.addSpriteSheet(key, spriteSheetSource, spriteSheetConfig);
+    } else if (spriteSheetSource instanceof HTMLCanvasElement) {
+        scene.textures.addSpriteSheet(
+            key,
+            spriteSheetSource as unknown as HTMLImageElement,
+            spriteSheetConfig,
+        );
+    } else {
+        throw new Error(`Unsupported fallback spritesheet source for "${key}".`);
+    }
+
+    scene.textures.remove(sourceTexture.key);
+}
+
 function buildEnemySheet(scene: Phaser.Scene): void {
     const spec = PRESENTATION_SPRITESHEETS.enemy;
     const frameCount = 4;
-    const sheet = createCanvasTexture(scene, spec.key, spec.frameWidth * frameCount, spec.frameHeight);
+    const sheet = createSpritesheetCanvasTexture(
+        scene,
+        spec.key,
+        spec.frameWidth * frameCount,
+        spec.frameHeight,
+    );
     const ctx = sheet.getContext();
 
     for (let i = 0; i < frameCount; i += 1) {
@@ -44,12 +101,18 @@ function buildEnemySheet(scene: Phaser.Scene): void {
     }
 
     sheet.refresh();
+    registerFallbackSpritesheet(scene, spec.key, spec, sheet);
 }
 
 function buildCollectibleSheet(scene: Phaser.Scene): void {
     const spec = PRESENTATION_SPRITESHEETS.collectible;
     const frameCount = 6;
-    const sheet = createCanvasTexture(scene, spec.key, spec.frameWidth * frameCount, spec.frameHeight);
+    const sheet = createSpritesheetCanvasTexture(
+        scene,
+        spec.key,
+        spec.frameWidth * frameCount,
+        spec.frameHeight,
+    );
     const ctx = sheet.getContext();
     const COLLECTIBLE_PULSE_SCALES = [0.78, 0.9, 1, 1, 0.9, 0.78] as const;
 
@@ -67,12 +130,18 @@ function buildCollectibleSheet(scene: Phaser.Scene): void {
     }
 
     sheet.refresh();
+    registerFallbackSpritesheet(scene, spec.key, spec, sheet);
 }
 
 function buildCheckpointSheet(scene: Phaser.Scene): void {
     const spec = PRESENTATION_SPRITESHEETS.checkpoint;
     const frameCount = 8;
-    const sheet = createCanvasTexture(scene, spec.key, spec.frameWidth * frameCount, spec.frameHeight);
+    const sheet = createSpritesheetCanvasTexture(
+        scene,
+        spec.key,
+        spec.frameWidth * frameCount,
+        spec.frameHeight,
+    );
     const ctx = sheet.getContext();
 
     for (let i = 0; i < frameCount; i += 1) {
@@ -96,12 +165,18 @@ function buildCheckpointSheet(scene: Phaser.Scene): void {
     }
 
     sheet.refresh();
+    registerFallbackSpritesheet(scene, spec.key, spec, sheet);
 }
 
 function buildGoalSheet(scene: Phaser.Scene): void {
     const spec = PRESENTATION_SPRITESHEETS.goal;
     const frameCount = 6;
-    const sheet = createCanvasTexture(scene, spec.key, spec.frameWidth * frameCount, spec.frameHeight);
+    const sheet = createSpritesheetCanvasTexture(
+        scene,
+        spec.key,
+        spec.frameWidth * frameCount,
+        spec.frameHeight,
+    );
     const ctx = sheet.getContext();
 
     for (let i = 0; i < frameCount; i += 1) {
@@ -119,6 +194,7 @@ function buildGoalSheet(scene: Phaser.Scene): void {
     }
 
     sheet.refresh();
+    registerFallbackSpritesheet(scene, spec.key, spec, sheet);
 }
 
 function buildGroundTexture(scene: Phaser.Scene): void {
