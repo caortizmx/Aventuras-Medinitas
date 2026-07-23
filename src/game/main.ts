@@ -1,6 +1,7 @@
 import { Boot } from './scenes/BootScene';
 import { GameOver } from './scenes/GameOverScene';
 import { MainMenu } from './scenes/MainMenuScene';
+import { CharacterSelect } from './scenes/CharacterSelectScene';
 import { LevelOne } from './scenes/LevelOneScene';
 import { AUTO, Game, Scale } from 'phaser';
 import { Preloader } from './scenes/Preloader';
@@ -27,6 +28,7 @@ const config: Phaser.Types.Core.GameConfig = {
         Boot,
         Preloader,
         MainMenu,
+        CharacterSelect,
         LevelOne,
         GameOver,
     ],
