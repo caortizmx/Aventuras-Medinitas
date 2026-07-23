@@ -13,6 +13,13 @@ export const PLAYER_INVULNERABILITY_MS = 1200;
 export const PLAYER_KNOCKBACK_X = 230;
 export const PLAYER_KNOCKBACK_Y = -260;
 
+// Jump feel: short grace windows so presses near ground contact are never lost.
+// Coyote time forgives jumping just after walking off a ledge; the jump buffer
+// forgives pressing jump slightly before landing. Both make jumping feel
+// responsive instead of getting "stuck" on a single strict grounded frame.
+export const JUMP_COYOTE_TIME_MS = 120;
+export const JUMP_BUFFER_MS = 120;
+
 // ─── Physics ──────────────────────────────────────────────────────────────────
 export const GRAVITY = 800; // px/s²
 
