@@ -6,6 +6,7 @@ import {
 } from '../constants/sceneKeys';
 import { calculateCoverScale, calculateGameOverLayout } from '../layout/responsiveLayout';
 import { RENDER_DEPTHS } from '../constants/renderDepths';
+import { clearLevelCheckpoint } from '../system/SaveSystem';
 
 interface GameOverData {
     reason?: string;
@@ -14,6 +15,7 @@ interface GameOverData {
     collectibleCount?: number;
     totalCollectibles?: number;
     characterId?: string;
+    levelId?: import('../constants/campaign').LevelId;
 }
 
 interface ActionButton {
@@ -64,7 +66,13 @@ export class GameOver extends Scene {
             lineSpacing: 6,
         }).setOrigin(0.5).setDepth(depth + 3);
         this._retryButton = this._createButton('Retry', RETRY_ACTION, () => {
-            this.scene.start(SCENE_LEVEL_ONE, { characterId: this._data.characterId });
+            if (this._data.levelId) {
+                clearLevelCheckpoint(this._data.levelId);
+            }
+            this.scene.start(SCENE_LEVEL_ONE, {
+                characterId: this._data.characterId,
+                levelId: this._data.levelId,
+            });
         });
         this._menuButton = this._createButton('Main Menu', MENU_ACTION, () => {
             this.scene.start(SCENE_MAIN_MENU);

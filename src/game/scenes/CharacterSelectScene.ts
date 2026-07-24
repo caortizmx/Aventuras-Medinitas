@@ -1,7 +1,7 @@
 import { Scene } from 'phaser';
 import { CHARACTERS, CharacterConfig, getDefaultCharacter } from '../data/characters';
 import { saveSelectedCharacter, loadSelectedCharacterId, loadGameSaveData } from '../system/SaveSystem';
-import { SCENE_LEVEL_ONE } from '../constants/sceneKeys';
+import { SCENE_LEVEL_SELECT } from '../constants/sceneKeys';
 import { GAME_WIDTH, GAME_HEIGHT } from '../constants/gameValues';
 import { getCharacterAnimationKey } from '../constants/animationKeys';
 import { LEVEL_ONE_COLLECTIBLE_TARGET_COUNT } from '../constants/tiledLevel';
@@ -222,6 +222,6 @@ export class CharacterSelect extends Scene {
     private _startGame(): void {
         const character = CHARACTERS[this._selectedIndex] ?? getDefaultCharacter();
         saveSelectedCharacter(character.id);
-        this.scene.start(SCENE_LEVEL_ONE, { characterId: character.id });
+        this.scene.start(SCENE_LEVEL_SELECT);
     }
 }

@@ -2,7 +2,8 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
     testDir: './tests/e2e',
-    outputDir: '/tmp/aventuras-playwright-results',
+    // Playwright clears this directory at the start of each test run.
+    outputDir: './test-results/playwright',
     use: {
         baseURL: 'http://127.0.0.1:8080',
         browserName: 'chromium',

@@ -1,4 +1,11 @@
 import { findCharacterById, getDefaultCharacter } from '../data/characters';
+import {
+    CAMPAIGN_LEVELS,
+    FINAL_LEVEL_NUMBER,
+    getNextLevel,
+    isLevelId,
+    LevelId,
+} from '../constants/campaign';
 
 export interface SaveSettings {
     soundEnabled: boolean;
@@ -10,10 +17,18 @@ export interface SaveData {
     unlockedLevel: number;
     bestScores: Record<string, number>;
     bestCollectibleCounts: Record<string, number>;
+    currentLevelId: LevelId;
+    checkpoints: Partial<Record<LevelId, SavedCheckpoint>>;
     settings: SaveSettings;
 }
 
-export const SAVE_DATA_SCHEMA_VERSION = 1;
+export interface SavedCheckpoint {
+    checkpointId: string;
+    x: number;
+    y: number;
+}
+
+export const SAVE_DATA_SCHEMA_VERSION = 2;
 export const SAVE_DATA_STORAGE_KEY = 'aventuras_save_data_v1';
 const LEGACY_CHARACTER_KEY = 'aventuras_selected_character';
 
@@ -23,6 +38,8 @@ const DEFAULT_SAVE_DATA: SaveData = {
     unlockedLevel: 1,
     bestScores: {},
     bestCollectibleCounts: {},
+    currentLevelId: 'level-1',
+    checkpoints: {},
     settings: {
         soundEnabled: true,
     },
@@ -35,6 +52,8 @@ function createDefaultSaveData(): SaveData {
         unlockedLevel: DEFAULT_SAVE_DATA.unlockedLevel,
         bestScores: {},
         bestCollectibleCounts: {},
+        currentLevelId: DEFAULT_SAVE_DATA.currentLevelId,
+        checkpoints: {},
         settings: {
             soundEnabled: DEFAULT_SAVE_DATA.settings.soundEnabled,
         },
@@ -89,21 +108,65 @@ function sanitizeSettings(value: unknown): SaveSettings {
     };
 }
 
+function sanitizeCheckpoint(value: unknown): SavedCheckpoint | undefined {
+    if (!isRecord(value)
+        || typeof value.checkpointId !== 'string'
+        || value.checkpointId.trim().length === 0
+        || typeof value.x !== 'number'
+        || !Number.isFinite(value.x)
+        || typeof value.y !== 'number'
+        || !Number.isFinite(value.y)) {
+        return undefined;
+    }
+    return {
+        checkpointId: value.checkpointId,
+        x: value.x,
+        y: value.y,
+    };
+}
+
+function sanitizeCheckpoints(value: unknown): Partial<Record<LevelId, SavedCheckpoint>> {
+    if (!isRecord(value)) {
+        return {};
+    }
+    const checkpoints: Partial<Record<LevelId, SavedCheckpoint>> = {};
+    for (const [levelId, rawCheckpoint] of Object.entries(value)) {
+        const checkpoint = sanitizeCheckpoint(rawCheckpoint);
+        if (isLevelId(levelId) && checkpoint) {
+            checkpoints[levelId] = checkpoint;
+        }
+    }
+    return checkpoints;
+}
+
 function sanitizeSaveData(raw: unknown): SaveData {
     if (!isRecord(raw)) {
         return createDefaultSaveData();
     }
 
-    if (raw.schemaVersion !== SAVE_DATA_SCHEMA_VERSION) {
+    if (raw.schemaVersion !== 1 && raw.schemaVersion !== SAVE_DATA_SCHEMA_VERSION) {
         return createDefaultSaveData();
     }
 
+    const unlockedLevel = Math.min(
+        FINAL_LEVEL_NUMBER,
+        Math.max(1, toNonNegativeInteger(raw.unlockedLevel, DEFAULT_SAVE_DATA.unlockedLevel)),
+    );
+    const migratedLevelId = CAMPAIGN_LEVELS[unlockedLevel - 1]?.id ?? DEFAULT_SAVE_DATA.currentLevelId;
+    const requestedLevelId = isLevelId(raw.currentLevelId) ? raw.currentLevelId : migratedLevelId;
+    const requestedLevelOrder = CAMPAIGN_LEVELS.find(({ id }) => id === requestedLevelId)?.levelOrder
+        ?? Number.POSITIVE_INFINITY;
+    const currentLevelId = requestedLevelOrder <= unlockedLevel
+        ? requestedLevelId
+        : migratedLevelId;
     return {
         schemaVersion: SAVE_DATA_SCHEMA_VERSION,
         selectedCharacterId: sanitizeSelectedCharacterId(raw.selectedCharacterId),
-        unlockedLevel: toNonNegativeInteger(raw.unlockedLevel, DEFAULT_SAVE_DATA.unlockedLevel),
+        unlockedLevel,
         bestScores: sanitizeBestMap(raw.bestScores),
         bestCollectibleCounts: sanitizeBestMap(raw.bestCollectibleCounts),
+        currentLevelId: raw.schemaVersion === 1 ? migratedLevelId : currentLevelId,
+        checkpoints: raw.schemaVersion === 1 ? {} : sanitizeCheckpoints(raw.checkpoints),
         settings: sanitizeSettings(raw.settings),
     };
 }
@@ -145,6 +208,9 @@ export function loadGameSaveData(): SaveData {
 
         const parsed = JSON.parse(raw);
         const safeData = sanitizeSaveData(parsed);
+        if (isRecord(parsed) && parsed.schemaVersion === 1) {
+            saveGameSaveData(safeData);
+        }
         return safeData;
     } catch {
         return createDefaultSaveData();
@@ -172,7 +238,7 @@ export function loadSelectedCharacterId(): string {
 }
 
 export interface LevelResultPayload {
-    levelId: string;
+    levelId: LevelId;
     score: number;
     collectibleCount: number;
     unlockedLevel: number;
@@ -182,7 +248,10 @@ export function recordLevelResult(payload: LevelResultPayload): SaveData {
     const current = loadGameSaveData();
     const score = toNonNegativeInteger(payload.score, 0);
     const collectibleCount = toNonNegativeInteger(payload.collectibleCount, 0);
-    const unlockedLevel = Math.max(1, toNonNegativeInteger(payload.unlockedLevel, current.unlockedLevel));
+    const unlockedLevel = Math.min(
+        FINAL_LEVEL_NUMBER,
+        Math.max(1, toNonNegativeInteger(payload.unlockedLevel, current.unlockedLevel)),
+    );
 
     const previousBestScore = current.bestScores[payload.levelId] ?? 0;
     const previousBestCollectibleCount = current.bestCollectibleCounts[payload.levelId] ?? 0;
@@ -190,7 +259,38 @@ export function recordLevelResult(payload: LevelResultPayload): SaveData {
     current.bestScores[payload.levelId] = Math.max(previousBestScore, score);
     current.bestCollectibleCounts[payload.levelId] = Math.max(previousBestCollectibleCount, collectibleCount);
     current.unlockedLevel = Math.max(current.unlockedLevel, unlockedLevel);
+    current.currentLevelId = getNextLevel(payload.levelId)?.id ?? payload.levelId;
 
+    return saveGameSaveData(current);
+}
+
+export function saveCurrentLevel(levelId: LevelId): SaveData {
+    const current = loadGameSaveData();
+    current.currentLevelId = levelId;
+    return saveGameSaveData(current);
+}
+
+export function saveLevelCheckpoint(
+    levelId: LevelId,
+    checkpointId: string,
+    x: number,
+    y: number,
+): SaveData {
+    const current = loadGameSaveData();
+    if (checkpointId.trim().length > 0 && Number.isFinite(x) && Number.isFinite(y)) {
+        current.currentLevelId = levelId;
+        current.checkpoints[levelId] = { checkpointId, x, y };
+    }
+    return saveGameSaveData(current);
+}
+
+export function loadLevelCheckpoint(levelId: LevelId): SavedCheckpoint | undefined {
+    return loadGameSaveData().checkpoints[levelId];
+}
+
+export function clearLevelCheckpoint(levelId: LevelId): SaveData {
+    const current = loadGameSaveData();
+    delete current.checkpoints[levelId];
     return saveGameSaveData(current);
 }
 
