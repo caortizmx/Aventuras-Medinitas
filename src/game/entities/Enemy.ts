@@ -3,6 +3,7 @@ import { GAMEPLAY_VISUALS } from '../assets/gameplayVisualConfig';
 import { GAMEPLAY_ANIMATION_KEYS } from '../assets/animationKeys';
 
 export interface EnemySpawnConfig {
+    id?: string;
     x: number;
     y: number;
     patrolLeft: number;
@@ -99,6 +100,14 @@ export class Enemy extends Physics.Arcade.Sprite {
 
     isAlive(): boolean {
         return this._alive;
+    }
+
+    getVisualVariant(): 'small' | 'large' {
+        return this._spawn.visualVariant === 'large' ? 'large' : 'small';
+    }
+
+    getEnemyId(): string | undefined {
+        return this._spawn.id;
     }
 
     private _turn(nextDirection: 1 | -1): void {

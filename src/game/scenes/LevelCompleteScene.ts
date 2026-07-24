@@ -1,11 +1,12 @@
 import { Scene } from 'phaser';
-import { SCENE_CHARACTER_SELECT, SCENE_LEVEL_ONE } from '../constants/sceneKeys';
+import { SCENE_LEVEL_ONE, SCENE_LEVEL_SELECT } from '../constants/sceneKeys';
 import { GAME_HEIGHT, GAME_WIDTH } from '../constants/gameValues';
-import { loadGameSaveData, resetProgress } from '../system/SaveSystem';
+import { clearLevelCheckpoint, loadGameSaveData, resetProgress } from '../system/SaveSystem';
+import { FIRST_LEVEL_ID, getLevelDefinition, getNextLevel, LevelId } from '../constants/campaign';
 
 interface LevelCompleteData {
     characterId: string;
-    levelId: string;
+    levelId: LevelId;
     score: number;
     collectibleCount: number;
     totalCollectibles: number;
@@ -21,7 +22,7 @@ export class LevelComplete extends Scene {
     create(data: LevelCompleteData): void {
         const safeData = {
             characterId: data?.characterId ?? loadGameSaveData().selectedCharacterId,
-            levelId: data?.levelId ?? 'level-1',
+            levelId: data?.levelId ?? FIRST_LEVEL_ID,
             score: typeof data?.score === 'number' ? data.score : 0,
             collectibleCount: typeof data?.collectibleCount === 'number' ? data.collectibleCount : 0,
             totalCollectibles: typeof data?.totalCollectibles === 'number' ? data.totalCollectibles : 0,
@@ -31,7 +32,9 @@ export class LevelComplete extends Scene {
 
         this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_WIDTH, GAME_HEIGHT, 0x101622);
 
-        this.add.text(GAME_WIDTH / 2, 52, 'Level Complete!', {
+        const currentLevel = getLevelDefinition(safeData.levelId);
+        const nextLevel = getNextLevel(currentLevel.id);
+        this.add.text(GAME_WIDTH / 2, 52, nextLevel ? 'Level Complete!' : 'Campaign Complete!', {
             fontFamily: 'Arial Black',
             fontSize: '40px',
             color: '#f1c40f',
@@ -68,15 +71,38 @@ export class LevelComplete extends Scene {
             },
         ).setOrigin(0.5);
 
-        this._addButton(GAME_WIDTH / 2, 298, 360, 44, 'Replay level', () => {
-            this.scene.start(SCENE_LEVEL_ONE, { characterId: safeData.characterId });
-        });
+        this.add.text(GAME_WIDTH / 2, 96, currentLevel.title, {
+            fontFamily: 'Arial Black',
+            fontSize: '18px',
+            color: '#ffffff',
+        }).setOrigin(0.5);
 
-        this._addButton(GAME_WIDTH / 2, 352, 360, 44, 'Return to character selection', () => {
-            this.scene.start(SCENE_CHARACTER_SELECT);
-        });
+        let buttonY = 286;
+        if (nextLevel) {
+            this._addButton(GAME_WIDTH / 2, buttonY, 360, 42, `Continue to level ${nextLevel.levelOrder}`, () => {
+                this.scene.start(SCENE_LEVEL_ONE, {
+                    characterId: safeData.characterId,
+                    levelId: nextLevel.id,
+                });
+            });
+            buttonY += 50;
+        }
 
-        this._addButton(GAME_WIDTH / 2, 406, 360, 36, 'Reset progress', () => {
+        this._addButton(GAME_WIDTH / 2, buttonY, 360, 42, 'Replay level', () => {
+            clearLevelCheckpoint(currentLevel.id);
+            this.scene.start(SCENE_LEVEL_ONE, {
+                characterId: safeData.characterId,
+                levelId: currentLevel.id,
+            });
+        });
+        buttonY += 50;
+
+        this._addButton(GAME_WIDTH / 2, buttonY, 360, 42, 'Level selection', () => {
+            this.scene.start(SCENE_LEVEL_SELECT);
+        });
+        buttonY += 48;
+
+        this._addButton(GAME_WIDTH / 2, buttonY, 360, 34, 'Reset progress', () => {
             const afterReset = resetProgress();
             bestScoreLabel.setText(`Best score: ${afterReset.bestScores[safeData.levelId] ?? 0}`);
             bestCollectiblesLabel.setText(

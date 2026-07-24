@@ -3,10 +3,14 @@ import { getDefaultCharacter } from '../src/game/data/characters';
 import {
     SAVE_DATA_SCHEMA_VERSION,
     SAVE_DATA_STORAGE_KEY,
+    clearLevelCheckpoint,
     loadGameSaveData,
+    loadLevelCheckpoint,
     recordLevelResult,
     resetProgress,
     saveGameSaveData,
+    saveCurrentLevel,
+    saveLevelCheckpoint,
 } from '../src/game/system/SaveSystem';
 import { applyCollectiblePickup } from '../src/game/system/stage8Gameplay';
 
@@ -22,6 +26,8 @@ describe('stage 8 save system', () => {
             unlockedLevel: 2,
             bestScores: { 'level-1': 450 },
             bestCollectibleCounts: { 'level-1': 3 },
+            currentLevelId: 'level-2',
+            checkpoints: {},
             settings: { soundEnabled: true },
         });
 
@@ -34,15 +40,17 @@ describe('stage 8 save system', () => {
         localStorage.setItem(SAVE_DATA_STORAGE_KEY, JSON.stringify({
             schemaVersion: SAVE_DATA_SCHEMA_VERSION,
             selectedCharacterId: 'orel',
-            unlockedLevel: 3,
+            unlockedLevel: 2,
             bestScores: { 'level-1': 900 },
             bestCollectibleCounts: { 'level-1': 3 },
+            currentLevelId: 'level-2',
+            checkpoints: {},
             settings: { soundEnabled: false },
         }));
 
         const loaded = loadGameSaveData();
         expect(loaded.selectedCharacterId).toBe('orel');
-        expect(loaded.unlockedLevel).toBe(3);
+        expect(loaded.unlockedLevel).toBe(2);
         expect(loaded.bestScores['level-1']).toBe(900);
         expect(loaded.settings.soundEnabled).toBe(false);
     });
@@ -86,6 +94,70 @@ describe('stage 8 save system', () => {
         expect(Object.keys(loaded.bestScores)).toHaveLength(0);
     });
 
+    it('migrates schema v1 progress without losing campaign results', () => {
+        localStorage.setItem(SAVE_DATA_STORAGE_KEY, JSON.stringify({
+            schemaVersion: 1,
+            selectedCharacterId: 'orel',
+            unlockedLevel: 2,
+            bestScores: { 'level-1': 1200 },
+            bestCollectibleCounts: { 'level-1': 27 },
+            settings: { soundEnabled: false },
+        }));
+
+        const migrated = loadGameSaveData();
+        expect(migrated.schemaVersion).toBe(2);
+        expect(migrated.unlockedLevel).toBe(2);
+        expect(migrated.bestScores['level-1']).toBe(1200);
+        expect(migrated.currentLevelId).toBe('level-2');
+        expect(migrated.checkpoints).toEqual({});
+        expect(JSON.parse(localStorage.getItem(SAVE_DATA_STORAGE_KEY) ?? '{}').schemaVersion).toBe(2);
+    });
+
+    it('persists checkpoints independently per level', () => {
+        saveLevelCheckpoint('level-1', 'level-1-checkpoint-2', 8960, 648);
+        saveLevelCheckpoint('level-2', 'level-2-checkpoint-1', 3520, 648);
+
+        expect(loadLevelCheckpoint('level-1')).toEqual({
+            checkpointId: 'level-1-checkpoint-2',
+            x: 8960,
+            y: 648,
+        });
+
+        expect(loadLevelCheckpoint('level-2')).toEqual({
+            checkpointId: 'level-2-checkpoint-1',
+            x: 3520,
+            y: 648,
+        });
+    });
+
+    it('drops checkpoints with non-finite coordinates', () => {
+        localStorage.setItem(SAVE_DATA_STORAGE_KEY, JSON.stringify({
+            schemaVersion: 2,
+            selectedCharacterId: 'emma',
+            unlockedLevel: 1,
+            currentLevelId: 'level-1',
+            bestScores: {},
+            bestCollectibleCounts: {},
+            checkpoints: {
+                'level-1': { checkpointId: 'level-1-checkpoint-1', x: 'invalid', y: 648 },
+            },
+            settings: { soundEnabled: true },
+        }));
+
+        expect(loadLevelCheckpoint('level-1')).toBeUndefined();
+    });
+
+    it('tracks the resumable level and clears only the restarted checkpoint', () => {
+        saveLevelCheckpoint('level-1', 'level-1-checkpoint-1', 4480, 648);
+        saveLevelCheckpoint('level-2', 'level-2-checkpoint-2', 7040, 648);
+        saveCurrentLevel('level-1');
+        const cleared = clearLevelCheckpoint('level-1');
+
+        expect(cleared.currentLevelId).toBe('level-1');
+        expect(cleared.checkpoints['level-1']).toBeUndefined();
+        expect(cleared.checkpoints['level-2']?.checkpointId).toBe('level-2-checkpoint-2');
+    });
+
     it('recovers from invalid selected character id', () => {
         localStorage.setItem(SAVE_DATA_STORAGE_KEY, JSON.stringify({
             schemaVersion: SAVE_DATA_SCHEMA_VERSION,
@@ -121,6 +193,8 @@ describe('stage 8 save system', () => {
             unlockedLevel: 4,
             bestScores: { 'level-1': 800 },
             bestCollectibleCounts: { 'level-1': 3 },
+            currentLevelId: 'level-2',
+            checkpoints: {},
             settings: { soundEnabled: false },
         });
 

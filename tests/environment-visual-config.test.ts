@@ -6,14 +6,29 @@ import {
     TERRAIN_VISUAL_MAPPINGS,
 } from '../src/game/assets/environmentVisualConfig';
 import { RENDER_DEPTHS } from '../src/game/constants/renderDepths';
+import environmentAtlasRaw from '../public/assets/game/atlases/environment/environment_atlas.json?raw';
 
 describe('environment visual configuration', () => {
-    it('has one unique atlas frame for every terrain type', () => {
-        const frames = Object.values(TERRAIN_VISUAL_MAPPINGS).map(({ frame }) => frame);
-        expect(frames).toHaveLength(2);
-        expect(new Set(frames).size).toBe(frames.length);
-        expect(resolveTerrainVisual('ground')).toBe(TERRAIN_VISUAL_MAPPINGS.ground);
-        expect(resolveTerrainVisual('platform')).toBe(TERRAIN_VISUAL_MAPPINGS.platform);
+    it('has explicit existing-art terrain mappings for both themes', () => {
+        const frames = Object.values(TERRAIN_VISUAL_MAPPINGS)
+            .flatMap((theme) => Object.values(theme).map(({ frame }) => frame));
+        expect(frames).toEqual(expect.arrayContaining([
+            'terrain_grass_top_00',
+            'platform_wood_00',
+            'terrain_stone_00',
+            'platform_wood_01',
+        ]));
+        expect(resolveTerrainVisual('ground', 'green-valley'))
+            .toBe(TERRAIN_VISUAL_MAPPINGS['green-valley'].ground);
+        expect(resolveTerrainVisual('platform', 'mountain-ruins'))
+            .toBe(TERRAIN_VISUAL_MAPPINGS['mountain-ruins'].platform);
+        expect(TERRAIN_VISUAL_MAPPINGS['mountain-ruins'].ground.alternateFrames)
+            .toContain('terrain_dirt_cliff_00');
+        const atlas = JSON.parse(environmentAtlasRaw) as { frames: Record<string, unknown> };
+        for (const frame of frames) {
+            expect(atlas.frames[frame]).toBeDefined();
+        }
+        expect(atlas.frames.terrain_dirt_cliff_00).toBeDefined();
     });
 
     it('returns no production placeholder for an unknown terrain type', () => {

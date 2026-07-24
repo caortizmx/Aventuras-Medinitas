@@ -1,5 +1,6 @@
 import { ATLAS_KEYS } from './assetKeys';
 import { RENDER_DEPTHS } from '../constants/renderDepths';
+import { BackgroundTheme } from '../constants/campaign';
 
 export const ENVIRONMENT_VISUALS = {
     atlasKey: ATLAS_KEYS.environment,
@@ -14,6 +15,7 @@ export type TerrainVisualType = 'ground' | 'platform';
 
 export interface TerrainVisualMapping {
     frame: string;
+    alternateFrames?: readonly string[];
     depth: number;
     originX: number;
     originY: number;
@@ -23,26 +25,53 @@ export interface TerrainVisualMapping {
     minimumWidth: number;
 }
 
-export const TERRAIN_VISUAL_MAPPINGS: Readonly<Record<TerrainVisualType, TerrainVisualMapping>> = {
-    ground: {
-        frame: 'terrain_grass_top_00',
-        depth: RENDER_DEPTHS.terrain,
-        originX: 0,
-        originY: 0,
-        visualOffsetX: 0,
-        visualOffsetY: 0,
-        tileableHorizontally: true,
-        minimumWidth: 32,
+export const TERRAIN_VISUAL_MAPPINGS: Readonly<
+Record<BackgroundTheme, Readonly<Record<TerrainVisualType, TerrainVisualMapping>>>
+> = {
+    'green-valley': {
+        ground: {
+            frame: 'terrain_grass_top_00',
+            depth: RENDER_DEPTHS.terrain,
+            originX: 0,
+            originY: 0,
+            visualOffsetX: 0,
+            visualOffsetY: 0,
+            tileableHorizontally: true,
+            minimumWidth: 32,
+        },
+        platform: {
+            frame: 'platform_wood_00',
+            depth: RENDER_DEPTHS.terrain + 1,
+            originX: 0.5,
+            originY: 0,
+            visualOffsetX: 0,
+            visualOffsetY: -8,
+            tileableHorizontally: false,
+            minimumWidth: 64,
+        },
     },
-    platform: {
-        frame: 'platform_wood_00',
-        depth: RENDER_DEPTHS.terrain + 1,
-        originX: 0.5,
-        originY: 0,
-        visualOffsetX: 0,
-        visualOffsetY: -8,
-        tileableHorizontally: false,
-        minimumWidth: 64,
+    'mountain-ruins': {
+        ground: {
+            frame: 'terrain_stone_00',
+            alternateFrames: ['terrain_dirt_cliff_00'],
+            depth: RENDER_DEPTHS.terrain,
+            originX: 0,
+            originY: 0,
+            visualOffsetX: 0,
+            visualOffsetY: 0,
+            tileableHorizontally: true,
+            minimumWidth: 32,
+        },
+        platform: {
+            frame: 'platform_wood_01',
+            depth: RENDER_DEPTHS.terrain + 1,
+            originX: 0.5,
+            originY: 0,
+            visualOffsetX: 0,
+            visualOffsetY: -8,
+            tileableHorizontally: false,
+            minimumWidth: 32,
+        },
     },
 };
 
@@ -82,9 +111,12 @@ export const BACKGROUND_LAYERS: readonly BackgroundLayerConfig[] = [
     },
 ] as const;
 
-export function resolveTerrainVisual(type: string): TerrainVisualMapping | undefined {
+export function resolveTerrainVisual(
+    type: string,
+    theme: BackgroundTheme = 'green-valley',
+): TerrainVisualMapping | undefined {
     return type === 'ground' || type === 'platform'
-        ? TERRAIN_VISUAL_MAPPINGS[type]
+        ? TERRAIN_VISUAL_MAPPINGS[theme][type]
         : undefined;
 }
 

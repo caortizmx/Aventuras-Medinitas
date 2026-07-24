@@ -1,5 +1,6 @@
 import StartGame from './game/main';
 import { isStandaloneMode, registerPwa } from './pwa/registerPwa';
+import { installCampaignTestBridge } from './game/testing/campaignTestBridge';
 
 document.addEventListener('DOMContentLoaded', () => {
     if (isStandaloneMode()) {
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (import.meta.env.DEV) {
         window.__PHASER_GAME__ = game;
     }
+    installCampaignTestBridge(game);
     const updateNotice = document.createElement('aside');
     updateNotice.id = 'pwa-update-notice';
     updateNotice.hidden = true;

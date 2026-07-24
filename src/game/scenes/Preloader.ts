@@ -1,10 +1,8 @@
 import { GameObjects, Scene, Scale } from 'phaser';
 import { ASSET_KEYS } from '../constants/assetKeys';
 import { SCENE_MAIN_MENU } from '../constants/sceneKeys';
-import {
-    LEVEL_ONE_MAP_PATH,
-    LEVEL_ONE_TILESET_IMAGE_PATH,
-} from '../constants/tiledLevel';
+import { LEVEL_ONE_TILESET_IMAGE_PATH } from '../constants/tiledLevel';
+import { CAMPAIGN_LEVELS } from '../constants/campaign';
 import { ATLAS_PATHS } from '../assets/assetPaths';
 import { REQUIRED_ATLAS_KEYS } from '../assets/assetKeys';
 import { registerAtlasAnimations } from '../assets/registerAnimations';
@@ -83,7 +81,9 @@ export class Preloader extends Scene
         this.load.setPath('assets');
         this._failedAtlasKeys.clear();
 
-        this.load.tilemapTiledJSON(ASSET_KEYS.levelOneMap, LEVEL_ONE_MAP_PATH);
+        for (const level of CAMPAIGN_LEVELS) {
+            this.load.tilemapTiledJSON(level.mapAssetKey, level.mapPath);
+        }
         this.load.image(ASSET_KEYS.levelOneTiles, LEVEL_ONE_TILESET_IMAGE_PATH);
 
         this.load.on('loaderror', (file: Phaser.Loader.File) => {

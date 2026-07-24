@@ -3,6 +3,7 @@ export const ASSET_KEYS = {
     logo: 'logo',
     pixel: 'px',
     levelOneMap: 'level-one-map',
+    levelTwoMap: 'level-two-map',
     levelOneTiles: 'level-one-tiles',
     enemy: 'enemy-sheet',
     collectible: 'collectible-sheet',

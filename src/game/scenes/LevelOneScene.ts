@@ -28,9 +28,9 @@ import { SCENE_GAME_OVER, SCENE_LEVEL_COMPLETE } from '../constants/sceneKeys';
 import { CharacterConfig, findCharacterById, getDefaultCharacter } from '../data/characters';
 import { ASSET_KEYS } from '../constants/assetKeys';
 import {
-    LEVEL_ONE_COLLECTIBLE_TARGET_COUNT,
     LEVEL_ONE_LAYER_NAMES,
     LEVEL_ONE_TILESET_NAME,
+    LEVEL_WORLD_BOTTOM_PADDING,
 } from '../constants/tiledLevel';
 import {
     LevelMapValidationError,
@@ -51,7 +51,13 @@ import {
     RespawnCandidate,
 } from '../system/stage7Gameplay';
 import { applyCollectiblePickup } from '../system/stage8Gameplay';
-import { recordLevelResult } from '../system/SaveSystem';
+import {
+    clearLevelCheckpoint,
+    loadLevelCheckpoint,
+    recordLevelResult,
+    saveCurrentLevel,
+    saveLevelCheckpoint,
+} from '../system/SaveSystem';
 import { PRESENTATION_ANIMATION_KEYS } from '../constants/presentationAnimationKeys';
 import { CHARACTER_SOURCE_SIZE, CHARACTER_VISUALS } from '../assets/characterVisualConfig';
 import {
@@ -63,6 +69,15 @@ import {
 } from '../assets/environmentVisualConfig';
 import { GAMEPLAY_VISUALS, PROP_VISUALS } from '../assets/gameplayVisualConfig';
 import { RENDER_DEPTHS } from '../constants/renderDepths';
+import { isCampaignTestModeEnabled } from '../testing/campaignTestBridge';
+import {
+    FIRST_LEVEL_ID,
+    getLevelDefinition,
+    getNextLevel,
+    isLevelId,
+    LevelDefinition,
+    LevelId,
+} from '../constants/campaign';
 
 type SpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 type StaticSpriteWithBody = Phaser.Types.Physics.Arcade.SpriteWithStaticBody;
@@ -80,6 +95,7 @@ interface CheckpointMarker {
     id: string;
     x: number;
     y: number;
+    respawnOffsetY: number;
     sprite: StaticSpriteWithBody;
     activated: boolean;
 }
@@ -90,11 +106,9 @@ interface CollectibleSpawnPoint {
     y: number;
 }
 
-const TILED_WORLD_BOTTOM_PADDING = 1200;
 const FALLBACK_WORLD_BOUNDS_Y = -200;
 const FALLBACK_WORLD_BOUNDS_EXTRA_HEIGHT = 2200;
 const PLAYER_RESPAWN_CLEARANCE_Y = 8;
-const LEVEL_ONE_ID = 'level-1';
 const COLLECTIBLE_POINTS = 100;
 const ENEMY_STOMP_POINTS = 50;
 const LEVEL_CLEAR_LIFE_BONUS = 25;
@@ -120,11 +134,13 @@ function isCollidableTilemapLayer(
     return 'setCollisionByExclusion' in layer;
 }
 
-function normalizeCheckpoint(point: { id: string; x: number; y: number }): RespawnCandidate {
+function normalizeCheckpoint(
+    point: { id: string; x: number; y: number; respawnOffsetY?: number },
+): RespawnCandidate {
     return {
         id: point.id,
         x: point.x,
-        y: point.y - PLAYER_RESPAWN_CLEARANCE_Y,
+        y: point.y + (point.respawnOffsetY ?? -PLAYER_RESPAWN_CLEARANCE_Y),
     };
 }
 
@@ -133,6 +149,7 @@ export class LevelOne extends Scene {
     private _mobile!:    MobileControls;
     private _player!:    SpriteWithBody;
     private _character!: CharacterConfig;
+    private _level: LevelDefinition = getLevelDefinition(FIRST_LEVEL_ID);
     private _spawnX = SPAWN_X;
     private _spawnY = WORLD_HEIGHT - GROUND_HEIGHT - (PLAYER_HEIGHT * PLAYER_SPRITE_SCALE) / 2;
     private _worldWidth = WORLD_WIDTH;
@@ -146,7 +163,8 @@ export class LevelOne extends Scene {
     private _goalBanner!: Phaser.GameObjects.Text;
     private _livesLabel!: Phaser.GameObjects.Text;
     private _scoreLabel!: Phaser.GameObjects.Text;
-    private _collectiblesLabel!: Phaser.GameObjects.Text;
+    // Undefined while a reused scene instance rebuilds gameplay before its HUD.
+    private _collectiblesLabel?: Phaser.GameObjects.Text;
 
     private _collisionLayer?: Phaser.Tilemaps.TilemapLayer;
     private _killZones: LevelRect[] = [];
@@ -180,9 +198,10 @@ export class LevelOne extends Scene {
 
     constructor() { super('LevelOne'); }
 
-    init(data: { characterId?: string }): void {
+    init(data: { characterId?: string; levelId?: LevelId }): void {
         this._character = (data?.characterId ? findCharacterById(data.characterId) : undefined)
             ?? getDefaultCharacter();
+        this._level = getLevelDefinition(isLevelId(data?.levelId) ? data.levelId : FIRST_LEVEL_ID);
     }
 
     create(): void {
@@ -201,6 +220,7 @@ export class LevelOne extends Scene {
         this._collectiblesCollected = 0;
         this._collectiblesTotal = 0;
         this._collectedCollectibleIds = new Set<string>();
+        this._collectiblesLabel = undefined;
         this._collisionLayer = undefined;
         this._killZones = [];
         this._enemies = [];
@@ -210,6 +230,7 @@ export class LevelOne extends Scene {
         this._wasGrounded = true;
         this._squashTween = undefined;
         this._runDustAllowedAtMs = 0;
+        saveCurrentLevel(this._level.id);
 
         this._input  = new InputController();
         this._mobile = new MobileControls(
@@ -333,10 +354,63 @@ export class LevelOne extends Scene {
         }
     }
 
+    getCampaignTestState(): {
+        levelId: LevelId;
+        collectibles: number;
+        enemies: { small: number; large: number };
+        enemyIds: string[];
+        checkpoints: string[];
+        activeCheckpoint?: string;
+        playerPosition: { x: number; y: number };
+    } {
+        const enemies = this._enemies.reduce((counts, enemy) => {
+            counts[enemy.getVisualVariant()] += 1;
+            return counts;
+        }, { small: 0, large: 0 });
+        return {
+            levelId: this._level.id,
+            collectibles: this._collectiblesTotal,
+            enemies,
+            enemyIds: this._enemies
+                .map((enemy) => enemy.getEnemyId())
+                .filter((id): id is string => Boolean(id)),
+            checkpoints: this._checkpoints.map(({ id }) => id),
+            activeCheckpoint: this._activeCheckpoint?.id,
+            playerPosition: { x: this._player.x, y: this._player.y },
+        };
+    }
+
+    campaignTestActivateCheckpoint(checkpointId: string): boolean {
+        const checkpoint = this._checkpoints.find(({ id }) => id === checkpointId);
+        if (!checkpoint || !this._isCampaignTestMode()) {
+            return false;
+        }
+        this._activateCheckpoint(checkpoint);
+        return true;
+    }
+
+    campaignTestComplete(): void {
+        if (this._isCampaignTestMode() && !this._levelDone) {
+            this._completeLevel();
+        }
+    }
+
+    campaignTestRestart(): void {
+        if (!this._isCampaignTestMode()) {
+            return;
+        }
+        clearLevelCheckpoint(this._level.id);
+        this.scene.restart({ characterId: this._character.id, levelId: this._level.id });
+    }
+
+    private _isCampaignTestMode(): boolean {
+        return isCampaignTestModeEnabled();
+    }
+
     private _buildLevelFromTiledMap(): boolean {
         try {
             const mapData = this._getValidatedTiledMapData();
-            const map = this.make.tilemap({ key: ASSET_KEYS.levelOneMap });
+            const map = this.make.tilemap({ key: this._level.mapAssetKey });
             const tileset = map.addTilesetImage(LEVEL_ONE_TILESET_NAME, ASSET_KEYS.levelOneTiles);
 
             if (!tileset) {
@@ -374,7 +448,7 @@ export class LevelOne extends Scene {
             this._spawnY = mapData.playerSpawn.y;
             this._killZones = mapData.killZones;
 
-            this.physics.world.setBounds(0, 0, this._worldWidth, this._worldHeight + TILED_WORLD_BOTTOM_PADDING);
+            this.physics.world.setBounds(0, 0, this._worldWidth, this._worldHeight + LEVEL_WORLD_BOTTOM_PADDING);
 
             const goal = this.physics.add.staticSprite(
                 mapData.levelGoal.x + mapData.levelGoal.width / 2,
@@ -404,6 +478,7 @@ export class LevelOne extends Scene {
 
             this._spawnEnemies(mapData.enemySpawns);
             this._spawnCheckpoints(mapData.checkpoints);
+            this._restorePersistedCheckpoint();
             this._spawnCollectibles(this._toCollectibleSpawns(mapData.collectibleSpawns));
 
             const killZoneGroup = this.physics.add.staticGroup();
@@ -435,10 +510,10 @@ export class LevelOne extends Scene {
     }
 
     private _spawnEnemies(enemySpawns: EnemySpawnConfig[]): void {
-        enemySpawns.forEach((enemySpawn, index) => {
+        enemySpawns.forEach((enemySpawn) => {
             const enemy = new Enemy(this, {
                 ...enemySpawn,
-                visualVariant: index % 3 === 2 ? 'large' : 'small',
+                visualVariant: enemySpawn.visualVariant,
             }, {
                 hasGroundAhead: (x, y) => this._hasGroundTileAt(x, y),
             }).spawn();
@@ -453,7 +528,9 @@ export class LevelOne extends Scene {
         });
     }
 
-    private _spawnCheckpoints(checkpoints: Array<{ id: string; x: number; y: number }>): void {
+    private _spawnCheckpoints(
+        checkpoints: Array<{ id: string; x: number; y: number; respawnOffsetY?: number }>,
+    ): void {
         for (const checkpointData of checkpoints) {
             const marker = this.physics.add.staticSprite(
                 checkpointData.x,
@@ -473,6 +550,7 @@ export class LevelOne extends Scene {
                 id: checkpointData.id,
                 x: checkpointData.x,
                 y: checkpointData.y,
+                respawnOffsetY: checkpointData.respawnOffsetY ?? -PLAYER_RESPAWN_CLEARANCE_Y,
                 sprite: marker,
                 activated: false,
             };
@@ -483,7 +561,7 @@ export class LevelOne extends Scene {
         }
     }
 
-    private _activateCheckpoint(checkpoint: CheckpointMarker): void {
+    private _activateCheckpoint(checkpoint: CheckpointMarker, persist = true): void {
         if (checkpoint.activated && this._activeCheckpoint?.id === checkpoint.id) {
             return;
         }
@@ -499,6 +577,33 @@ export class LevelOne extends Scene {
         }
 
         this._activeCheckpoint = normalizeCheckpoint(checkpoint);
+        if (persist) {
+            saveLevelCheckpoint(
+                this._level.id,
+                checkpoint.id,
+                this._activeCheckpoint.x,
+                this._activeCheckpoint.y,
+            );
+        }
+    }
+
+    private _restorePersistedCheckpoint(): void {
+        const saved = loadLevelCheckpoint(this._level.id);
+        if (!saved) {
+            return;
+        }
+        const checkpoint = this._checkpoints.find(({ id }) => id === saved.checkpointId);
+        const expected = checkpoint ? normalizeCheckpoint(checkpoint) : undefined;
+        const coordinatesMatch = expected
+            && Math.abs(expected.x - saved.x) < 0.01
+            && Math.abs(expected.y - saved.y) < 0.01;
+        const savedCandidate = { id: saved.checkpointId, x: saved.x, y: saved.y };
+        if (!checkpoint || !coordinatesMatch || !this._isRespawnCandidateSafe(savedCandidate)) {
+            clearLevelCheckpoint(this._level.id);
+            return;
+        }
+        this._activateCheckpoint(checkpoint, false);
+        this._player.setPosition(saved.x, saved.y);
     }
 
     private _onPlayerEnemyCollision(enemy: Enemy): void {
@@ -557,6 +662,7 @@ export class LevelOne extends Scene {
                     collectibleCount: this._collectiblesCollected,
                     totalCollectibles: this._collectiblesTotal,
                     characterId: this._character.id,
+                    levelId: this._level.id,
                 });
             });
             return;
@@ -724,12 +830,12 @@ export class LevelOne extends Scene {
     }
 
     private _getValidatedTiledMapData(): ValidatedLevelMapData {
-        const cacheEntry = this.cache.tilemap.get(ASSET_KEYS.levelOneMap) as { data?: TiledMapLike } | undefined;
+        const cacheEntry = this.cache.tilemap.get(this._level.mapAssetKey) as { data?: TiledMapLike } | undefined;
         if (!cacheEntry?.data) {
             throw new LevelMapValidationError('tilemap JSON was not loaded into cache');
         }
 
-        return validateAndExtractLevelMapData(cacheEntry.data);
+        return validateAndExtractLevelMapData(cacheEntry.data, this._level);
     }
 
     private _createRequiredTileLayer(
@@ -804,7 +910,8 @@ export class LevelOne extends Scene {
             return;
         }
 
-        const frame = this.textures.getFrame(ENVIRONMENT_VISUALS.atlasKey, mapping.frame);
+        const frameName = this._selectTerrainFrame(mapping, x);
+        const frame = this.textures.getFrame(ENVIRONMENT_VISUALS.atlasKey, frameName);
         const displayHeight = Math.max(1, height);
         const tileScale = displayHeight / frame.height;
         this.add.tileSprite(
@@ -813,7 +920,7 @@ export class LevelOne extends Scene {
             Math.max(mapping.minimumWidth, width),
             displayHeight,
             ENVIRONMENT_VISUALS.atlasKey,
-            mapping.frame,
+            frameName,
         )
             .setOrigin(mapping.originX, mapping.originY)
             .setTileScale(tileScale, tileScale)
@@ -847,11 +954,13 @@ export class LevelOne extends Scene {
     }
 
     private _getAvailableTerrainVisual(type: TerrainVisualType) {
-        const mapping = resolveTerrainVisual(type);
+        const mapping = resolveTerrainVisual(type, this._level.backgroundTheme);
         if (
             mapping
             && this.textures.exists(ENVIRONMENT_VISUALS.atlasKey)
             && this.textures.get(ENVIRONMENT_VISUALS.atlasKey).has(mapping.frame)
+            && (mapping.alternateFrames ?? []).every((frame) =>
+                this.textures.get(ENVIRONMENT_VISUALS.atlasKey).has(frame))
         ) {
             return mapping;
         }
@@ -860,6 +969,14 @@ export class LevelOne extends Scene {
             console.warn(`[environment] Missing terrain visual mapping for "${type}"`);
         }
         return undefined;
+    }
+
+    private _selectTerrainFrame(
+        mapping: NonNullable<ReturnType<typeof resolveTerrainVisual>>,
+        worldX: number,
+    ): string {
+        const frames = [mapping.frame, ...(mapping.alternateFrames ?? [])];
+        return frames[Math.abs(Math.floor(worldX / 32)) % frames.length] ?? mapping.frame;
     }
 
     private _isDebugUiEnabled(): boolean {
@@ -957,9 +1074,11 @@ export class LevelOne extends Scene {
         });
     }
 
-    private _toCollectibleSpawns(points: Array<{ x: number; y: number }>): CollectibleSpawnPoint[] {
-        return points.slice(0, LEVEL_ONE_COLLECTIBLE_TARGET_COUNT).map((point, index) => ({
-            id: `map-collectible-${index}`,
+    private _toCollectibleSpawns(
+        points: Array<{ id: string; x: number; y: number }>,
+    ): CollectibleSpawnPoint[] {
+        return points.map((point) => ({
+            id: point.id,
             x: point.x,
             y: point.y,
         }));
@@ -1113,22 +1232,24 @@ export class LevelOne extends Scene {
         this._score += this._lives * LEVEL_CLEAR_LIFE_BONUS;
         this._refreshScoreUI();
 
+        const nextLevel = getNextLevel(this._level.id);
+        clearLevelCheckpoint(this._level.id);
         const saved = recordLevelResult({
-            levelId: LEVEL_ONE_ID,
+            levelId: this._level.id,
             score: this._score,
             collectibleCount: this._collectiblesCollected,
-            unlockedLevel: 2,
+            unlockedLevel: nextLevel?.levelOrder ?? this._level.levelOrder,
         });
 
         this.time.delayedCall(CELEBRATION_EXIT_DELAY_MS, () => {
             this.scene.start(SCENE_LEVEL_COMPLETE, {
                 characterId: this._character.id,
-                levelId: LEVEL_ONE_ID,
+                levelId: this._level.id,
                 score: this._score,
                 collectibleCount: this._collectiblesCollected,
                 totalCollectibles: this._collectiblesTotal,
-                bestScore: saved.bestScores[LEVEL_ONE_ID] ?? 0,
-                bestCollectibleCount: saved.bestCollectibleCounts[LEVEL_ONE_ID] ?? 0,
+                bestScore: saved.bestScores[this._level.id] ?? 0,
+                bestCollectibleCount: saved.bestCollectibleCounts[this._level.id] ?? 0,
             });
         });
     }

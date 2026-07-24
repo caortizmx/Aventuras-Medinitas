@@ -9,6 +9,7 @@ import { Preloader } from './scenes/Preloader';
 import { GAME_HEIGHT, GAME_WIDTH, GRAVITY } from './constants/gameValues';
 import { AtlasSmoke } from './scenes/AtlasSmokeScene';
 import { AssetGallery } from './scenes/AssetGalleryScene';
+import { LevelSelect } from './scenes/LevelSelectScene';
 
 const config: Phaser.Types.Core.GameConfig = {
     type: AUTO,
@@ -38,6 +39,7 @@ const config: Phaser.Types.Core.GameConfig = {
         Preloader,
         MainMenu,
         CharacterSelect,
+        LevelSelect,
         LevelOne,
         LevelComplete,
         GameOver,
